@@ -240,9 +240,26 @@ btnpos.addEventListener('click',function (event){
 
 });
 
+const btncashin = document.getElementById("btncashin");
+btncashin.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/cashin.html`;
+});
+
 const btnproduct=document.getElementById('btnproduct');
 btnproduct.addEventListener('click',function (event){
     window.location.href =`file:///${__dirname}/product.html`;
+});
+
+const btnlaporansales = document.getElementById("btnlaporansales");
+btnlaporansales.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/report_sales.html`;
+});
+
+;
+
+const btnsalesorder = document.getElementById("btnsalesorder");
+btnsalesorder.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/sales_order.html`;
 });
 
 const btnsetup=document.getElementById('btnsetup');
