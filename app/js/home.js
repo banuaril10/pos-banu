@@ -133,44 +133,44 @@ btncashierclosesubmit.addEventListener('click',async function (event){
 
 
 // Shop Close click
-const btnshopclose=document.getElementById('btnshopclose');
-btnshopclose.addEventListener('click',function (event){
+// const btnshopclose=document.getElementById('btnshopclose');
+// btnshopclose.addEventListener('click',function (event){
 
 
- // synctable('pos_dorder','pos_dorder_sync_view','pos_dsalesorderlocal_sync','pos_dorder_sync_update');
-	// var stdstatus = getValueStd();
-	// if(stdstatus == 1){
+//  // synctable('pos_dorder','pos_dorder_sync_view','pos_dsalesorderlocal_sync','pos_dorder_sync_update');
+// 	// var stdstatus = getValueStd();
+// 	// if(stdstatus == 1){
 		
 		
-	var objstatus=get_auth_data("/pos/dcashierbalance_shopclose_check",{f1:cashierid },false);
-	if (objstatus.message=="Confirm") {
-    $.each(objstatus.data, function (i,item) {
-      strsalesdate=item.salesdate;
-      $('#divshopsalesdate').html(item.salesdate);
-    });
-  //  $('#shopclosemod').modal('show');
-    if (isDialogSupported) {
-      shopclosemod.showModal();
-    } else {
-      shopclosemod.setAttribute("open", "");
-    };
-    // shopclosemod.querySelector("input").focus();
-  } else
-  {
-      showalert('Maaf',objstatus.message);
-  }
+// 	var objstatus=get_auth_data("/pos/dcashierbalance_shopclose_check",{f1:cashierid },false);
+// 	if (objstatus.message=="Confirm") {
+//     $.each(objstatus.data, function (i,item) {
+//       strsalesdate=item.salesdate;
+//       $('#divshopsalesdate').html(item.salesdate);
+//     });
+//   //  $('#shopclosemod').modal('show');
+//     if (isDialogSupported) {
+//       shopclosemod.showModal();
+//     } else {
+//       shopclosemod.setAttribute("open", "");
+//     };
+//     // shopclosemod.querySelector("input").focus();
+//   } else
+//   {
+//       showalert('Maaf',objstatus.message);
+//   }
 		
 		
 		
-	// }else{
+// 	// }else{
 		
-		// showalert('Maaf','STD LOKAL dan WEBPOS belum balance. Silahkan hubungi tim EDP yg sedang piket.. Terima kasih');
+// 		// showalert('Maaf','STD LOKAL dan WEBPOS belum balance. Silahkan hubungi tim EDP yg sedang piket.. Terima kasih');
 		
-	// }
+// 	// }
 
 
 
-});
+// });
 // submit close shop
 const btnshopclosesubmit=document.getElementById('btnshopclosesubmit');
 btnshopclosesubmit.addEventListener('click',async function (event){ 
@@ -250,9 +250,9 @@ btnproduct.addEventListener('click',function (event){
     window.location.href =`file:///${__dirname}/product.html`;
 });
 
-const btnlaporansales = document.getElementById("btnlaporansales");
-btnlaporansales.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/report_sales.html`;
+const btnlaporan = document.getElementById("btnlaporan");
+btnlaporan.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/report.html`;
 });
 
 ;
@@ -268,14 +268,22 @@ btnsetup.addEventListener('click',function (event){
   //  window.location.href =`file:///${__dirname}/setup.html`;
 });
 
-const btnchangepassword=document.getElementById('btnchangepassword');
-btnchangepassword.addEventListener('click',function (event){
-  if (isDialogSupported) {
-    changepasswordmode.showModal();
-   } else {
-    changepasswordmode.setAttribute("open", "");
-   };
+
+const btnpricetag = document.getElementById("btnpricetag");
+btnpricetag.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/pricetag.html`;
 });
+
+;
+
+// const btnchangepassword=document.getElementById('btnchangepassword');
+// btnchangepassword.addEventListener('click',function (event){
+//   if (isDialogSupported) {
+//     changepasswordmode.showModal();
+//    } else {
+//     changepasswordmode.setAttribute("open", "");
+//    };
+// });
 
 
 const btnreprintoption=document.getElementById('btnreprintoption');

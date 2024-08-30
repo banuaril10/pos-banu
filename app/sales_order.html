@@ -44,7 +44,15 @@
       <div class="row">
         <div class="col-sm-4">
           <h1 class="text-white" id="divcashiername"></h1>
-          <div style="background-color: #fff; text-align: center; border-radius: 10%; font-weight: bold;" id="online-status"></div>
+          <div
+            style="
+              background-color: #fff;
+              text-align: center;
+              border-radius: 10%;
+              font-weight: bold;
+            "
+            id="online-status"
+          ></div>
         </div>
 
         <div class="col-sm-4">
@@ -80,14 +88,9 @@
             Refresh Data
           </button>
         </div>
-        <div class="col-sm-2">
-          <button type="button" class="btn btn-danger" onclick="getSales();">
-            Restore Data
-          </button>
-        </div>
       </div>
 
-      <br>
+      <br />
 
       <div class="row">
         <div class="col-md-12">
@@ -125,12 +128,61 @@
           </div>
         </div>
       </div>
+      <br>
+    <button
+      type="button"
+      id="btnshopclose"
+      class="btn btn-danger btn-lg btn-block"
+    >Tutup Toko
+    </button>
     </div>
+    
+    <br>
+
+    <dialog id="shopclosemod">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h3>TUTUP HARIAN</h3>
+          <hr />
+        </div>
+      </div>
+      <!-- Tanggal -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Tanggal </label>
+            <div id="divshopsalesdate" class="form-control"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Drawer Cash -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Catatan</label>
+            <textarea
+              type="text"
+              id="shopclosingremark"
+              class="form-control mb-4"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- Error Message -->
+      <div id="shopclosemodmessage"></div>
+      <div class="modal-footer">
+        <button type="button" id="btnshopclosesubmit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </dialog>
 
     <footer>
-      <center><p style="color:#fff">&copy; 2024 - Idolmart Idolaku</p></center>
+      <center><p style="color: #fff">&copy; 2024 - Idolmart Idolaku</p></center>
     </footer>
     <!-- jquery -->
+    <script src="./js/myfunction.js"></script>
+    <script src="./js/smartnotification.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./renderer.js"></script>
     <script src="js/function_sales.js"></script>
