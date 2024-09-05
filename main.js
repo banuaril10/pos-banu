@@ -14,9 +14,6 @@ var macaddress = require('macaddress');
 
 
 
-
-
-
 function getconfig(){
   var strconfig = fs.readFileSync(app.getPath('documents')+'/pos/config.ini');
   // var strconfig_printer = fs.readFileSync(app.getPath('documents')+'/pos/printer.ini');
@@ -120,6 +117,65 @@ function createWindow () {
 	})
 
 }
+
+
+function createWindowPriceTag(texthtml) {
+  // Create the browser window.
+
+  mainWindow = new BrowserWindow({
+    fullscreen: false,
+    width: 1000,
+    height: 600,
+    icon: path.join(__dirname, "assets/icons/png/icon.png"),
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+
+      //  devTools: false
+    },
+  });
+
+  // load text html
+  mainWindow.loadURL(`data:text/html;charset=utf-8,${texthtml}`);
+  
+  //modal window
+  mainWindow.webContents.on(
+    "new-window",
+    (event, url, frameName, disposition, options, additionalFeatures) => {
+      if (frameName === "modal") {
+        // open window as modal
+        event.preventDefault();
+        Object.assign(options, {
+          modal: true,
+          parent: mainWindow,
+          width: 100,
+          height: 100,
+        });
+        event.newGuest = new BrowserWindow(options);
+      }
+    }
+  );
+
+  // Open the DevTools.
+  //  mainWindow.webContents.openDevTools();
+
+  // Emitted when the window is closed.
+  mainWindow.on("closed", function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
+  });
+
+  globalShortcut.register("f9", function () {
+    console.log("f9 is pressed");
+    mainWindow.reload();
+  });
+}
+
+
 
 function gethome(){
   store.set('print_path', app.getPath('documents'));

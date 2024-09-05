@@ -57,7 +57,7 @@ function initload(){
     loadpendingsales(userid);
     loadrefund('');
     divalert.innerHTML="Scan Barcode Product ...";
-	getDataPromo(lastbillno);
+	  getDataPromo(lastbillno);
 	// getDataHris();
 };
 

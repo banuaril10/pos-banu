@@ -43,6 +43,16 @@ const btnsyncitems = document.getElementById("btnsyncitems");
 const btnproductstocksync = document.getElementById("btnproductstocksync");
 const btnproductbarcode = document.getElementById("btnproductbarcode");
 const btnproductshortcut = document.getElementById("btnproductshortcut");
+const btnproductpricesync = document.getElementById("btnproductpricesync");
+const btnracksync = document.getElementById("btnracksync");
+
+btnproductpricesync.addEventListener("click", async function (event) {
+  sync_price();
+});
+
+btnracksync.addEventListener("click", async function (event) {
+  sync_rack();
+});
 
 btnproductbarcode.addEventListener("click", async function (event) {
   sync_barcode();
@@ -97,6 +107,39 @@ btnsyncitems.addEventListener("click", async function (event) {
 btnproductstocksync.addEventListener("click", async function (event) {
   sync_stock();
 });
+
+
+function sync_price() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_price.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync");
+    },
+    async: false,
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      alert(dataResult.message);
+    },
+  });
+}
+
+function sync_rack() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_rack.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync rack");
+    },
+    async: false,
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      alert(dataResult.message);
+    },
+  });
+}
 
 function sync_barcode() {
   $.ajax({
@@ -354,37 +397,37 @@ function sync_items() {
 
 // });
 
-const btnproductpricesync = document.getElementById("btnproductpricesync");
-btnproductpricesync.addEventListener("click", async function (event) {
-  var objsync = await post_async_auth_data(
-    "/pos/tablecount",
-    { api: api_url, f1: "", f2: "pos_mproductprice" },
-    true
-  );
-  if (objsync.count > 0) {
-    $("#loaderpos").show();
-    var intloop = 0;
-    var intlimit = 1000;
-    for (var i = 0; i <= objsync.count; i = i + intlimit) {
-      var objsyncsub = await post_async_auth_data(
-        "/pos/tabledata",
-        {
-          api: api_url,
-          f1: "",
-          f2: "proc_pos_mproductprice_sync_view",
-          f3: "pos_mproductprice_sync",
-          f4: intlimit,
-          f5: intloop * intlimit,
-        },
-        false
-      );
-      intloop++;
-    }
-    $("#loaderpos").hide();
-    getproductinfo();
-    $("#tableproduct").DataTable().ajax.reload();
-  }
-});
+// const btnproductpricesync = document.getElementById("btnproductpricesync");
+// btnproductpricesync.addEventListener("click", async function (event) {
+//   var objsync = await post_async_auth_data(
+//     "/pos/tablecount",
+//     { api: api_url, f1: "", f2: "pos_mproductprice" },
+//     true
+//   );
+//   if (objsync.count > 0) {
+//     $("#loaderpos").show();
+//     var intloop = 0;
+//     var intlimit = 1000;
+//     for (var i = 0; i <= objsync.count; i = i + intlimit) {
+//       var objsyncsub = await post_async_auth_data(
+//         "/pos/tabledata",
+//         {
+//           api: api_url,
+//           f1: "",
+//           f2: "proc_pos_mproductprice_sync_view",
+//           f3: "pos_mproductprice_sync",
+//           f4: intlimit,
+//           f5: intloop * intlimit,
+//         },
+//         false
+//       );
+//       intloop++;
+//     }
+//     $("#loaderpos").hide();
+//     getproductinfo();
+//     $("#tableproduct").DataTable().ajax.reload();
+//   }
+// });
 
 // const btnproductdiscountsync=document.getElementById('btnproductdiscountsync');
 // btnproductdiscountsync.addEventListener('click',async function (event){

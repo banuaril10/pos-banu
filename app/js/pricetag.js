@@ -28,6 +28,46 @@ btnback.addEventListener("click", function (event) {
   window.location.href = `file:///${__dirname}/home.html`;
 });
 
+const btnprintpricetag = document.getElementById("btnprintpricetag");
+btnprintpricetag.addEventListener("click", function (event) {
+  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  cetak_pricetag(arrproduct);
+});
+
+function cetak_pricetag(arrproduct) {
+  // console.log(arrproduct);
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/get_pricetag.php",
+    type: "POST",
+    data: { arrproduct: arrproduct },
+    beforeSend: function () {
+      $("#statussync").html("proses sync shortcut");
+    },
+    async: false,
+    success: function (dataResult) {
+      // console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      var hasil = cetak_reguler(dataResult);
+      console.log(hasil);
+      //cetak pdf pricetag
+
+      //window no fullscreen
+      // var mywindow = window.open("", "_blank", "height=600,width=800");
+      // mywindow.document.write(
+      //   "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
+      // );
+      // mywindow.document.write(hasil);
+      // mywindow.print();
+      // //back to home
+      // window.location.href = `file:///${__dirname}/home.html`;
+      
+      createWindowPriceTag(hasil);
+      // 
+
+      // alert(dataResult.message);
+    },
+  });
+}
 
 function getproductinfo() {
   $.ajax({
@@ -89,18 +129,18 @@ var producttable = $("#tableproduct").DataTable({
           var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
           if (arrproduct.includes(data)) {
             return (
-              '<input type="checkbox" name="chkproduct" value="' +
+              '<input type="checkbox" name="checkbox[]" value="' +
               data +
               '" checked>'
             );
           } else {
             return (
-              '<input type="checkbox" name="chkproduct" value="' + data + '">'
+              '<input type="checkbox" name="checkbox[]" value="' + data + '">'
             );
           }
         } else {
           return (
-            '<input type="checkbox" name="chkproduct" value="' + data + '">'
+            '<input type="checkbox" name="checkbox[]" value="' + data + '">'
           );
         }
         // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
@@ -119,10 +159,11 @@ var producttable = $("#tableproduct").DataTable({
   ],
 });
 
+
 // btncheckall and save checked product from datatable to local storage
 const btncheckall = document.getElementById("btncheckall");
 btncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("chkproduct");
+  var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
 
   if (localStorage.getItem("arrproduct") != null) {
@@ -145,13 +186,13 @@ btncheckall.addEventListener("click", function (event) {
   }
 
   localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  console.log(localStorage.getItem("arrproduct"));
+  // console.log(localStorage.getItem("arrproduct"));
 });
 
 // btnuncheckall;
 const btnuncheckall = document.getElementById("btnuncheckall");
 btnuncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("chkproduct");
+  var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
   var arrproductnull = [];
 
@@ -171,9 +212,36 @@ btnuncheckall.addEventListener("click", function (event) {
   // console.log(localStorage.getItem('arrproduct'));
 });
 
+
+//check and unchecked value this save checked product from datatable to local storage
+$("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
+  var chkproduct = document.getElementsByName("checkbox[]");
+  var arrproduct = [];
+
+  if (localStorage.getItem("arrproduct") != null) {
+    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  }
+
+ 
+      //remove when unchecked
+      if (!this.checked) {
+        arrproduct.splice(arrproduct.indexOf(this.value), 1);
+      } else {
+        arrproduct.push(this.value);
+      }
+      
+
+      //add when checked
+
+
+  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+  console.log(localStorage.getItem("arrproduct")); 
+
+});
+
 //checked product from local storage
 function checkproduct() {
-  var chkproduct = document.getElementsByName("chkproduct");
+  var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
   if (localStorage.getItem("arrproduct") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
@@ -184,6 +252,21 @@ function checkproduct() {
       chkproduct[i].checked = true;
     }
   }
+}
+
+function createWindowPriceTag(texthtml) {
+  //print pricetag
+  var win = window.open("", "_blank", "height=600,width=800");
+  win.document.write(
+    "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
+  );
+  win.document.write(texthtml);
+  // console.log(texthtml);
+  //delay for print
+  setTimeout(function () {
+    win.print();
+    win.close();
+  }, 1000);
 }
 
 // btnproductcategorysync.addEventListener('click',async function (event){
