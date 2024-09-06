@@ -47,64 +47,79 @@ const btnproductpricesync = document.getElementById("btnproductpricesync");
 const btnracksync = document.getElementById("btnracksync");
 
 btnproductpricesync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_price();
 });
 
 btnracksync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_rack();
 });
 
 btnproductbarcode.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_barcode();
 });
 
 btnproductshortcut.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_shortcut();
 });
 
 btnproductcategorysync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_category();
   sync_category_sub();
   sync_category_subitem();
 });
 
 btnpromoreguler.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_promo_reguler();
 });
 
 btnpromobuyget.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_promo_buyget();
 });
 
 btnpromogrosir.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_promo_grosir();
 });
 
 btnpromocode.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_promo_code();
 });
 
 btnbanksync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_bank();
 });
 
 btnedcsync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_edc();
 });
 
 btnusersync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_users();
 });
 
 btnprofilesync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_profile();
 });
 
 btnsyncitems.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_items();
 });
 
 btnproductstocksync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
   sync_stock();
 });
 
@@ -113,14 +128,11 @@ function sync_price() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_price.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      // alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -129,14 +141,10 @@ function sync_rack() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_rack.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync rack");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -145,14 +153,10 @@ function sync_barcode() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_barcode.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync stock");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -161,14 +165,10 @@ function sync_shortcut() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_shortcut.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync shortcut");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -178,14 +178,10 @@ function sync_stock() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_stock.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync stock");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -195,10 +191,6 @@ function sync_category() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_category.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync category");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
     },
@@ -211,7 +203,6 @@ function sync_category_sub() {
     url:
       "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_category_sub.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
     },
@@ -226,12 +217,11 @@ function sync_category_subitem() {
       api_storeapps +
       "/pi_cyber/api/cyber/sync_category_subitem.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
       //$('#statussync').html(dataResult.message);
     },
   });
@@ -242,12 +232,11 @@ function sync_promo_reguler() {
     url:
       "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_reguler.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -257,12 +246,11 @@ function sync_promo_buyget() {
     url:
       "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_buyget.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -272,12 +260,11 @@ function sync_promo_grosir() {
     url:
       "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_grosir.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -286,12 +273,11 @@ function sync_promo_code() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_code.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -300,12 +286,11 @@ function sync_bank() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_bank.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -314,12 +299,11 @@ function sync_edc() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_edc.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -328,12 +312,11 @@ function sync_users() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_users.php",
     type: "GET",
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -343,15 +326,11 @@ function sync_profile() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_profile.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync profile");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -361,15 +340,11 @@ function sync_items() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_items.php",
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync items");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
 
       var dataResult = JSON.parse(dataResult);
-      alert(dataResult.message);
+      $("#loaderpos").hide();
     },
   });
 }
@@ -561,72 +536,8 @@ var producttable = $("#tableproduct").DataTable({
   ],
 });
 
-// btncheckall and save checked product from datatable to local storage
-const btncheckall = document.getElementById("btncheckall");
-btncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("chkproduct");
-  var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
 
-  for (var i = 0; i < chkproduct.length; i++) {
-    //check if product is already in local storage
-    if (arrproduct.includes(chkproduct[i].value)) {
-      //uncheck product
-      chkproduct[i].checked = false;
-      //remove product from local storage
-      arrproduct.splice(arrproduct.indexOf(chkproduct[i].value), 1);
-    } else {
-      //checked product
-      chkproduct[i].checked = true;
-      //add product to local storage
-      arrproduct.push(chkproduct[i].value);
-    }
-  }
-
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  console.log(localStorage.getItem("arrproduct"));
-});
-
-// btnuncheckall;
-const btnuncheckall = document.getElementById("btnuncheckall");
-btnuncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("chkproduct");
-  var arrproduct = [];
-  var arrproductnull = [];
-
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
-
-  for (var i = 0; i < chkproduct.length; i++) {
-    if (arrproduct.includes(chkproduct[i].value)) {
-      chkproduct[i].checked = false;
-      //arrproduct.splice(arrproduct.indexOf(chkproduct[i].value),1);
-    }
-  }
-
-  localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
-  // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
-  // console.log(localStorage.getItem('arrproduct'));
-});
-
-//checked product from local storage
-function checkproduct() {
-  var chkproduct = document.getElementsByName("chkproduct");
-  var arrproduct = [];
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
-
-  for (var i = 0; i < chkproduct.length; i++) {
-    if (arrproduct.includes(chkproduct[i].value)) {
-      chkproduct[i].checked = true;
-    }
-  }
-}
 
 // btnproductcategorysync.addEventListener('click',async function (event){
 // var objsync= await post_async_auth_data("/pos/tablecount",{api:api_url,f1:'erp',f2:'m_product_category'},true);

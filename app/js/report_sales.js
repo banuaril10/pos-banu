@@ -21,6 +21,28 @@ if (!window.HTMLDialogElement) {
   isDialogSupported = false;
 }
 
+;
+const date_awal = document.getElementById("date_awal");
+const date_akhir = document.getElementById("date_akhir");
+
+//value date now
+var today = new Date();
+
+
+
+date_awal.value = today
+  .toISOString("dd/mm/yyyy")
+  .substr(0, 10)
+  .toString("dd/mm/yyyy");
+date_akhir.value = today
+  .toISOString("dd/mm/yyyy")
+  .substr(0, 10)
+  .toString("dd/mm/yyyy");
+
+//change format date dd/mm/yyyy
+
+
+
 // log out
 const btnback = document.getElementById("btnback");
 btnback.addEventListener("click", function (event) {
