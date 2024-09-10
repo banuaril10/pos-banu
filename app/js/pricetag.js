@@ -2,7 +2,7 @@ require("jquery");
 require("popper.js");
 require("bootstrap");
 var $ = require("jquery");
-
+let remote = require('electron').remote
 // get cashier information
 $("#loaderpos").html(
   "<img id='loading-image' src='./img/loading2.gif' alt='Loading...' />"
@@ -255,19 +255,70 @@ function checkproduct() {
 }
 
 function createWindowPriceTag(texthtml) {
-  //print pricetag
-  var win = window.open("", "_blank", "height=600,width=800");
-  win.document.write(
-    "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
+ 
+
+  let mainWindow = new BrowserWindow({
+    fullscreen: false,
+    width: 1000,
+    height: 600,
+    icon: path.join(__dirname, "assets/icons/png/icon.png"),
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+
+
+      //  devTools: false
+    },
+  });
+
+  //write to cetak_pricetag.html
+  fs.writeFileSync(
+    "app/cetak_pricetag.html",
+    "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
+      texthtml
   );
-  win.document.write(texthtml);
+
+
+  mainWindow.loadFile("app/cetak_pricetag.html");
+
+
   // console.log(texthtml);
-  //delay for print
+  // mainWindow.loadURL("data:text/html;charset=utf-8," + texthtml);
+
   setTimeout(function () {
-    win.print();
-    win.close();
+    mainWindow.webContents.print({ silent: false });
   }, 1000);
+
+  
+
+
+
+  // var win = window.open("", "_blank", "height=600,width=800");
+  // win.document.write(
+  //   "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
+  // );
+  // win.document.write(texthtml);
+  // setTimeout(function () {
+  //   win.document.print();
+  // }, 1000);
+
 }
+
+function printDivToPDF(id) {
+  let element = document.getElementById(id);
+  let range = new Range();
+  range.setStart(element, 0);
+  range.setEndAfter(element, 0);
+  document.getSelection().removeAllRanges();
+  document.getSelection().addRange(range);
+  ipcRenderer.send("exportSelectionToPDF");
+}
+
+
+
+
 
 // btnproductcategorysync.addEventListener('click',async function (event){
 // var objsync= await post_async_auth_data("/pos/tablecount",{api:api_url,f1:'erp',f2:'m_product_category'},true);

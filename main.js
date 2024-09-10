@@ -73,10 +73,8 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true,
       nativeWindowOpen:true,
-	  contextIsolation: false,
-	  enableRemoteModule: true,
-	  
-    //  devTools: false
+	    contextIsolation: false,
+	    enableRemoteModule: true,
     }
   })
 
@@ -118,7 +116,6 @@ function createWindow () {
 
 }
 
-
 function createWindowPriceTag(texthtml) {
   // Create the browser window.
 
@@ -137,8 +134,9 @@ function createWindowPriceTag(texthtml) {
     },
   });
 
+  mainWindow.loadFile("./app/register.html");
   // load text html
-  mainWindow.loadURL(`data:text/html;charset=utf-8,${texthtml}`);
+  // mainWindow.loadURL(`data:text/html;charset=utf-8,${texthtml}`);
   
   //modal window
   mainWindow.webContents.on(

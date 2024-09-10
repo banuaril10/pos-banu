@@ -5,7 +5,6 @@ const path = require('path');
 var $ = require("jquery");
 const { remote: { BrowserWindow }, ipcRenderer: ipc } = require("electron");
 
-
 // const filemanagerbtn=document.getElementById('filemanager')
 
 // filemanagerbtn.addEventListener('click',function (event){
@@ -22,13 +21,6 @@ if (localStorage.getItem('user') == null) {
     var objuser = JSON.parse(localStorage.getItem('user').replace('[','').replace(']','')); 
     divusername.innerHTML =  objuser.username;
 }
-
-
-
-
-
-
-
 
 
 

@@ -90,11 +90,12 @@ function save_cashin(username, ad_org_id, userid) {
   });
 }
 
-
+document.getElementById("date").value = new Date().toISOString().slice(0, 10);
 
 //show value in tbody tbodycashin
 showcashin(username, ad_org_id, userid);
 function showcashin(username, ad_org_id, userid) {
+  var tanggal = document.getElementById("date").value;
   $.ajax({
     url: "http://" + api_storeapps + "/pi_cyber/api/cyber/show_cashin.php",
     type: "POST",
@@ -102,6 +103,7 @@ function showcashin(username, ad_org_id, userid) {
       ad_org_id: ad_org_id,
       username: username,
       userid: userid,
+      tanggal: tanggal,
     },
     cache: false,
     beforeSend: function () {
@@ -113,53 +115,54 @@ function showcashin(username, ad_org_id, userid) {
       if (dataResult.result == "1") {
         var no = 1;
         var divbody = "";
+
+        document.getElementById("total_cashin").innerHTML = dataResult.total;
+
         $.each(dataResult.data, function (key, value) {
-
           //datatable
-            var btnapproved = "";
-            var btnreprint = "";
+          var btnapproved = "";
+          var btnreprint = "";
           //tbody
-            var approvedby = value.approvedby;
-            if(value.status == "0") {
-              value.status = "<font class='btn btn-danger'>Pending</font>";
-              value.approvedby = "-";
-              btnapproved =
-                "<button class='btn btn-success' id='btnapproved' onclick='modal_cashin(\"" +value.cashinid +"\")'>Approved</button>";
+          var approvedby = value.approvedby;
+          if (value.status == "0") {
+            value.status = "<font class='btn btn-danger'>PENDING</font>";
+            value.approvedby = "-";
+            btnapproved =
+              "<button class='btn btn-success' id='btnapproved' onclick='modal_cashin(\"" +
+              value.cashinid +
+              "\")'>Approved</button>";
+          } else if (value.status == "1") {
+            value.status = "<font class='badge badge-success'>APPROVED</font>";
+            value.approvedby = approvedby;
+            btnapproved =
+              "<button class='btn btn-primary' id='btnreprint' onclick='reprint_cashin(\"" +
+              value.cashinid +
+              "\")'>Reprint</button>";
+          }
 
-           
-            }else if(value.status == "1") {
-              value.status = "<font class='btn btn-success'>Approved</font>";
-              value.approvedby = approvedby;
-              btnapproved =
-                "<button class='btn btn-primary' id='btnreprint' onclick='reprint_cashin(\""+value.cashinid +"\")'>Reprint</button>";
-
-
-            }
-
-            divbody +=
-              "<tr><td>" +
-              no +
-              "</td><td>" +
-              value.nama_insert +
-              "</td><td>" +
-              value.cash +
-              "</td><td>" +
-              value.insertdate +
-              "</td><td>" +
-              value.status +
-              "</td><td>" +
-              value.approvedby +
-              "</td><td>" +
-              value.syncnewpos +
-              "</td><td>" +
-              value.setoran +
-              "</td> <td> " +
-              btnapproved + 
-              "</td></tr>";
-            no++;
-
+          divbody +=
+            "<tr><td>" +
+            no +
+            "</td><td>" +
+            value.nama_insert +
+            "</td><td>" +
+            value.cash +
+            "</td><td>" +
+            value.insertdate +
+            "</td><td>" +
+            value.status +
+            "</td><td>" +
+            value.approvedby +
+            "</td><td>" +
+            value.syncnewpos +
+            "</td><td>" +
+            value.setoran +
+            "</td> <td> " +
+            btnapproved +
+            "</td></tr>";
+          no++;
         });
-        $("#tbodycashin").html( divbody );
+        $("#tbodycashin").html(divbody);
       }
       $("#loaderpos").hide();
     },
