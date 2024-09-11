@@ -249,7 +249,7 @@ function get_report_sales_by_cashier() {
     url:
       "http://" +
       api_storeapps +
-      "/pi_cyber/api/cyber/report_sales_cashier.php",
+      "/pi/api/cyber/report_sales_cashier.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -289,7 +289,7 @@ function get_report_sales_by_cashier() {
 function get_report_sales_daily() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_daily.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -328,7 +328,7 @@ function get_report_sales_daily() {
 function get_report_sales_void() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_void.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -366,7 +366,7 @@ function get_report_sales_non_cash() {
     url:
       "http://" +
       api_storeapps +
-      "/pi_cyber/api/cyber/report_sales_non_cash.php",
+      "/pi/api/cyber/report_sales_non_cash.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -397,7 +397,7 @@ function get_report_sales_non_cash() {
 function get_report_sales_today() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_today.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -432,7 +432,7 @@ function get_excel_sales_by_cashier() {
     url:
       "http://" +
       api_storeapps +
-      "/pi_cyber/api/cyber/report_sales_cashier.php",
+      "/pi/api/cyber/report_sales_cashier.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -451,7 +451,7 @@ function get_excel_sales_daily(){
   var dataResults = "";
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_daily.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -469,7 +469,7 @@ function get_excel_sales_void(){
   var dataResults = "";
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_void.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -489,7 +489,7 @@ function get_excel_sales_non_cash(){
     url:
       "http://" +
       api_storeapps +
-      "/pi_cyber/api/cyber/report_sales_non_cash.php",
+      "/pi/api/cyber/report_sales_non_cash.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -507,7 +507,7 @@ function get_excel_sales_today(){
   var dataResults = "";
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/report_sales_today.php",
+      "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");

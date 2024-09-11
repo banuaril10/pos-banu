@@ -52,7 +52,7 @@ setInterval(checkOnlineStatus, 2000);
 
 function syncSalesHeader() {
   var date = $("#date").val();
-  var url = ip_local + "/pi_cyber/api/cyber/sync_sales_header.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_header.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
@@ -61,7 +61,7 @@ function syncSalesHeader() {
 
 function syncSalesLine() {
   var date = $("#date").val();
-  var url = ip_local + "/pi_cyber/api/cyber/sync_sales_line.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_line.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
@@ -71,7 +71,7 @@ function syncSalesLine() {
 function syncSalesCashierBalance() {
   var date = $("#date").val();
   var url =
-    ip_local + "/pi_cyber/api/cyber/sync_sales_cashierbalance.php?date=" + date;
+    ip_local + "/pi/api/cyber/sync_sales_cashierbalance.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
@@ -81,7 +81,7 @@ function syncSalesCashierBalance() {
 function syncSalesDeleted() {
   var date = $("#date").val();
   var url =
-    ip_local + "/pi_cyber/api/cyber/sync_sales_deleted.php?date=" + date;
+    ip_local + "/pi/api/cyber/sync_sales_deleted.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
@@ -91,7 +91,7 @@ function syncSalesDeleted() {
 function syncSalesShopSales() {
   var date = $("#date").val();
   var url =
-    ip_local + "/pi_cyber/api/cyber/sync_sales_shopsales.php?date=" + date;
+    ip_local + "/pi/api/cyber/sync_sales_shopsales.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
@@ -125,7 +125,7 @@ function toDateInputValue(dateObject) {
 
 function getSales() {
   var date = $("#date").val();
-  var url = ip_local + "/pi_cyber/api/cyber/get_sales.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/get_sales.php?date=" + date;
   $.get(url, function (data, status) {
     console.log(data);
     $("#sales").html(data);

@@ -61,7 +61,7 @@ function save_cashin(username, ad_org_id, userid) {
 
   // alert(cash);
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/save_cashin.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/save_cashin.php",
     type: "POST",
     data: {
       cash: cash,
@@ -97,7 +97,7 @@ showcashin(username, ad_org_id, userid);
 function showcashin(username, ad_org_id, userid) {
   var tanggal = document.getElementById("date").value;
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/show_cashin.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/show_cashin.php",
     type: "POST",
     data: {
       ad_org_id: ad_org_id,
@@ -260,7 +260,7 @@ function modal_cashin(id) {
 
 function approved_cashin(id, userspv) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/approve_cashin.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/approve_cashin.php",
     type: "POST",
     data: {
       id: id,
@@ -294,7 +294,7 @@ function reprint_cashin(id) {
   var number = 0;
   var no = 1;	
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/reprint_cashin.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/reprint_cashin.php",
     type: "POST",
     data: {
       id: id,

@@ -126,7 +126,7 @@ btnproductstocksync.addEventListener("click", async function (event) {
 
 function sync_price() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_price.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_price.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -139,7 +139,7 @@ function sync_price() {
 
 function sync_rack() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_rack.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_rack.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -151,7 +151,7 @@ function sync_rack() {
 
 function sync_barcode() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_barcode.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_barcode.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -163,7 +163,7 @@ function sync_barcode() {
 
 function sync_shortcut() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_shortcut.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_shortcut.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -176,7 +176,7 @@ function sync_shortcut() {
 function sync_stock() {
   $("#statussync").html("proses sync stock...");
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_stock.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_stock.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -189,7 +189,7 @@ function sync_stock() {
 function sync_category() {
   $("#statussync").html("proses sync category...");
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_category.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_category.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -201,7 +201,7 @@ function sync_category_sub() {
   $("#statussync").html("proses sync sub category...");
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_category_sub.php",
+      "http://" + api_storeapps + "/pi/api/cyber/sync_category_sub.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -215,7 +215,7 @@ function sync_category_subitem() {
     url:
       "http://" +
       api_storeapps +
-      "/pi_cyber/api/cyber/sync_category_subitem.php",
+      "/pi/api/cyber/sync_category_subitem.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -230,7 +230,7 @@ function sync_category_subitem() {
 function sync_promo_reguler() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_reguler.php",
+      "http://" + api_storeapps + "/pi/api/cyber/sync_promo_reguler.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -244,7 +244,7 @@ function sync_promo_reguler() {
 function sync_promo_buyget() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_buyget.php",
+      "http://" + api_storeapps + "/pi/api/cyber/sync_promo_buyget.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -258,7 +258,7 @@ function sync_promo_buyget() {
 function sync_promo_grosir() {
   $.ajax({
     url:
-      "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_grosir.php",
+      "http://" + api_storeapps + "/pi/api/cyber/sync_promo_grosir.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -271,7 +271,7 @@ function sync_promo_grosir() {
 
 function sync_promo_code() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_promo_code.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_promo_code.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -284,7 +284,7 @@ function sync_promo_code() {
 
 function sync_bank() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_bank.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_bank.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -297,7 +297,7 @@ function sync_bank() {
 
 function sync_edc() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_edc.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_edc.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -310,7 +310,7 @@ function sync_edc() {
 
 function sync_users() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_users.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_users.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -324,7 +324,7 @@ function sync_users() {
 function sync_profile() {
   $("#statussync").html("proses sync category...");
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_profile.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_profile.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -338,7 +338,7 @@ function sync_profile() {
 function sync_items() {
   $("#statussync").html("proses sync category...");
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_items.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_items.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
@@ -448,7 +448,7 @@ function sync_items() {
 
 function getproductinfo() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/get_product_info.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_info.php",
     type: "GET",
     async: false,
     success: function (dataResult) {

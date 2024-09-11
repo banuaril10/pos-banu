@@ -22,7 +22,7 @@ if (domain == "") {
 
 function getidlocationbyname() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/change_config.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/change_config.php",
     type: "GET",
     async: false,
     success: function (dataResult) {
@@ -55,7 +55,7 @@ function getidlocationbyname() {
 
 function getusersit() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_users_it.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_users_it.php",
     type: "GET",
     async: false,
     success: function (dataResult) {
@@ -116,7 +116,7 @@ btnexit.addEventListener("click", function (event) {
 
 function checkorg(has, domain, locationid) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/get_org.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_org.php",
     type: "POST",
     data: {
       has: has,
@@ -164,7 +164,7 @@ function sendotp(nohp, has, domain, locationid) {
   //alert("test");
   // alert(nohp + " " + has + " " + domain + " " + locationid);
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/send_otp.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/send_otp.php",
     type: "POST",
     data: {
       nohp: nohp,
@@ -189,7 +189,7 @@ function sendotp(nohp, has, domain, locationid) {
 function register(has, domain, locationid, kode_otp) {
   var name = $("#name").val();
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/sync_register.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_register.php",
     type: "POST",
     data: {
       has: has,

@@ -37,7 +37,7 @@ btnprintpricetag.addEventListener("click", function (event) {
 function cetak_pricetag(arrproduct) {
   // console.log(arrproduct);
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/get_pricetag.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
     type: "POST",
     data: { arrproduct: arrproduct },
     beforeSend: function () {
@@ -71,7 +71,7 @@ function cetak_pricetag(arrproduct) {
 
 function getproductinfo() {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi_cyber/api/cyber/get_product_info.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_info.php",
     type: "GET",
     async: false,
     success: function (dataResult) {
