@@ -12,6 +12,7 @@ const secret = 'marinuak';
 var macaddress = require('macaddress');
 
 
+//call sync_sales.js
 
 
 function getconfig(){

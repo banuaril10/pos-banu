@@ -133,7 +133,7 @@ function getSales() {
 }
 getSales();
 
-setInterval(syncSalesAuto, 180000);
+// setInterval(syncSalesAuto, 180000);
 setInterval(getSales, 90000);
 
 const btnback = document.getElementById("btnback");
