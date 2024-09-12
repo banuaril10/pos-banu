@@ -26,6 +26,7 @@ btnback.addEventListener("click", function (event) {
 
 const btnlaporansales = document.getElementById("btnlaporansales");
 const btnlaporanstock = document.getElementById("btnlaporanstock");
+const btnlaporanpi = document.getElementById("btnlaporanpi");
 
 
 btnlaporansales.addEventListener("click", function (event) {
@@ -34,7 +35,11 @@ btnlaporansales.addEventListener("click", function (event) {
 
 btnlaporanstock.addEventListener("click", function (event) {
   window.location.href = `file:///${__dirname}/report_stock.html`;
-} );
+});
+
+btnlaporanpi.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/report_pi.html`;
+});
 
 
 

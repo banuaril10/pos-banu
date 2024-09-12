@@ -34,8 +34,33 @@ btnprintpricetag.addEventListener("click", function (event) {
   cetak_pricetag(arrproduct);
 });
 
+const btnprintpricetagpromo = document.getElementById("btnprintpricetagpromo");
+btnprintpricetagpromo.addEventListener("click", function (event) {
+  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  cetak_pricetag_promo(arrproduct);
+});
+
+function cetak_pricetag_promo(arrproduct) {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo.php",
+    type: "POST",
+    data: { arrproduct: arrproduct },
+    beforeSend: function () {
+      $("#statussync").html("proses get");
+    },
+    async: false,
+    success: function (dataResult) {
+      var dataResult = JSON.parse(dataResult);
+      var hasil = cetak_promo(dataResult);
+      // console.log(hasil);
+
+      createWindowPriceTag(hasil);
+    },
+  });
+}
+
 function cetak_pricetag(arrproduct) {
-  // console.log(arrproduct);
+
   $.ajax({
     url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
     type: "POST",
@@ -45,26 +70,12 @@ function cetak_pricetag(arrproduct) {
     },
     async: false,
     success: function (dataResult) {
-      // console.log(dataResult);
+
       var dataResult = JSON.parse(dataResult);
       var hasil = cetak_reguler(dataResult);
-      console.log(hasil);
-      //cetak pdf pricetag
+      // console.log(hasil);
 
-      //window no fullscreen
-      // var mywindow = window.open("", "_blank", "height=600,width=800");
-      // mywindow.document.write(
-      //   "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
-      // );
-      // mywindow.document.write(hasil);
-      // mywindow.print();
-      // //back to home
-      // window.location.href = `file:///${__dirname}/home.html`;
-      
       createWindowPriceTag(hasil);
-      // 
-
-      // alert(dataResult.message);
     },
   });
 }
@@ -129,18 +140,20 @@ var producttable = $("#tableproduct").DataTable({
           var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
           if (arrproduct.includes(data)) {
             return (
-              '<input type="checkbox" name="checkbox[]" value="' +
+              '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
               data +
               '" checked>'
             );
           } else {
             return (
-              '<input type="checkbox" name="checkbox[]" value="' + data + '">'
+              '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
+              data +
+              '">'
             );
           }
         } else {
           return (
-            '<input type="checkbox" name="checkbox[]" value="' + data + '">'
+            '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' + data + '">'
           );
         }
         // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
@@ -239,20 +252,6 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 
 });
 
-//checked product from local storage
-function checkproduct() {
-  var chkproduct = document.getElementsByName("checkbox[]");
-  var arrproduct = [];
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
-
-  for (var i = 0; i < chkproduct.length; i++) {
-    if (arrproduct.includes(chkproduct[i].value)) {
-      chkproduct[i].checked = true;
-    }
-  }
-}
 
 function createWindowPriceTag(texthtml) {
  
@@ -267,13 +266,9 @@ function createWindowPriceTag(texthtml) {
       nativeWindowOpen: true,
       contextIsolation: false,
       enableRemoteModule: true,
-
-
-      //  devTools: false
     },
   });
 
-  //write to cetak_pricetag.html
   fs.writeFileSync(
     "app/cetak_pricetag.html",
     "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
@@ -282,44 +277,10 @@ function createWindowPriceTag(texthtml) {
 
 
   mainWindow.loadFile("app/cetak_pricetag.html");
-
-
-  // console.log(texthtml);
-  // mainWindow.loadURL("data:text/html;charset=utf-8," + texthtml);
-
   setTimeout(function () {
     mainWindow.webContents.print({ silent: false });
   }, 1000);
-
-  
-
-
-
-  // var win = window.open("", "_blank", "height=600,width=800");
-  // win.document.write(
-  //   "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>"
-  // );
-  // win.document.write(texthtml);
-  // setTimeout(function () {
-  //   win.document.print();
-  // }, 1000);
-
 }
-
-function printDivToPDF(id) {
-  let element = document.getElementById(id);
-  let range = new Range();
-  range.setStart(element, 0);
-  range.setEndAfter(element, 0);
-  document.getSelection().removeAllRanges();
-  document.getSelection().addRange(range);
-  ipcRenderer.send("exportSelectionToPDF");
-}
-
-
-
-
-
 // btnproductcategorysync.addEventListener('click',async function (event){
 // var objsync= await post_async_auth_data("/pos/tablecount",{api:api_url,f1:'erp',f2:'m_product_category'},true);
 // if (objsync.count>0){

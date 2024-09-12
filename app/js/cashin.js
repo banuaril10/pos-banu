@@ -92,10 +92,20 @@ function save_cashin(username, ad_org_id, userid) {
 
 document.getElementById("date").value = new Date().toISOString().slice(0, 10);
 
+const btnfiltercashin = document.getElementById("btnfiltercashin");
+btnfiltercashin.addEventListener("click", async function (event) {
+  showcashin(username, ad_org_id, userid);
+});
+;
+
+
+
 //show value in tbody tbodycashin
 showcashin(username, ad_org_id, userid);
 function showcashin(username, ad_org_id, userid) {
   var tanggal = document.getElementById("date").value;
+
+  // alert(tanggal);
   $.ajax({
     url: "http://" + api_storeapps + "/pi/api/cyber/show_cashin.php",
     type: "POST",
