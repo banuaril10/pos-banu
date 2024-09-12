@@ -214,7 +214,7 @@ function writefile(strtext) {
 }
 
 function print(strtext) {
-  // console.log(strtext);
+  console.log(strtext);
 
   const myArray = ip_server.split(":"); //ngebaca server store apps
   let ip_server_fix = myArray[0];
