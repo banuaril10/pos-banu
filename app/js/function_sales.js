@@ -116,6 +116,8 @@ function syncSalesAuto() {
   syncSalesDeleted();
   syncSalesShopSales();
 }
+
+syncSalesAuto();
 //run sync sales every 3 minutes
 function toDateInputValue(dateObject) {
   const local = new Date(dateObject);
