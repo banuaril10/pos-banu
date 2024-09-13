@@ -55,6 +55,8 @@ const btnsalesvoid = document.getElementById("btnsalesvoid");
 const btnsalesnoncash = document.getElementById("btnsalesnoncash");
 const btnsalestoday = document.getElementById("btnsalestoday");
 const btnexportexcel = document.getElementById("btnexportexcel");
+const btnsalesitem = document.getElementById("btnsalesitem");
+
 
 function hide_all() {
   //reset datatable
@@ -63,13 +65,21 @@ function hide_all() {
   $("#tablesalesvoid").DataTable().destroy();
   $("#tablesalesnoncash").DataTable().destroy();
   $("#tablesalestoday").DataTable().destroy();
+  $("#tablesalesitem").DataTable().destroy();
+
 
   $("#tablesalesdaily").hide();
   $("#tablesalesbycashier").hide();
   $("#tablesalesvoid").hide();
   $("#tablesalesnoncash").hide();
   $("#tablesalestoday").hide();
+  $("#tablesalesitem").hide();
 }
+
+btnsalesitem.addEventListener("click", async function (event) {
+  hide_all();
+  get_report_sales_item();
+});
 
 btnsalesdaily.addEventListener("click", async function (event) {
   hide_all();
@@ -230,6 +240,24 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_today") {
+    data = get_excel_sales_today();
+    var row_title = [];
+    row_title.push("Name Store");
+    row_title.push("Omset");
+    row_title.push("STD");
+    row_title.push("APC");
+
+    dataexcel.push(row_title);
+
+    for (var i = 0; i < data.length; i++) {
+      var row = [];
+      row.push(data[i].namestore);
+      row.push(data[i].omset);
+      row.push(data[i].std);
+      row.push(data[i].apc);
+      dataexcel.push(row);
+    }
+  } else if (jenis_laporan == "get_report_sales_item") {
     data = get_excel_sales_today();
     var row_title = [];
     row_title.push("Name Store");
@@ -440,6 +468,35 @@ function get_report_sales_today() {
           { data: "omset" },
           { data: "std" },
           { data: "apc" },
+        ],
+      });
+    },
+  });
+}
+
+function get_report_sales_item() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync stock");
+    },
+    async: false,
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      $("#jenis_laporan").val("get_report_sales_item");
+      $("#title_report").html("Report Sales By Items");
+      $("#tablesalesitem").show();
+      $("#tablesalesitem").DataTable({
+        data: dataResult,
+        columns: [
+          { data: "no" },
+          { data: "date" },
+          { data: "sku" },
+          { data: "name" },
+          { data: "qty" },
+          { data: "amount" },
         ],
       });
     },

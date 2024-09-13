@@ -87,7 +87,7 @@
 
       <br />
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <button
             type="button"
             id="btnsalesdaily"
@@ -105,7 +105,7 @@
             <i class="fa fa-database"></i> Sales By Cashier
           </button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <button
             type="button"
             id="btnsalesvoid"
@@ -114,7 +114,7 @@
             <i class="fa fa-database"></i> Void
           </button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <button
             type="button"
             id="btnsalesnoncash"
@@ -123,13 +123,18 @@
             <i class="fa fa-database"></i> Non Cash
           </button>
         </div>
+
+      </div>
+
+            <br />
+      <div class="row">
         <div class="col-md-3">
           <button
             type="button"
-            id="btnsalestoday"
+            id="btnsalesitem"
             class="btn btn-success btn-lg btn-block"
           >
-            <i class="fa fa-database"></i> Sales STD APC
+            <i class="fa fa-database"></i> Sales By Items
           </button>
         </div>
       </div>
@@ -250,6 +255,23 @@
                   </tr>
                 </thead>
               </table>
+              <table
+                id="tablesalesitem"
+                class="table table-bordered datatable"
+                style="width: 100%; display: none"
+              >
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Date</th>
+                    <th>SKU</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+              </table>
+
             </div>
           </div>
         </div>
