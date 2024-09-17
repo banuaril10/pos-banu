@@ -276,14 +276,14 @@ btnpricetag.addEventListener("click", function (event) {
 
 ;
 
-// const btnchangepassword=document.getElementById('btnchangepassword');
-// btnchangepassword.addEventListener('click',function (event){
-//   if (isDialogSupported) {
-//     changepasswordmode.showModal();
-//    } else {
-//     changepasswordmode.setAttribute("open", "");
-//    };
-// });
+const btnchangepassword=document.getElementById('btnchangepassword');
+btnchangepassword.addEventListener('click',function (event){
+  if (isDialogSupported) {
+    changepasswordmode.showModal();
+   } else {
+    changepasswordmode.setAttribute("open", "");
+   };
+});
 
 
 const btnreprintoption=document.getElementById('btnreprintoption');
@@ -356,29 +356,36 @@ btnchangepasswordsubmit.addEventListener('click',async function (event){
   }
   else
   {
-    var objchangepwd=await post_auth_data("/pos/password",{f1: api_url,f2: $('#oldpwd').val(),f3: $('#newpwd').val()},false); 
-      if (objchangepwd.result=="Success") {
-          changepasswordmode.close();
-
-          var objsync= await post_async_auth_data("/pos/tablecount",{api:api_url,f1:'',f2:'ad_muser'},true);
-          if (objsync.count>0){ 
-            $('#loaderpos').show();
-            var intloop=0;
-            var intlimit=100;
-            for (var i = 0; i < objsync.count; i=i+intlimit) { 
-              var objsyncsub=await post_async_auth_data("/pos/tabledata",{api:api_url,f1:'',f2:'proc_ad_muser_sync_view',f3:'ad_muser_sync',f4:intlimit,f5:intloop*intlimit},false);
-              intloop++;
-            };  
-            $("#loaderpos").hide();
-          };
-
-          alert("PASSWORD BERHASIL DI RUBAH !");
-          
-      } else {
-        alert(objchangepwd.result);
-      }; 
+    var oldpwd = $('#oldpwd').val();
+    var newpwd = $("#newpwd").val();
+    changepassword(oldpwd, newpwd);
+    
   }
 });
+
+function changepassword(oldpwd, newpwd) {
+  $("#loaderpos").show();
+  $.ajax({
+    url:
+      "http://" +
+      api_storeapps +
+      "/pi/api/cyber/change_password.php?oldpwd=" +
+      oldpwd +
+      "&newpwd=" +
+      newpwd +
+      "&userid=" +
+      useridval,
+    type: "GET",
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      $("#loaderpos").hide();
+      $("#status_cp").html(dataResult.message);
+      // alert(dataResult.message);
+    },
+  });
+}
+
 
 // Modal first Focus
 $('#balancemod').on('shown.bs.modal', function () {

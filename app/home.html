@@ -73,29 +73,32 @@
 	   <div class="col-md-4">     
           <button type="button" id="btnpos" class="btn btn-success btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-play fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold"> Point of Sales</td></tr></table> </button>
           <button type="button" id="btncashierclose" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-stop fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold"> Tutup Kasir</td></tr></table> </button>   
-          <button type="button" id="btnsalesorder" class="btn btn-danger btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-fast-forward fa-4x"></i> </td><td style="text-align: right; font-size: 20px; font-weight: bold"> Tutup Toko</td></tr></table></button>   
-     
-      </div>
+          <button type="button" id="btnsalesorder" class="btn btn-danger btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-fast-forward fa-4x"></i> </td><td style="text-align: right; font-size: 20px; font-weight: bold"> Tutup Toko</td></tr></table></button>
+           <button type="button" id="btnchangepassword" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-key fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Password</td></tr></table> </button>
+        </div>
 
       <div class="col-md-8">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <button type="button" id="btnbalance" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-file-o fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold"> Saldo Awal</td></tr></table></button>
                 <button type="button" id="btnreprintoption" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-print fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Reprint</td></tr></table></button>            
                 <button type="button" id="btncashin" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-money fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Pickup Cash In</td></tr></table></button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <button type="button" id="btnproduct" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-shopping-cart fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Sync POS</td></tr></table> </button>              
                 <button type="button" id="btnppob" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-mobile fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">PPOB</td></tr></table></button> 
                 <button type="button" id="btnlaporan" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-book fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Laporan</td></tr></table></button> 
-          </div>
-          <div class="col-sm-4"> 
+            </div>
+            <div class="col-md-4"> 
               <button type="button" id="btnsetup" class="btn btn-danger btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-gears fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Setup</td></tr></table> </button>
               <button type="button" id="btnpricetag" class="btn btn-warning btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-tag fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Price Tag</td></tr></table> </button> 
               <button type="button" id="btnlogout" class="btn btn-danger btn-lg btn-block"><table style="width: 100%"><tr><td style="text-align: left"><i class="fa fa-lock fa-4x"></i></td><td style="text-align: right; font-size: 20px; font-weight: bold">Logout</td></tr></table></button>            
-        </div>
+            </div>
         </div>
       </div>
+
+
+
   </div>
     <!-- Footer -->
     <div class="row">
@@ -289,6 +292,8 @@
   <div class="row">
       <div class="col-sm-12 text-center"><h3>GANTI PASSWORD</h3> <hr></div>
   </div>
+
+        <font style="color: red" id="status_cp"> Status notif...</font>
 
         <div class="row">
             <div class="col-sm-6">

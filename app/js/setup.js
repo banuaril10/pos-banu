@@ -102,8 +102,6 @@ btnreset.addEventListener('click', async function (event){
       alert("RESET FAIL!");
     };
   };
-   
-
 });
 
 const btnresetmaster=document.getElementById('btnresetmaster');
@@ -118,7 +116,26 @@ btnresetmaster.addEventListener('click', async function (event){
       alert("RESET FAIL!");
     };
   };
-   
-
 });
 
+const btnrestore = document.getElementById("btnrestore");
+btnrestore.addEventListener("click", async function (event) {
+  if (
+    confirm(
+      "Data Sales Akan direstore,Apakah Anda Yakin?"
+    )
+  ) {
+    restore_data_sales();
+  }
+});
+
+
+function restore_data_sales(){
+   $("#loaderpos").show();
+   var date = $("#date").val();
+   var url = ip_local + "/pi/api/cyber/restore_sales.php";
+   $.get(url, function (data, status) {
+      console.log(data);
+      $("#loaderpos").hide();
+   });
+}

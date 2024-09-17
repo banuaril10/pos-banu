@@ -201,10 +201,11 @@ async function post_auth_data(_api, _param, _async) {
 
 // function
 function writefile(strtext) {
-  fs.writeFile(path.join(__dirname, "../../../print.txt"), strtext, (err) => {
+    
+    //fs.writeFile(path.join(__dirname, "../../../print.txt"), strtext, (err) => {
     // fs.writeFile(path.join(__dirname,'../print.txt'), strtext, (err) => {
     // fs.writeFile(path.join(__dirname,'../print.txt'), strtext, (err) => {
-    // fs.writeFile(path.join(print_path,'/pos/print.txt'), strtext, (err) => {
+    fs.writeFile(path.join(print_path,'/pos/print.txt'), strtext, (err) => {
     if (err) {
       alert("An error ocurred updating the file" + err.message);
     }
@@ -219,7 +220,7 @@ function print(strtext) {
   const myArray = ip_server.split(":"); //ngebaca server store apps
   let ip_server_fix = myArray[0];
 
-  if (jenis_printer == "thermal") {
+  if (jenis_printer == "thermal") { //windows
     $.ajax({
       url: "http://" + ip_printer + "/pi/print_struk.php", //http://localhost/pi/print_struk.php
       type: "POST",
@@ -229,7 +230,7 @@ function print(strtext) {
       },
       success: function (dataResult) {},
     });
-  } else if (jenis_printer == "vsc") {
+  } else if (jenis_printer == "vsc") { //windows
     $.ajax({
       url: "http://" + ip_printer + "/pi/print_struk_vsc.php", //http://localhost/pi/print_struk.php
       type: "POST",
@@ -242,22 +243,9 @@ function print(strtext) {
         // $('#notif').html("Proses print");
       },
     });
-  } else if (jenis_printer == "linuxtmu") {
+  } else if (jenis_printer == "vsc_linux") { //linux
     $.ajax({
-      url: "http://" + ip_printer + "/pi/print_tmu.php", //http://localhost/pi/print_struk.php
-      type: "POST",
-      data: {
-        html: strtext,
-        ip_printer: ip_printer,
-      },
-      success: function (dataResult) {
-        // var dataResult = JSON.parse(dataResult);
-        // $('#notif').html("Proses print");
-      },
-    });
-  } else if (jenis_printer == "linuxthermal") {
-    $.ajax({
-      url: "http://" + ip_printer + "/pi/print_thermal.php", //http://localhost/pi/print_struk.php
+      url: "http://" + ip_printer + "/pi/print_struk_vsc_linux.php", //http://localhost/pi/print_struk.php
       type: "POST",
       data: {
         html: strtext,
@@ -270,11 +258,16 @@ function print(strtext) {
     });
   } else {
     const process = require("child_process"); // The power of Node.JS
-
     var cmd = "";
     if (is.windows()) {
-      writefile(strtext);
-      cmd = "print.bat";
+      // writefile(strtext);
+      var perintah = "notepad /p print.txt";
+      var writeStream = fs.createWriteStream("print.txt");
+      writeStream.write(strtext);
+      writeStream.end();
+
+      // cmd = "print.bat";
+      cmd = perintah;
     } else {
       cmd = 'echo "' + strtext + '" | lpr -o raw';
     }
