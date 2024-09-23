@@ -1,13 +1,35 @@
                 IDOLAKU                
        Jl. Nusa Indah Raya No.22       
        Jl. Nusa Indah Raya No.22       
-REPRINT
+         TANGGAL    :18-Sep-24         
 =======================================
-KASIR      :                 pos
-TANGGAL    :                   17-Sep-24
-SALDO AWAL :                      10,000
+Penjualan        :             469,000
+Diskon           :                   0
+Refund           :                   0
 =======================================
-17-Sep-24 08:39:42
+Penjualan Bersih :             469,000
+EDC BANK DKI     :             123,000
+EDC BRI          :             165,000
+EDC BTN          :              40,000
+Voucher          :                   0
+Reedem Point     :                   0
+=======================================
+           TOTAL :             141,000
+
+Batal            :      0/           0
+Infak            :                   0
+Modal            :              10,000
+Cash In Drawer   :             400,000
+Variant(-)       :                   0
+Variant(+)       :             259,000
+=======================================
+TOTAL TRANSFER   :             400,000
+=======================================
+              BY CATEGORY              
+                               469,000
+=======================================
+           TOTAL :             469,000
+"pos": 18-Sep-24 ~ 13:21:49
                                       
                                       
                                       

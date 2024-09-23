@@ -546,3 +546,12 @@ function syncSalesAuto() {
 }
 
 setInterval(syncSalesAuto, 30000);
+
+function logout(){
+  localStorage.removeItem('token');
+  localStorage.removeItem('menu');
+  localStorage.removeItem('user');
+  window.location.href = "login.html";
+}
+
+setInterval(logout, 600000);

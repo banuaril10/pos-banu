@@ -106,6 +106,7 @@ function syncSales() {
   syncSalesDeleted();
   syncSalesShopSales();
   alert("Proses sync, klik tombol refresh setelah beberapa saat..");
+  getSales();
 }
 
 function syncSalesAuto() {
@@ -115,6 +116,7 @@ function syncSalesAuto() {
   syncSalesCashierBalance();
   syncSalesDeleted();
   syncSalesShopSales();
+  getSales();
 }
 
 syncSalesAuto();

@@ -7,7 +7,12 @@ $("#loaderpos").html(
   "<img id='loading-image' src='./img/loading2.gif' alt='Loading...' />"
 );
 // Get Shop
-
+$("#loaderpos").hide();
+var isDialogSupported = true;
+if (!window.HTMLDialogElement) {
+  document.body.classList.add("no-dialog");
+  isDialogSupported = false;
+}
 // const store = new Store();
 
 // const domain = store.get("domain");
@@ -16,7 +21,7 @@ console.log(domain);
 if (domain == "") {
   checkorg(has, domain, locationid);
   getusersit();
-}else{
+} else {
   getidlocationbyname();
 }
 
@@ -40,13 +45,13 @@ function getidlocationbyname() {
         "utf8"
       );
 
-        let json_file = fs.readFileSync(
-          app.getPath("documents") + "/pos/config.json"
-        );
+      let json_file = fs.readFileSync(
+        app.getPath("documents") + "/pos/config.json"
+      );
 
-        let strconfig_config = JSON.parse(json_file);
-        store.set("domain", strconfig_config["domain"].toString());
-        store.set("locationid", strconfig_config["organization"].toString());
+      let strconfig_config = JSON.parse(json_file);
+      store.set("domain", strconfig_config["domain"].toString());
+      store.set("locationid", strconfig_config["organization"].toString());
 
       location.reload();
     },
@@ -152,15 +157,21 @@ const btnsendotp = document.getElementById("btnsendotp");
 
 btnsendotp.addEventListener("click", async function (event) {
   var nohp = $("#nohp").val();
+
   sendotp(nohp, has, domain, locationid);
+
 });
 
 btnregister.addEventListener("click", async function (event) {
   var kode_otp = $("#kode_otp").val();
+  $("#loaderpos").show();
   register(has, domain, locationid, kode_otp);
 });
 
 function sendotp(nohp, has, domain, locationid) {
+  //disabled button
+  // $("#btnsendotp").prop("disabled", true);
+  // $("#btnsendotp").css("background-color", "gray");
   //alert("test");
   // alert(nohp + " " + has + " " + domain + " " + locationid);
   $.ajax({
@@ -182,6 +193,11 @@ function sendotp(nohp, has, domain, locationid) {
           dataResult.message +
           "</h3></div>"
       );
+      $("#loaderpos").hide();
+        // $("#btnsendotp").prop("disabled", false);
+        // $("#btnsendotp").css("background-color", "green");
+
+      //enable
     },
   });
 }
