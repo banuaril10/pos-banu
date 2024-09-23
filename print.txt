@@ -1,35 +1,33 @@
-                IDOLAKU                
-       Jl. Nusa Indah Raya No.22       
-       Jl. Nusa Indah Raya No.22       
-         TANGGAL    :18-Sep-24         
+               IDOLMART               
+      Jl. Bintara Raya No. 60A-B      
+      Jl. Bintara Raya No. 60A-B      
+STRUK   :BOS02-000126V0ZL      10:53:33
+TANGGAL :23-Sep-24                    
 =======================================
-Penjualan        :             469,000
-Diskon           :                   0
-Refund           :                   0
+Nama Barang Qty  Harga  Disc      Total
 =======================================
-Penjualan Bersih :             469,000
-EDC BANK DKI     :             123,000
-EDC BRI          :             165,000
-EDC BTN          :              40,000
-Voucher          :                   0
-Reedem Point     :                   0
+747 F/P Sedan Big Foot MBK
+            1  52,500      0     52,500
+3188 F/P Motor Matic MBK
+            1  23,500      0     23,500
 =======================================
-           TOTAL :             141,000
-
-Batal            :      0/           0
-Infak            :                   0
-Modal            :              10,000
-Cash In Drawer   :             400,000
-Variant(-)       :                   0
-Variant(+)       :             259,000
+TOTAL                            76,000
+DISKON                                0
+GRAND TOTAL                      76,000
+BAYAR D/C                             0
+BAYAR CASH                       80,000
+INFAK                                 0
+KEMBALI                           4,000
 =======================================
-TOTAL TRANSFER   :             400,000
+DPP :     68,468    PPN :      7,532
 =======================================
-              BY CATEGORY              
-                               469,000
-=======================================
-           TOTAL :             469,000
-"pos": 18-Sep-24 ~ 13:21:49
+***************************************
+      NPWP :31.188.370.6-407.000      
+            IDOLMART Group            
+***************************************
+            #TERIMA KASIH#            
+***************************************
+                NOT SET                
                                       
                                       
                                       
