@@ -458,7 +458,7 @@ function get_report_sales_today() {
       var dataResult = JSON.parse(dataResult);
 
       $("#jenis_laporan").val("get_report_sales_today");
-      $("#title_report").html("Report Sales Today");
+      $("#title_report").html("Report Sales STD APC");
       $("#tablesalestoday").show();
       $("#tablesalestoday").DataTable({
         data: dataResult,

@@ -1555,14 +1555,67 @@ buttonlistbuygetclose.addEventListener('click',function (event){
 
 
 //EDC Select
-var objedc=get_auth_data("/selects/select_filter",{ f3: 'pos_medc_get',f4:'' },false);
+// var objedc=get_auth_data("/selects/select_filter",{ f3: 'pos_medc_get',f4:'' },false);
+
 var stredcoption='';
+var stredcoption_credit='';
    // stredcoption += '<option value=""></option>';
-$.each(objedc.data, function (i,item) {
-        stredcoption += '<option value="' + item.id + '">' + item.text + '</option>';
-});
-$('#divdebitedc').html('<select id="edcdebitname" class="form-control pull-right" placeholder="EDC" >'+stredcoption+'</select>' );
-$('#divcreditedc').html('<select id="edccreditname" class="form-control pull-right" placeholder="EDC" >'+stredcoption+'</select>' );
+// $.each(objedc.data, function (i,item) {
+//         stredcoption += '<option value="' + item.id + '">' + item.text + '</option>';
+// });
+
+get_edc_credit();
+get_edc_debit();
+
+// console.log(stredcoption);
+
+function get_edc_credit() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_edc.php?jenis=Debit",
+    type: "GET",
+    success: function (dataResult) {
+      // console.log(dataResult);
+
+      var dataResult = JSON.parse(dataResult);
+      //looping data
+      $.each(dataResult, function (i, item) {
+        stredcoption += '<option value="' + item.id + '">' + item.name + '</option>';
+      });
+
+      $("#divdebitedc").html(
+        '<select id="edcdebitname" class="form-control pull-right" placeholder="EDC" >' +
+          stredcoption +
+          "</select>"
+      );
+      
+    },
+  });
+}
+
+function get_edc_debit() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_edc.php?jenis=Credit",
+    type: "GET",
+    success: function (dataResult) {
+      // console.log(dataResult);
+
+      var dataResult = JSON.parse(dataResult);
+      //looping data
+      $.each(dataResult, function (i, item) {
+        stredcoption_credit += '<option value="' + item.id + '">' + item.name + '</option>';
+      });
+
+      $("#divcreditedc").html(
+        '<select id="edccreditname" class="form-control pull-right" placeholder="EDC" >' +
+          stredcoption_credit +
+          "</select>"
+      );
+    },
+  });
+}
+
+
+
 
   //Bank Select
 var objbank=get_auth_data("/selects/select_filter",{ f3: 'pos_mbank_get',f4:'' },false);

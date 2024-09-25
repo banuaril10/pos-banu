@@ -1,25 +1,25 @@
                IDOLMART               
-      Jl. Bintara Raya No. 60A-B      
-      Jl. Bintara Raya No. 60A-B      
-STRUK   :BOS02-000126V0ZL      10:53:33
-TANGGAL :23-Sep-24                    
+       JL. Jend. Ahmad Yani 224       
+       JL. Jend. Ahmad Yani 224       
+STRUK   :BOS105-00015HXPZ5      11:33:55
+TANGGAL :25-Sep-24                    
 =======================================
 Nama Barang Qty  Harga  Disc      Total
 =======================================
-747 F/P Sedan Big Foot MBK
-            1  52,500      0     52,500
-3188 F/P Motor Matic MBK
-            1  23,500      0     23,500
+7050 Rak Piring
+            1  57,500      0     57,500
+7060 Keranjang Set
+            1  44,500      0     44,500
 =======================================
-TOTAL                            76,000
+TOTAL                           102.000
 DISKON                                0
-GRAND TOTAL                      76,000
+GRAND TOTAL                     102,000
 BAYAR D/C                             0
-BAYAR CASH                       80,000
+BAYAR CASH                      105,000
 INFAK                                 0
-KEMBALI                           4,000
+KEMBALI                           3,000
 =======================================
-DPP :     68,468    PPN :      7,532
+DPP :     91,892    PPN :     10,108
 =======================================
 ***************************************
       NPWP :31.188.370.6-407.000      
@@ -27,7 +27,7 @@ DPP :     68,468    PPN :      7,532
 ***************************************
             #TERIMA KASIH#            
 ***************************************
-                NOT SET                
+                                      
                                       
                                       
                                       

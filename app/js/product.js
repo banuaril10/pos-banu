@@ -49,21 +49,25 @@ const btnracksync = document.getElementById("btnracksync");
 btnproductpricesync.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_price();
+  
 });
 
 btnracksync.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_rack();
+
 });
 
 btnproductbarcode.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_barcode();
+
 });
 
 btnproductshortcut.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_shortcut();
+
 });
 
 btnproductcategorysync.addEventListener("click", async function (event) {
@@ -71,16 +75,19 @@ btnproductcategorysync.addEventListener("click", async function (event) {
   sync_category();
   sync_category_sub();
   sync_category_subitem();
+
 });
 
 btnpromoreguler.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_promo_reguler();
+
 });
 
 btnpromobuyget.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_promo_buyget();
+
 });
 
 btnpromogrosir.addEventListener("click", async function (event) {
@@ -133,6 +140,7 @@ function sync_price() {
       var dataResult = JSON.parse(dataResult);
       // alert(dataResult.message);
       $("#loaderpos").hide();
+      location.reload();
     },
   });
 }
@@ -345,6 +353,7 @@ function sync_items() {
 
       var dataResult = JSON.parse(dataResult);
       $("#loaderpos").hide();
+      location.reload();
     },
   });
 }
