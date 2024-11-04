@@ -104,6 +104,9 @@ function getproductinfo() {
   // };
 }
 
+
+
+
 var producttable = $("#tableproduct").DataTable({
   sDom:
     "<'dt-toolbar'<'col-sm-6' <'toolbar'>><'col-sm-12'f>>" +
@@ -170,6 +173,18 @@ var producttable = $("#tableproduct").DataTable({
     { data: "rack", className: "text-center" },
     { data: "buygetremark", className: "text-center" },
   ],
+});
+
+//id filterstock onclick refresh datatable
+$("#filterstock").on("click", function () {
+  //stock
+  var stock = $("#stock").val();
+
+  if (stock == "ada") {
+    producttable.columns(6).search("1").draw();
+  } else {
+    producttable.columns(6).search("").draw();
+  }
 });
 
 

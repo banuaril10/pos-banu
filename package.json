@@ -12,7 +12,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "electron-packager . pos --platform linux --overwrite --arch x64 --icon assets/icons/png/icon.png --out dist/",
-    "deb64": "electron-installer-debian --src dist/pos-linux-x64/ --overwrite --icon assets/icons/png/icon.png --dest dist/installers/ --arch amd64",
+    "create-installer-linux": "electron-installer-debian --src dist/pos-linux-x64/ --overwrite --icon assets/icons/png/icon.png --dest dist/installers/ --arch amd64",
     "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "build": {
