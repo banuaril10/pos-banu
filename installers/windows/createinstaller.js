@@ -19,7 +19,7 @@ function getInstallerConfig () {
     noMsi: true,
     outputDirectory: path.join(outPath, 'windows-installer'),
     exe: 'pos-idolmart.exe',
-    setupExe: 'pos-idolmart-setup.exe',
+    setupExe: 'pos-idolmart-setup-v4.0.exe',
     setupIcon: path.join(rootPath, 'assets', 'icons', 'win', 'icon.ico')
   })
 }
