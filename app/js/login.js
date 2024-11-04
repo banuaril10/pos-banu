@@ -68,10 +68,65 @@ function getcashier(){
  var objcashier=get_data("/pos/mcashier",{ f1: has },false);
  $.each(objcashier.data, function (i,item) {
           divshopname.innerHTML =  item.shopname;
-           divcashiername.innerHTML=item.name;
+           divcashiername.innerHTML = item.name + " (" + platform + ")";
            cashierid=item.id;
    });
    if (objcashier.data==null) {
       window.location.href =`file:///${__dirname}/register.html`;
    }
  }
+ 
+ 
+const notification = document.getElementById('notification');
+const message = document.getElementById('message');
+const restartButton = document.getElementById('restart-button');
+ipcRenderer.on('update_available', () => {
+  ipcRenderer.removeAllListeners('update_available');
+  message.innerText = 'A new update is available. Downloading now...';
+  notification.classList.remove('hidden');
+});
+ipcRenderer.on('update_downloaded', () => {
+  ipcRenderer.removeAllListeners('update_downloaded');
+  message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+  restartButton.classList.remove('hidden');
+  notification.classList.remove('hidden');
+});
+
+function closeNotification() {
+  notification.classList.add('hidden');
+}
+function restartApp() {
+  ipcRenderer.send('restart_app');
+}
+
+get_version(version);
+//get data ajax
+function get_version(version) {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/cek_version.php",
+    type: "GET",
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+
+      console.log(dataResult.version);
+      if (dataResult.version != version) {
+        // set div id cek-version
+        document.getElementById("cek-version").innerHTML =
+          "New Version Available, <a href='" +
+          dataResult.link +
+          "'>Download Now</a>";
+        // set div id cek-version
+        document.getElementById("cek-version").style.color = "red";
+        // set div id cek-version
+      } else {
+        // set div id cek-version
+        document.getElementById("cek-version").innerHTML =
+          "Version " + version + " is up to date";
+        // set div id cek-version
+        document.getElementById("cek-version").style.color = "green";
+        // set div id cek-version
+      }
+    },
+  });
+}

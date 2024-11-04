@@ -82,6 +82,25 @@
             </div>    
 
             <br>
+
+        <div class="row">
+                <div class="col-md-12">     
+				    <div class="table-responsive" style="width:100%">
+                    <br>
+                
+                    <select id="stock" name="stock" class="form-control text-search">
+							<option value="">Semua Stock</option>
+							<option value="ada">Stock > 0</option>
+							<option value="all">Semua Stock</option>
+				    </select>
+
+                    <button type="button" id="filterstock" class="btn btn-primary"><i class="fa fa-check"></i> Filter</button>
+			</div>
+      
+            </div>
+         </div>
+
+         <br>
 			
             <div class="row">
                 <div class="col-md-12">     
@@ -92,6 +111,7 @@
                     <button type="button" id="btnprintpricetag" class="btn btn-primary"><i class="fa fa-print"></i> Cetak Reguler</button>
                     <button type="button" id="btnprintpricetagpromo" class="btn btn-warning"><i class="fa fa-print"></i> Cetak Promo</button>
                     
+                
                 <table id="tableproduct" class="table table-bordered datatable"  style="width:100%">
                     <thead>
                         <tr>

@@ -1,22 +1,36 @@
 {
-  "name": "pos",
-  "version": "3.0.2",
-  "description": "Idolmart POS",
+  "name": "POS Idolmart",
+  "productName": "pos-idolmart",
+  "version": "4.0.0",
+  "description": "POS Idolmart",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"POS Idolmart\"",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"pos-idolmart\"",
     "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=release-builds",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "electron-packager . pos --platform linux --overwrite --arch x64 --icon assets/icons/png/icon.png --out dist/",
-    "deb64": "electron-installer-debian --src dist/pos-linux-x64/ --overwrite --icon assets/icons/png/icon.png --dest dist/installers/ --arch amd64"
+    "deb64": "electron-installer-debian --src dist/pos-linux-x64/ --overwrite --icon assets/icons/png/icon.png --dest dist/installers/ --arch amd64",
+    "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "build": {
     "appId": "marinuak",
     "mac": {
       "category": "infinite.pos.idolmart.electron"
+    },
+    "artifactName": "pos-v4.0.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
     }
   },
   "repository": "https://gitlab.com/agus5/infinitepos.git",
@@ -33,6 +47,7 @@
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
     "electron-packager": "^13.1.1",
+    "electron-winstaller": "^5.4.0",
     "express": "^4.16.3"
   },
   "dependencies": {
@@ -48,6 +63,7 @@
     "electron-localshortcut": "^3.1.0",
     "electron-modal": "^1.0.0",
     "electron-store": "^3.2.0",
+    "electron-updater": "^6.3.9",
     "express": "^4.16.3",
     "jquery": "^3.4.1",
     "jquery-mask-plugin": "^1.14.15",

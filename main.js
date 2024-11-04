@@ -1,4 +1,9 @@
-// Modules to control application life and create native browser window
+const setupEvents = require('./installers/setupEvents')
+if (setupEvents.handleSquirrelEvent()) {
+    // squirrel event handled and app will exit in 1000ms, so don't do anything else
+    return;
+}
+ 
 const {app, BrowserWindow,ipcMain: ipc,shell,globalShortcut } = require('electron');
 const debug = require('electron-debug');
 const modal = require('electron-modal');
@@ -10,9 +15,10 @@ const path = require("path");
 const crypto = require('crypto');
 const secret = 'marinuak';
 var macaddress = require('macaddress');
+const is = require("electron-is");
 
-
-//call sync_sales.js
+const { autoUpdater } = require('electron-updater');
+const { error } = require('console');
 
 
 function getconfig(){
@@ -36,7 +42,14 @@ function getconfig(){
   //live
   //store.set('api', 'http://'+strconfig.toString()+':8080/api');
   //test
-   store.set('api', 'http://'+strconfig.toString()+'/api');
+  if (is.windows()) {
+    store.set("api", "http://" + strconfig.toString() + "/api");
+  }else{
+    store.set("api", "http://" + strconfig.toString() + ":8080/api");
+  }
+
+
+
    store.set('ip_printer', strconfig_printer['ip_printer'].toString());
    store.set('jenis_printer', strconfig_printer['jenis_printer'].toString());
    store.set('ip_server', strconfig.toString());
@@ -68,6 +81,7 @@ function createWindow () {
 
    mainWindow = new BrowserWindow({
     fullscreen:true,
+    zoomFactor: 0.2,
     width: 1000,
     height: 600,
     icon: path.join(__dirname, 'assets/icons/png/icon.png'),
@@ -114,6 +128,11 @@ function createWindow () {
 		console.log('f9 is pressed')
 		mainWindow.reload()
 	})
+	
+	
+	mainWindow.once('ready-to-show', () => {
+		autoUpdater.checkForUpdatesAndNotify();
+	});
 
 }
 
@@ -181,7 +200,24 @@ function gethome(){
 }
 
 
+//open apps posserver-win.exe from documents
+function openApps(){
+  var exec = require('child_process').execFile;
+
+  // check if file exists
+  if (!fs.existsSync(app.getPath('documents')+'/pos/posserver-win.exe')) {
+    // show error message
+    console.log('File posserver-win.exe not found in documents/pos folder');
+  }
+
+  exec(app.getPath('documents')+'/pos/posserver-win.exe', function(err, data) {  
+    console.log(err)
+    console.log(data.toString());                       
+  });
+}
+
 app.on('ready', function() {
+  openApps();
   createWindow();
   gethome();
 });
@@ -193,12 +229,26 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 });
 
-ipc.on("send-window-id", (event) => {
-  event.sender.send("window-id-sent", mainWindow.id);
-});
+// ipc.on("send-window-id", (event) => {
+  // event.sender.send("window-id-sent", mainWindow.id);
+// });
 
-app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow()
-});
+// app.on('activate', function () {
+  // if (mainWindow === null) createWindow()
+// });
+
+// ipcMain.on('app_version', (event) => {
+  // event.sender.send('app_version', { version: app.getVersion() });
+// });
+
+
+// autoUpdater.on('update-available', () => {
+  // mainWindow.webContents.send('update_available');
+// });
+// autoUpdater.on('update-downloaded', () => {
+  // mainWindow.webContents.send('update_downloaded');
+// });
+
+// ipcMain.on('restart_app', () => {
+  // autoUpdater.quitAndInstall();
+// });

@@ -12,6 +12,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 const is = require("electron-is");
 //const printer = require('electron-print');
 
+const version = "4.0.0";
 const store = new Store();
 const api_url = store.get("api");
 const api_storeapps = store.get("api_storeapps");
@@ -31,6 +32,14 @@ var dt = require("datatables.net")(window, $);
 //require( 'datatables.net-keytable' )();
 //require( 'datatables.net-select' )();
 var msk = require("jquery-mask-plugin");
+
+$("#version").html(version);
+
+const platform = "Linux";
+
+if (is.windows()) {
+  platform = "Windows";
+}
 
 function get_data(_api, _param, _async) {
   var strres = $.ajax({
@@ -230,7 +239,21 @@ function print(strtext) {
       },
       success: function (dataResult) {},
     });
-  } else if (jenis_printer == "vsc") { //windows
+  } else if(jenis_printer == "linuxtmu"){
+		$.ajax({
+        url: "http://"+ip_printer+"/pi/print_tmu.php", //http://localhost/pi/print_struk.php
+        type: "POST",
+        data: {
+            html: strtext,
+            ip_printer: ip_printer
+        },
+        success: function(dataResult) {
+            // var dataResult = JSON.parse(dataResult);
+
+            // $('#notif').html("Proses print");
+        }
+		});
+	} else if (jenis_printer == "vsc") { //windows
     $.ajax({
       url: "http://" + ip_printer + "/pi/print_struk_vsc.php", //http://localhost/pi/print_struk.php
       type: "POST",
@@ -554,4 +577,4 @@ function logout(){
   window.location.href = "login.html";
 }
 
-setInterval(logout, 600000);
+// setInterval(logout, 600000);
