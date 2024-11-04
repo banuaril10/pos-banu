@@ -135,7 +135,7 @@ function showcashin(username, ad_org_id, userid) {
           //tbody
           var approvedby = value.approvedby;
           if (value.status == "0") {
-            value.status = "<font class='btn btn-danger'>PENDING</font>";
+            value.status = "<font class='badge badge-danger'>PENDING</font>";
             value.approvedby = "-";
             btnapproved =
               "<button class='btn btn-success' id='btnapproved' onclick='modal_cashin(\"" +
@@ -361,3 +361,8 @@ function reprint_cashin(id) {
 
 
 $("#tablecashin").DataTable();
+
+//masking money format when typing id cash
+$("#cash").mask("#.##0", { reverse: true });
+
+
