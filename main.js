@@ -20,6 +20,16 @@ const is = require("electron-is");
 const { autoUpdater } = require('electron-updater');
 const { error } = require('console');
 
+var os_val = "No OS detected";
+var platform = os.platform();
+
+if (platform === 'linux') {
+  os_val = "Linux";
+}else if (platform === 'darwin') {
+  os_val = "Mac";
+}else if (platform === 'win32') {
+  os_val = "Windows";
+}
 
 function getconfig(){
   var strconfig = fs.readFileSync(app.getPath('documents')+'/pos/config.ini');
@@ -42,9 +52,9 @@ function getconfig(){
   //live
   //store.set('api', 'http://'+strconfig.toString()+':8080/api');
   //test
-  if (is.windows()) {
+  if (os_val === "Windows") {
     store.set("api", "http://" + strconfig.toString() + "/api");
-  }else{
+  } else {
     store.set("api", "http://" + strconfig.toString() + ":8080/api");
   }
 

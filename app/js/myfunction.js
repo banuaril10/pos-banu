@@ -35,10 +35,15 @@ var msk = require("jquery-mask-plugin");
 
 $("#version").html(version);
 
-const platform = "Linux";
+var os_val = "No OS detected";
+var platform = os.platform();
 
-if (is.windows()) {
-  platform = "Windows";
+if (platform === "linux") {
+  os_val = "Linux";
+} else if (platform === "darwin") {
+  os_val = "Mac";
+} else if (platform === "win32") {
+  os_val = "Windows";
 }
 
 function get_data(_api, _param, _async) {

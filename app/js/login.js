@@ -68,7 +68,7 @@ function getcashier(){
  var objcashier=get_data("/pos/mcashier",{ f1: has },false);
  $.each(objcashier.data, function (i,item) {
           divshopname.innerHTML =  item.shopname;
-           divcashiername.innerHTML = item.name + " (" + platform + ")";
+           divcashiername.innerHTML = item.name + " (" + os_val + ")";
            cashierid=item.id;
    });
    if (objcashier.data==null) {
