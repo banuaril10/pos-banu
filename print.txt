@@ -1,14 +1,8 @@
-PICKUP CASH IN (SETORAN KE-1)
-
-Tanggal     : 2024-11-04 
-Nama Kasir  : pos 
-Approved By : Widya 
-
-No |       Jam |          Cash 
-1  |  13:52:14 |  Rp 1.000.000
-
- Ttd Ka. Toko / Wkl Ka. Toko
-
-
-
-==========================
+==============================
+     TEST PRINT
+==============================
+No. 1
+No. 2
+No. 3
+No. 4
+No. 5

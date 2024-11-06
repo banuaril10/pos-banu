@@ -228,52 +228,61 @@ function writefile(strtext) {
   // alert(path.join(__dirname,'../../../print.txt'));
 }
 
-function print(strtext) {
-  console.log(strtext);
 
-  const myArray = ip_server.split(":"); //ngebaca server store apps
-  let ip_server_fix = myArray[0];
+function test_print() {
+  var strtext = "";
+  strtext += "==============================\n";
+  strtext += "     TEST PRINT\n";
+  strtext += "==============================\n";
+  strtext += "No. 1\n";
+  strtext += "No. 2\n";
+  strtext += "No. 3\n";
+  strtext += "No. 4\n";
+  strtext += "No. 5\n";
+
+  print(strtext);
+}
+
+function print(strtext) {
+
+  const os = require("os");
+  var os_val = "";
+  var platform = os.platform();
+
+  if (platform === "linux") {
+    os_val = "Linux";
+  } else if (platform === "darwin") {
+    os_val = "Mac";
+  } else if (platform === "win32") {
+    os_val = "Windows";
+  }
 
   if (jenis_printer == "thermal") { //windows
+    if (os_val === "Windows") {
+      var url = "http://" + ip_printer + "/pi/printer/print_struk.php";
+    } else if (os_val === "Linux") {
+      var url = "http://" + ip_printer + "/pi/printer/print_struk_linux.php";
+    }
+
     $.ajax({
-      url: "http://" + ip_printer + "/pi/print_struk.php", //http://localhost/pi/print_struk.php
+      url: url,
       type: "POST",
       data: {
         html: strtext,
         ip_printer: ip_printer,
+
       },
       success: function (dataResult) {},
     });
-  } else if(jenis_printer == "linuxtmu"){
-		$.ajax({
-        url: "http://"+ip_printer+"/pi/print_tmu.php", //http://localhost/pi/print_struk.php
-        type: "POST",
-        data: {
-            html: strtext,
-            ip_printer: ip_printer
-        },
-        success: function(dataResult) {
-            // var dataResult = JSON.parse(dataResult);
+  } else if (jenis_printer == "vsc") { //windows & linux
+    if(os_val === "Windows"){
+      var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc.php";
+    }else if(os_val === "Linux"){
+      var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc_linux.php";   
+    }
 
-            // $('#notif').html("Proses print");
-        }
-		});
-	} else if (jenis_printer == "vsc") { //windows
     $.ajax({
-      url: "http://" + ip_printer + "/pi/print_struk_vsc.php", //http://localhost/pi/print_struk.php
-      type: "POST",
-      data: {
-        html: strtext,
-        ip_printer: ip_printer,
-      },
-      success: function (dataResult) {
-        // var dataResult = JSON.parse(dataResult);
-        // $('#notif').html("Proses print");
-      },
-    });
-  } else if (jenis_printer == "vsc_linux") { //linux
-    $.ajax({
-      url: "http://" + ip_printer + "/pi/print_struk_vsc_linux.php", //http://localhost/pi/print_struk.php
+      url: url,
       type: "POST",
       data: {
         html: strtext,
@@ -299,6 +308,8 @@ function print(strtext) {
     } else {
       cmd = 'echo "' + strtext + '" | lpr -o raw';
     }
+
+
     var child = process.exec(cmd);
     child.on("error", function (err) {
       console.log("stderr: <" + err + ">");

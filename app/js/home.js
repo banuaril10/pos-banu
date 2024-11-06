@@ -239,6 +239,10 @@ btnpos.addEventListener('click',function (event){
     };
 
 });
+const btnconfigprint = document.getElementById("btnconfigprint");
+btnconfigprint.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/configprinter.html`;
+});
 
 const btncashin = document.getElementById("btncashin");
 btncashin.addEventListener("click", function (event) {

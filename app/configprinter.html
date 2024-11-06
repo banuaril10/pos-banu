@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./css/smartadmin-production-plugins.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./css/smartadmin-production.css"
+    />
+    <link rel="stylesheet" href="./css/datatables/datatables.css" />
+    <!-- <link rel="stylesheet" href="../node_modules/datatables.net-dt/css/jquery.dataTables.css"> -->
+
+    <!-- <link rel="stylesheet" href="./css/dashboard.css"> -->
+    <link rel="stylesheet" href="./css/mystyle.css" />
+    <title>CONFIG PRINTER</title>
+  </head>
+  <body>
+    <div id="loaderpos" class="text-center"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3 class="text-white" id="divshopname"></h3>
+        </div>
+
+        <div class="col-sm-4">
+           <h1 class="text-white" id="divcashiername"></h1>  
+        </div>
+        <div class="col-sm-4 text-right">
+          <button type="button" id="btnback" class="btn btn-success">
+            <i class="fa fa-play"></i> Back
+          </button>
+        </div>
+      </div>
+
+          <div class="row">
+      <div class="col-md-4">
+        <input class="form-control" type="text" id="ip_printer" name="ip_printer" >
+      </div>
+      <div class="col-md-4">
+        <input class="form-control" type="text" id="jenis_printer" name="jenis_printer" >
+      </div>
+      <div class="col-md-1">
+         <button style="text-align: right;" type="button" id="btnsaveconfig" class="btn btn-primary">UPDATE</button>
+      </div>
+       <div class="col-md-2">
+         <button style="text-align: left;" type="button" id="btntestprint" class="btn btn-danger">TEST PRINT</button>
+      </div>
+    
+    </div>
+    <br>
+
+      <div class="row" >
+        <div class="col-md-12" style="background-color: #fff;">
+          <h2>Petunjuk Konfigurasi</h2>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Jenis Printer</th>
+                <th>OS</th>
+                <th>Komputer POS</th>
+                <th>Komputer yg colok printer</th>
+                <th>IP Printer</th>
+                <th>Jenis Printer</th>
+                <th>Ket</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>THERMAL NON VSC</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>thermal</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>THERMAL NON VSC</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Office</td>
+                <td>{IP Printer Office}</td>
+                <td>thermal</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>THERMAL NON VSC</td>
+                <td>Windows</td>
+                <td>Office</td>
+                <td>Server</td>
+                <td>{IP Printer Server}</td>
+                <td>thermal</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>THERMAL VSC</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>vsc</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>THERMAL VSC</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Office</td>
+                <td>{IP Printer Office}</td>
+                <td>vsc</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>THERMAL VSC</td>
+                <td>Windows</td>
+                <td>Office</td>
+                <td>Server</td>
+                <td>{IP Printer Server}</td>
+                <td>vsc</td>
+                <td>-</td>
+              </tr>
+
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>thermal/dot</td>
+                <td>Jika dot lewat notepad (default printer)</td>
+              </tr>
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Windows</td>
+                <td>Server</td>
+                <td>Office</td>
+                <td>{IP Printer Office}</td>
+                <td>thermal</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Windows</td>
+                <td>Office</td>
+                <td>Server</td>
+                <td>{IP Printer Server}</td>
+                <td>thermal</td>
+                <td>-</td>
+              </tr>
+
+
+
+
+              <tr>
+                <td>ALL THERMAL</td>
+                <td>Linux</td>
+                <td>Server</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>thermal/dot</td>
+                <td>Jadikan default printer</td>
+              </tr>
+
+              <tr>
+                <td>ALL THERMAL</td>
+                <td>Linux</td>
+                <td>Server</td>
+                <td>Office</td>
+                <td>localhost</td>
+                <td>dot</td>
+                <td>add printer sharing, dan jadikan default</td>
+              </tr>
+
+              <tr>
+                <td>ALL THERMAL</td>
+                <td>Linux</td>
+                <td>Office</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>dot</td>
+                <td>add printer sharing, dan jadikan default</td>
+              </tr>
+
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Linux</td>
+                <td>Server</td>
+                <td>Server</td>
+                <td>localhost</td>
+                <td>dot</td>
+                <td>Jadikan default printer</td>
+              </tr>
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Linux</td>
+                <td>Server</td>
+                <td>Office</td>
+                 <td>localhost</td>
+                <td>dot</td>
+                <td>add printer sharing, dan jadikan default</td>
+              </tr>
+
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Linux</td>
+                <td>Office</td>
+                <td>Server</td>
+                 <td>localhost</td>
+                <td>dot</td>
+                <td>add printer sharing, dan jadikan default</td>
+              </tr>
+
+
+
+
+
+            </tbody>
+          </table>
+
+
+
+        </div>
+        
+      </div>
+
+      <br />
+
+
+    </div>
+
+  </body>
+  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="./js/mask.js"></script>
+  <script src="./js/numeric.js"></script>
+  <script src="./js/myfunction.js"></script>
+  <script src="./js/smartnotification.js"></script>
+  <script src="./js/select2.min.js"></script>
+  <script src="./js/configprinter.js"></script>
+
+</html>
