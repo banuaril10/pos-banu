@@ -274,11 +274,35 @@ function print(strtext) {
       },
       success: function (dataResult) {},
     });
-  } else if (jenis_printer == "vsc") { //windows & linux
-    if(os_val === "Windows"){
+  }else if (jenis_printer == "thermal_linux") {
+    var url = "http://" + ip_printer + "/pi/printer/print_struk_linux.php";
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        html: strtext,
+        ip_printer: ip_printer,
+      },
+      success: function (dataResult) {},
+    });
+  }else if (jenis_printer == "thermal_windows") {
+    var url = "http://" + ip_printer + "/pi/printer/print_struk.php";
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        html: strtext,
+        ip_printer: ip_printer,
+      },
+      success: function (dataResult) {},
+    });
+  } else if (jenis_printer == "vsc") {
+    //windows & linux
+    if (os_val === "Windows") {
       var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc.php";
-    }else if(os_val === "Linux"){
-      var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc_linux.php";   
+    } else if (os_val === "Linux") {
+      var url =
+        "http://" + ip_printer + "/pi/printer/print_struk_vsc_linux.php";
     }
 
     $.ajax({
@@ -308,7 +332,6 @@ function print(strtext) {
     } else {
       cmd = 'echo "' + strtext + '" | lpr -o raw';
     }
-
 
     var child = process.exec(cmd);
     child.on("error", function (err) {

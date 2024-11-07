@@ -85,6 +85,8 @@ function load_config() {
     var fs = require("fs");
     var path = require("path");
     var app = require("electron").remote.app;
+    const Store = require("electron-store");
+    const store = new Store();
     let json_printer = fs.readFileSync(
       app.getPath("documents") + "/pos/printer.json"
     );

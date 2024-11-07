@@ -76,6 +76,10 @@
         <div class="col-md-12" style="background-color: #fff;">
           <h2>Petunjuk Konfigurasi</h2>
 
+          <p>Notes : Jika mau print ke office, install xampp <b>(checklist apache saja)</b> lalu jadikan apache service, lalu buka cmd dan jalankan ini : <br>
+            D: && cd /xampp/htdocs && git clone https://github.com/banuaril10/pi-banu-office.git && rename pi-banu-office pi<br>Jika folder pi sudah ada, hapus dulu folder pi baru jalankan perintah diatas
+          </p>
+
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -86,6 +90,7 @@
                 <th>IP Printer</th>
                 <th>Jenis Printer</th>
                 <th>Ket</th>
+                <th>Check</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +102,9 @@
                 <td>localhost</td>
                 <td>thermal</td>
                 <td>-</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
+
+
               </tr>
 
               <tr>
@@ -106,7 +114,8 @@
                 <td>Office</td>
                 <td>{IP Printer Office}</td>
                 <td>thermal</td>
-                <td>-</td>
+                <td>Lihat notes</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -117,6 +126,7 @@
                 <td>{IP Printer Server}</td>
                 <td>thermal</td>
                 <td>-</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -127,6 +137,7 @@
                 <td>localhost</td>
                 <td>vsc</td>
                 <td>-</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -136,7 +147,8 @@
                 <td>Office</td>
                 <td>{IP Printer Office}</td>
                 <td>vsc</td>
-                <td>-</td>
+                 <td>Lihat notes</td>
+                  <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -147,6 +159,7 @@
                 <td>{IP Printer Server}</td>
                 <td>vsc</td>
                 <td>-</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
 
@@ -158,6 +171,7 @@
                 <td>localhost</td>
                 <td>thermal/dot</td>
                 <td>Jika dot lewat notepad (default printer)</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -167,7 +181,8 @@
                 <td>Office</td>
                 <td>{IP Printer Office}</td>
                 <td>thermal</td>
-                <td>-</td>
+                 <td>Lihat notes</td>
+                  <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -178,6 +193,7 @@
                 <td>{IP Printer Server}</td>
                 <td>thermal</td>
                 <td>-</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
 
@@ -190,7 +206,8 @@
                 <td>Server</td>
                 <td>localhost</td>
                 <td>thermal/dot</td>
-                <td>Jadikan default printer</td>
+                <td>install driver xp58, add printer, Jadikan default printer</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -201,6 +218,7 @@
                 <td>localhost</td>
                 <td>dot</td>
                 <td>add printer sharing, dan jadikan default</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -211,6 +229,7 @@
                 <td>localhost</td>
                 <td>dot</td>
                 <td>add printer sharing, dan jadikan default</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
 
@@ -221,7 +240,8 @@
                 <td>Server</td>
                 <td>localhost</td>
                 <td>dot</td>
-                <td>Jadikan default printer</td>
+                <td>add generic, Jadikan default printer</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -232,6 +252,7 @@
                  <td>localhost</td>
                 <td>dot</td>
                 <td>add printer sharing, dan jadikan default</td>
+                 <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
               <tr>
@@ -242,9 +263,31 @@
                  <td>localhost</td>
                 <td>dot</td>
                 <td>add printer sharing, dan jadikan default</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
               </tr>
 
 
+              <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Windows - Linux</td>
+                <td>Office (Windows)</td>
+                <td>Server (Linux)</td>
+                <td>{IP Printer Server}</td>
+                <td>thermal_linux</td>
+                <td>-</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
+              </tr>
+
+			  <tr>
+                <td>TMU DOT MATRIX</td>
+                <td>Linux - Windows</td>
+                <td>Server (Linux)</td>
+				<td>Office (Windows)</td>
+                <td>{IP Printer Office}</td>
+                <td>thermal_windows</td>
+                <td>-</td>
+                <td><i class="fa fa-check" style="color: green"></i></td>
+              </tr>
 
 
 
