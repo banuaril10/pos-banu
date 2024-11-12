@@ -236,6 +236,8 @@ function openApps(os_val) {
   }
   createWindow();
   gethome();
+  //reload page
+  mainWindow.reload();
 }
 
 
