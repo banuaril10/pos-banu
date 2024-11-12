@@ -74,7 +74,7 @@ function getconfig(){
    // alert(strconfig_printer['ip_printer'].toString());
  // store.set('api', 'http://'+strconfig.toString()+':3001/api');
 };
-
+openApps(os_val);
 getconfig();
 
 macaddress.one(function (err, mac) {
@@ -234,8 +234,6 @@ function openApps(os_val) {
 }
 
 app.on('ready', function() {
-  openApps(os_val);
-  sleep(3000);
   createWindow();
   gethome();
 });
