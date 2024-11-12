@@ -218,6 +218,13 @@ function openApps(){
   if (!fs.existsSync(app.getPath('documents')+'/pos/posserver-win.exe')) {
     // show error message
     console.log('File posserver-win.exe not found in documents/pos folder');
+
+    exec(app.getPath("documents") + "/server/dist/posserver_214", function (err, data) {
+      console.log(err);
+      console.log(data.toString());
+    });
+
+
   }
 
   exec(app.getPath('documents')+'/pos/posserver-win.exe', function(err, data) {  

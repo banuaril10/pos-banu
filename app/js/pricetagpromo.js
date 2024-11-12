@@ -32,7 +32,7 @@ btnback.addEventListener("click", function (event) {
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
   var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag(arrproduct);
+  cetak_pricetag_promo(arrproduct);
 });
 
 
@@ -293,51 +293,29 @@ function createWindowPriceTag(texthtml) {
   }, 1000);
 }
 
-//get value id stocking
-var stocking = 0;
-const stock = document.getElementById("stock");
-
-get_data_product(stocking);
-
-stock.addEventListener("change", function (event) {
-  $("#loaderpos").show();
-  stocking = stock.value;
-  console.log("stock : " + stocking);
-  // alert("stock : " + stocking);
+var stock = document.getElementById("stock").value;
+get_data_product(stock);
+//onclick button print pricetag
+const filterstock = document.getElementById("filterstock");
+filterstock.addEventListener("click", function (event) {
+  console.log("stock : "+stock);
+  alert("stock : "+stock);
   $("#tableproductreguler").DataTable().destroy();
-  get_data_product(stocking);
-  $("#loaderpos").hide();
+  get_data_product(stock);
 });
-
-
-
-
- 
-// get_data_product(stocking);
-
-// const filterstock = document.getElementById("filterstock");
-// filterstock.addEventListener("click", function (event) {
-//   console.log("stock : " + stocking);
-//   alert("stock : " + stocking);
-//   // alert("test : " + test);
-//   // $("#tableproductreguler").DataTable().destroy();
-//   // get_data_product(stock);
-// });
 
 
 
 
 function get_data_product(stock) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_reguler.php?stock=" + stock,
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_promo.php?stock=" + stock,
     type: "GET",
     beforeSend: function () {
-      // $("#statussync").html("proses sync stock");
-      $("#loaderpos").show();
+      $("#statussync").html("proses sync stock");
     },
     async: false,
     success: function (dataResult) {
-      
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
       $("#tableproductreguler").DataTable({
@@ -377,9 +355,10 @@ function get_data_product(stock) {
           { data: "name" },
           { data: "price" },
           { data: "stock" },
+          { data: "priceafter" },
+          { data: "discountname" },
         ],
       });
-      $("#loaderpos").hide();
     },
   });
 }

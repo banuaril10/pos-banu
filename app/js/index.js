@@ -1667,6 +1667,7 @@ async function gentexttoprint(strbillno){
    var strNote1='';
    var strNote2='';
    var strNote3='';
+   var edcname = "";
    
    var total = 0;
    var diskon = 0;
@@ -1701,9 +1702,14 @@ async function gentexttoprint(strbillno){
      strReedemPoint=item.point;
      strPointGive=item.pointgive;
      strMemberName=item.membername;
-     strNote1=item.note1,
-     strNote2=item.note2,
-     strNote3=item.note3
+     strNote1=item.note1;
+     strNote2=item.note2;
+     strNote3=item.note3;
+
+     if(item.edcname != ""){
+        edcname = "("+item.edcname+")";
+     }
+     
 	 
 	if(notes_footer != ""){
 			// notes+=textbyline("***************************************",38,'center')+'\r\n';
@@ -1736,7 +1742,8 @@ async function gentexttoprint(strbillno){
     };
 
     strcontent+=textbyline("GRAND TOTAL",11,'left')+textbyline(strgrandamount.toString(),28,'right')+'\r\n';
-    strcontent+=textbyline("BAYAR D/C  ",11,'left')+textbyline(strdcamount.toString(),28,'right')+'\r\n';
+    strcontent+=textbyline("BAYAR D/C  ", 11, "left") + textbyline(strdcamount.toString(), 28, "right") +"\r\n";
+    strcontent+=textbyline(edcname, 11, "left") + "\r\n";
     strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
     strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount.toString(),28,'right')+'\r\n';  
     strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';
@@ -1946,6 +1953,8 @@ function gentexttoreprint(objheader,objline){
    
    var notes = "";
    var notes_footer = "";
+
+  
   
         $.each(objheader, function (i,item) {
 		  notes_footer=getDataNotes(item.grandamount);
@@ -1977,7 +1986,11 @@ function gentexttoreprint(objheader,objline){
           strMemberName=item.membername;
           strNote1=item.note1,
           strNote2=item.note2,
-          strNote3=item.note3
+          strNote3=item.note3;
+
+           if (item.edcname != "") {
+             edcname = item.edcname;
+           }
 		  
 		if(notes_footer != ""){
 			// notes+=textbyline("***************************************",38,'center')+'\r\n';
@@ -2012,7 +2025,8 @@ function gentexttoreprint(objheader,objline){
             strcontent+=textbyline("REEDEM POINT",8,'left')+textbyline(strReedemPoint.toString(),27,'right')+'\r\n';
             };
           strcontent+=textbyline("GRAND TOTAL",11,'left')+textbyline(strgrandamount.toString(),28,'right')+'\r\n';
-          strcontent+=textbyline("BAYAR D/C  ",11,'left')+textbyline(strdcamount.toString(),28,'right')+'\r\n';
+          strcontent+=textbyline("BAYAR D/C  ",11, "left")+textbyline(strdcamount.toString(),28,'right')+'\r\n';
+          strcontent+=textbyline(edcname, 11, "left")+'\r\n';
           strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
           strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount,28,'right')+'\r\n';
           strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';

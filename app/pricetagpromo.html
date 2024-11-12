@@ -34,7 +34,7 @@
                   <h3 class="text-white" id="divshopname"></h3>    
               </div>
               <div class="col-sm-4">
-                  <h3 class="text-white text-center">PRICE TAG REGULER</h3>    
+                  <h3 class="text-white text-center">PRICE TAG PROMO</h3>    
               </div>
 			  
 			  
@@ -71,34 +71,33 @@
 				    <div class="table-responsive" style="width:100%">
                     <button type="button" id="btncheckall" class="btn btn-success"><i class="fa fa-check-square-o"></i> Check All</button>
                     <button type="button" id="btnuncheckall" class="btn btn-danger"><i class="fa fa-square-o"></i> Uncheck All</button>                    
-                    <button type="button" id="btnprintpricetag" class="btn btn-primary"><i class="fa fa-print"></i> Cetak Reguler</button>
+                    <button type="button" id="btnprintpricetag" class="btn btn-primary"><i class="fa fa-print"></i> Cetak Promo</button>
                     <!-- <button type="button" id="btnprintpricetagpromo" class="btn btn-warning"><i class="fa fa-print"></i> Cetak Promo</button> -->
                     
                 
-                <table id="tableproduct" class="table table-bordered datatable"  style="width:100%">
-                    <thead>
+                    <table
+                        id="tableproductreguler"
+                        class="table table-bordered datatable"
+                        style="width: 100%"
+                    >
+                        <thead>
                         <tr>
                             <th></th>
-                            <th>sku</th>
-                            <th>nama item</th>
-                            <th>harga satuan</th>
-                            <th>potongan reguler</th>
-                            <th>potongan member</th>
-                            <th>stok</th>
-                            <th>shortcut</th>
-                            <th>no sale</th>
-                            <th>rack</th>
-                            <th>remark</th>
+                            <!-- <th>No</th> -->
+                            <th>SKU</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Price After Discount</th>
+                            <th>Discount Name</th>
+                            
                         </tr>
-                    </thead>
-              </table>
+                        </thead>
+                    </table>
 			</div>
             </div>
             </div>
          </div>
-		 
-		 
-		 
       </div> 
   </body>
   <script src="https://intransit.idolmartidolaku.com/apiidolmart/pricetag/price.js?id=321313"></script>
@@ -107,5 +106,5 @@
   <script src="./js/myfunction.js"></script> 
   <script src="./js/smartnotification.js"></script>
   <script src="./js/select2.min.js"></script>
-  <script src="./js/pricetag.js"></script>
+  <script src="./js/pricetagpromo.js"></script>
 </html>
