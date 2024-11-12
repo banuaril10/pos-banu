@@ -235,6 +235,7 @@ function openApps(os_val) {
 
 app.on('ready', function() {
   openApps(os_val);
+  sleep(3000);
   createWindow();
   gethome();
 });
