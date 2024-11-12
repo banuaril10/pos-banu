@@ -211,30 +211,30 @@ function gethome(){
 
 
 //open apps posserver-win.exe from documents
-function openApps(){
-  var exec = require('child_process').execFile;
+function openApps(os_val) {
+  var exec = require("child_process").execFile;
 
-  // check if file exists
-  if (!fs.existsSync(app.getPath('documents')+'/pos/posserver-win.exe')) {
-    // show error message
-    console.log('File posserver-win.exe not found in documents/pos folder');
-
-    exec(app.getPath("documents") + "/server/dist/posserver_214", function (err, data) {
-      console.log(err);
-      console.log(data.toString());
-    });
-
-
+  if (os_val == "Windows") {
+    exec(
+      app.getPath("documents") + "/pos/posserver-win.exe",
+      function (err, data) {
+        console.log(err);
+        console.log(data.toString());
+      }
+    );
+  }else if(os_val == "Linux"){
+    exec(
+      app.getPath("documents") + "/server/dist/posserver_214",
+      function (err, data) {
+        console.log(err);
+        console.log(data.toString());
+      }
+    );
   }
-
-  exec(app.getPath('documents')+'/pos/posserver-win.exe', function(err, data) {  
-    console.log(err)
-    console.log(data.toString());                       
-  });
 }
 
 app.on('ready', function() {
-  openApps();
+  openApps(os_val);
   createWindow();
   gethome();
 });
