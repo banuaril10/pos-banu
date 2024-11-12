@@ -1,3 +1,4 @@
+
 const setupEvents = require('./installers/setupEvents')
 if (setupEvents.handleSquirrelEvent()) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
@@ -16,6 +17,7 @@ const crypto = require('crypto');
 const secret = 'marinuak';
 var macaddress = require('macaddress');
 const is = require("electron-is");
+
 
 const { autoUpdater } = require('electron-updater');
 const { error } = require('console');
@@ -74,7 +76,7 @@ function getconfig(){
    // alert(strconfig_printer['ip_printer'].toString());
  // store.set('api', 'http://'+strconfig.toString()+':3001/api');
 };
-openApps(os_val);
+
 getconfig();
 
 macaddress.one(function (err, mac) {
@@ -90,18 +92,19 @@ function createWindow () {
   // Create the browser window.
 
    mainWindow = new BrowserWindow({
-    fullscreen:true,
-    zoomFactor: 0.2,
-    width: 1000,
-    height: 600,
-    icon: path.join(__dirname, 'assets/icons/png/icon.png'),
-    webPreferences: {
-      nodeIntegration: true,
-      nativeWindowOpen:true,
-	    contextIsolation: false,
-	    enableRemoteModule: true,
-    }
-  })
+     fullscreen: true,
+     zoomFactor: 0.2,
+     width: 1000,
+     height: 600,
+     icon: path.join(__dirname, "assets/icons/png/icon.png"),
+     webPreferences: {
+       preload: path.join(__dirname, "load.js"),
+       nodeIntegration: true,
+       nativeWindowOpen: true,
+       contextIsolation: false,
+       enableRemoteModule: true,
+     },
+   });
 
   // and load the index.html of the app.
   mainWindow.loadFile('./app/register.html')
@@ -231,11 +234,13 @@ function openApps(os_val) {
       }
     );
   }
-}
-
-app.on('ready', function() {
   createWindow();
   gethome();
+}
+
+
+app.on('ready', function() {
+  openApps(os_val);
 });
 
 // Quit when all windows are closed.
