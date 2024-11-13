@@ -35,6 +35,9 @@ if (platform === 'linux') {
 
 function getconfig(){
   var strconfig = fs.readFileSync(app.getPath('documents')+'/pos/config.ini');
+  store.set("path_documents", app.getPath("documents")+'/pos');
+
+
   // var strconfig_printer = fs.readFileSync(app.getPath('documents')+'/pos/printer.ini');
   
   let json_printer = fs.readFileSync(app.getPath('documents')+'/pos/printer.json');

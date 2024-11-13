@@ -265,6 +265,12 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 
 
 function createWindowPriceTag(texthtml) {
+  const Store = require("electron-store");
+  const store = new Store();
+  //call store path_documents
+  var path_documents = store.get("path_documents");
+
+
   let mainWindow = new BrowserWindow({
     fullscreen: false,
     width: 1000,
@@ -280,14 +286,19 @@ function createWindowPriceTag(texthtml) {
 
   //create file cetak_pricetag.html if not exists
 
+  var path_cetak = path_documents + "/cetak_pricetag.html";
+
+  var writeStream = fs.createWriteStream(path_cetak);
+  writeStream.end();
 
   fs.writeFileSync(
-    path.join(__dirname, "cetak_pricetag.html"),
+    path.join(path_cetak),
     "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
       texthtml
   );
 
-  mainWindow.loadFile(path.join(__dirname, "cetak_pricetag.html"));
+  mainWindow.loadFile(path.join(path_cetak));
+
   setTimeout(function () {
     mainWindow.webContents.print({ silent: false });
   }, 1000);
