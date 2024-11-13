@@ -245,6 +245,8 @@ function test_print() {
 
 function print(strtext) {
 
+  // console.log(strtext);
+
   const os = require("os");
   var os_val = "";
   var platform = os.platform();
@@ -297,7 +299,6 @@ function print(strtext) {
       success: function (dataResult) {},
     });
   } else if (jenis_printer == "vsc") {
-    //windows & linux
     if (os_val === "Windows") {
       var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc.php";
     } else if (os_val === "Linux") {
@@ -313,21 +314,16 @@ function print(strtext) {
         ip_printer: ip_printer,
       },
       success: function (dataResult) {
-        // var dataResult = JSON.parse(dataResult);
-        // $('#notif').html("Proses print");
       },
     });
   } else {
     const process = require("child_process"); // The power of Node.JS
     var cmd = "";
     if (is.windows()) {
-      // writefile(strtext);
       var perintah = "notepad /p print.txt";
       var writeStream = fs.createWriteStream("print.txt");
       writeStream.write(strtext);
       writeStream.end();
-
-      // cmd = "print.bat";
       cmd = perintah;
     } else {
       cmd = 'echo "' + strtext + '" | lpr -o raw';

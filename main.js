@@ -225,19 +225,20 @@ function openApps(os_val) {
         console.log(data.toString());
       }
     );
-  }else if(os_val == "Linux"){
-    exec(
-      app.getPath("documents") + "/server/dist/posserver_214",
-      function (err, data) {
-        console.log(err);
-        console.log(data.toString());
-      }
-    );
   }
+  // else if(os_val == "Linux"){
+  //   exec(
+  //     app.getPath("documents") + "/server/dist/posserver_214",
+  //     function (err, data) {
+  //       console.log(err);
+  //       console.log(data.toString());
+  //     }
+  //   );
+  // }
   createWindow();
   gethome();
   //reload page
-  mainWindow.reload();
+  // mainWindow.reload();s
 }
 
 

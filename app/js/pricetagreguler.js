@@ -265,8 +265,6 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 
 
 function createWindowPriceTag(texthtml) {
- 
-
   let mainWindow = new BrowserWindow({
     fullscreen: false,
     width: 1000,
@@ -280,14 +278,16 @@ function createWindowPriceTag(texthtml) {
     },
   });
 
+  //create file cetak_pricetag.html if not exists
+
+
   fs.writeFileSync(
-    "app/cetak_pricetag.html",
+    path.join(__dirname, "cetak_pricetag.html"),
     "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
       texthtml
   );
 
-
-  mainWindow.loadFile("app/cetak_pricetag.html");
+  mainWindow.loadFile(path.join(__dirname, "cetak_pricetag.html"));
   setTimeout(function () {
     mainWindow.webContents.print({ silent: false });
   }, 1000);

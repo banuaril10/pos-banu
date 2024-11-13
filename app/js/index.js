@@ -1706,7 +1706,7 @@ async function gentexttoprint(strbillno){
      strNote2=item.note2;
      strNote3=item.note3;
 
-     if(item.edcname != ""){
+     if(item.edcname != "" && item.edcname != null){
         edcname = "("+item.edcname+")";
      }
      
@@ -1742,8 +1742,25 @@ async function gentexttoprint(strbillno){
     };
 
     strcontent+=textbyline("GRAND TOTAL",11,'left')+textbyline(strgrandamount.toString(),28,'right')+'\r\n';
-    strcontent+=textbyline("BAYAR D/C  ", 11, "left") + textbyline(strdcamount.toString(), 28, "right") +"\r\n";
-    strcontent+=textbyline(edcname, 11, "left") + "\r\n";
+    
+    if (edcname != "") {
+
+      //str replace EDC to ""
+      var edcname = edcname.replace("EDC ", "");
+      // strcontent += textbyline(edcname, 11, "left") + "\r\n";
+      var lengthdebit = 11 + edcname.length;
+      var num = 39 - lengthdebit;
+
+      strcontent +=
+        textbyline("BAYAR D/C  " + edcname, lengthdebit, "left") +
+        textbyline(strdcamount.toString(), num, "right") +
+        "\r\n";
+    }else{
+      strcontent +=
+        textbyline("BAYAR D/C  ", 11, "left") +
+        textbyline(strdcamount.toString(), 28, "right") +
+        "\r\n";
+    }
     strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
     strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount.toString(),28,'right')+'\r\n';  
     strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';
@@ -1953,6 +1970,7 @@ function gentexttoreprint(objheader,objline){
    
    var notes = "";
    var notes_footer = "";
+   var edcname = "";
 
   
   
@@ -1988,8 +2006,8 @@ function gentexttoreprint(objheader,objline){
           strNote2=item.note2,
           strNote3=item.note3;
 
-           if (item.edcname != "") {
-             edcname = item.edcname;
+           if (item.edcname != "" && item.edcname != null) {
+             edcname = "(" + item.edcname + ")";
            }
 		  
 		if(notes_footer != ""){
@@ -2026,7 +2044,26 @@ function gentexttoreprint(objheader,objline){
             };
           strcontent+=textbyline("GRAND TOTAL",11,'left')+textbyline(strgrandamount.toString(),28,'right')+'\r\n';
           strcontent+=textbyline("BAYAR D/C  ",11, "left")+textbyline(strdcamount.toString(),28,'right')+'\r\n';
-          strcontent+=textbyline(edcname, 11, "left")+'\r\n';
+
+              if (edcname != "") {
+                //str replace EDC to ""
+                var edcname = edcname.replace("EDC ", "");
+                // strcontent += textbyline(edcname, 11, "left") + "\r\n";
+                var lengthdebit = 11 + edcname.length;
+                var num = 39 - lengthdebit;
+
+                strcontent +=
+                  textbyline("BAYAR D/C  " + edcname, lengthdebit, "left") +
+                  textbyline(strdcamount.toString(), num, "right") +
+                  "\r\n";
+              } else {
+                strcontent +=
+                  textbyline("BAYAR D/C  ", 11, "left") +
+                  textbyline(strdcamount.toString(), 28, "right") +
+                  "\r\n";
+              }
+
+
           strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
           strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount,28,'right')+'\r\n';
           strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';
