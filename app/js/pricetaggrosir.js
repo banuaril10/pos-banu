@@ -29,45 +29,16 @@ btnback.addEventListener("click", function (event) {
 });
 
 
-const btnpricetagreguler = document.getElementById("btnpricetagreguler");
-btnpricetagreguler.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/pricetagreguler.html`;
-});
-
-const btnpricetagpromo = document.getElementById("btnpricetagpromo");
-btnpricetagpromo.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/pricetagpromo.html`;
-});
-
-
-const btnpricetaggrosir = document.getElementById("btnpricetaggrosir");
-btnpricetaggrosir.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/pricetaggrosir.html`;
-});
-
-// btnpricetagbabydoll;
-const btnpricetagbabydoll = document.getElementById("btnpricetagbabydoll");
-btnpricetagbabydoll.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/pricetagbabydoll.html`;
-});
-
-
-
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
   var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag(arrproduct);
+  cetak_pricetag_promo_grosir(arrproduct);
 });
 
-const btnprintpricetagpromo = document.getElementById("btnprintpricetagpromo");
-btnprintpricetagpromo.addEventListener("click", function (event) {
-  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag_promo(arrproduct);
-});
 
-function cetak_pricetag_promo(arrproduct) {
+function cetak_pricetag_promo_grosir(arrproduct) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo_grosir.php",
     type: "POST",
     data: { arrproduct: arrproduct },
     beforeSend: function () {
@@ -75,6 +46,7 @@ function cetak_pricetag_promo(arrproduct) {
     },
     async: false,
     success: function (dataResult) {
+      console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
       var hasil = cetak_promo(dataResult);
       // console.log(hasil);
@@ -84,26 +56,6 @@ function cetak_pricetag_promo(arrproduct) {
   });
 }
 
-function cetak_pricetag(arrproduct) {
-
-  $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
-    type: "POST",
-    data: { arrproduct: arrproduct },
-    beforeSend: function () {
-      $("#statussync").html("proses sync shortcut");
-    },
-    async: false,
-    success: function (dataResult) {
-
-      var dataResult = JSON.parse(dataResult);
-      var hasil = cetak_reguler(dataResult);
-      // console.log(hasil);
-
-      createWindowPriceTag(hasil);
-    },
-  });
-}
 
 function getproductinfo() {
   $.ajax({
@@ -128,80 +80,6 @@ function getproductinfo() {
   // });
   // };
 }
-
-producttable("");
-function producttable(stock){
-$("#tableproduct").DataTable({
-  sDom:
-    "<'dt-toolbar'<'col-sm-6' <'toolbar'>><'col-sm-12'f>>" +
-    "t" +
-    "<'dt-toolbar-footer'<'col-sm-2 col-xs-2 hidden-xs'l><'col-sm-4 col-xs-4 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-  oLanguage: {
-    sSearch:
-      '<span class="input-group-addon"><i class="fa fa-search"></i></span>',
-  },
-  scrollX: false,
-  autoWidth: true,
-  processing: true,
-  serverSide: true,
-  ajax: {
-    url: api_url + "/pos/table?f1=pos_mproduct_all_view&f2=",
-    type: "POST",
-    dataType: "json",
-    contentType: "application/json",
-    headers: { Authorization: localStorage.getItem("token").replace('"', "") },
-    data: function (d) {
-      return JSON.stringify(d);
-    },
-  },
-  language: {
-    loadingRecords: "&nbsp;",
-    processing: "Lagi Loading...",
-  },
-  columns: [
-    {
-      data: "sku",
-      render: function (data, type, full, meta) {
-        //check checked product from local storage
-        if (localStorage.getItem("arrproduct") != null) {
-          var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-          if (arrproduct.includes(data)) {
-            return (
-              '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
-              data +
-              '" checked>'
-            );
-          } else {
-            return (
-              '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
-              data +
-              '">'
-            );
-          }
-        } else {
-          return (
-            '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
-            data +
-            '">'
-          );
-        }
-        // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
-      },
-    },
-    { data: "sku" },
-    { data: "name" },
-    { data: "price", className: "text-right" },
-    { data: "discount", className: "text-right" },
-    { data: "discount_member", className: "text-right" },
-    { data: "stockqty", className: "text-right" },
-    { data: "shortcut", className: "text-center" },
-    { data: "isnosale", className: "text-center" },
-    { data: "rack", className: "text-center" },
-    { data: "buygetremark", className: "text-center" },
-  ],
-});
-}
-
 
 //filter datatable
 $("#filterstock").on("click", function () {
@@ -267,34 +145,37 @@ btnuncheckall.addEventListener("click", function (event) {
 
 
 //check and unchecked value this save checked product from datatable to local storage
-$("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
-  var chkproduct = document.getElementsByName("checkbox[]");
-  var arrproduct = [];
+$("#tableproductgrosir tbody").on(
+  "click",
+  "input[type='checkbox']",
+  function () {
+    var chkproduct = document.getElementsByName("checkbox[]");
+    var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    if (localStorage.getItem("arrproduct") != null) {
+      arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    }
+
+    //remove when unchecked
+    if (!this.checked) {
+      arrproduct.splice(arrproduct.indexOf(this.value), 1);
+    } else {
+      arrproduct.push(this.value);
+    }
+
+    //add when checked
+
+    localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+    console.log(localStorage.getItem("arrproduct"));
   }
-
- 
-      //remove when unchecked
-      if (!this.checked) {
-        arrproduct.splice(arrproduct.indexOf(this.value), 1);
-      } else {
-        arrproduct.push(this.value);
-      }
-      
-
-      //add when checked
-
-
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  console.log(localStorage.getItem("arrproduct")); 
-
-});
+);
 
 
 function createWindowPriceTag(texthtml) {
- 
+   const Store = require("electron-store");
+   const store = new Store();
+   //call store path_documents
+   var path_documents = store.get("path_documents");
 
   let mainWindow = new BrowserWindow({
     fullscreen: false,
@@ -308,30 +189,41 @@ function createWindowPriceTag(texthtml) {
       enableRemoteModule: true,
     },
   });
-  
 
+  var path_cetak = path_documents + "/cetak_pricetag.html";
+
+  var writeStream = fs.createWriteStream(path_cetak);
+  writeStream.end();
 
   fs.writeFileSync(
-    path.join(__dirname, "cetak_pricetag.html"),
+    path.join(path_cetak),
     "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
       texthtml
   );
 
-
-  mainWindow.loadFile(path.join(__dirname, "cetak_pricetag.html"));
+  mainWindow.loadFile(path.join(path_cetak));
   setTimeout(function () {
     mainWindow.webContents.print({ silent: false });
   }, 1000);
 }
 
+var stock = document.getElementById("stock").value;
+get_data_product(stock);
+//onclick button print pricetag
+const filterstock = document.getElementById("filterstock");
+filterstock.addEventListener("click", function (event) {
+  console.log("stock : "+stock);
+  alert("stock : "+stock);
+  $("#tableproductgrosir").DataTable().destroy();
+  get_data_product(stock);
+});
 
 
 
 
-get_data_product();
-function get_data_product() {
+function get_data_product(stock) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_reguler.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_promo_grosir.php?stock=" + stock,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -340,30 +232,75 @@ function get_data_product() {
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
-      $("#tableproductreguler").DataTable({
+      $("#tableproductgrosir").DataTable({
         data: dataResult,
         columns: [
-          { data: "no" },
+          {
+            data: "sku",
+            render: function (data, type, full, meta) {
+              //check checked product from local storage
+              if (localStorage.getItem("arrproduct") != null) {
+                var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+                if (arrproduct.includes(data)) {
+                  return (
+                    '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
+                    data +
+                    '" checked>'
+                  );
+                } else {
+                  return (
+                    '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
+                    data +
+                    '">'
+                  );
+                }
+              } else {
+                return (
+                  '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
+                  data +
+                  '">'
+                );
+              }
+              // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
+            },
+          },
+          // { data: "no" },
           { data: "sku" },
           { data: "name" },
           { data: "price" },
           { data: "stock" },
-          {
-            data: "sku",
-            render: function (data, type, row) {
-              return (
-                '<input type="checkbox" name="chkproduct" value="' + data + '">'
-              );
-            },
-          },
-          
+          { data: "grosir_price" },
+          { data: "discountname" },
         ],
       });
     },
   });
 }
 
+$("#tableproductgrosir tbody").on(
+  "click",
+  "input[type='checkbox']",
+  function () {
+    var chkproduct = document.getElementsByName("checkbox[]");
+    var arrproduct = [];
 
+    if (localStorage.getItem("arrproduct") != null) {
+      arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    }
+
+    //remove when unchecked
+    if (!this.checked) {
+      arrproduct.splice(arrproduct.indexOf(this.value), 1);
+    } else {
+      arrproduct.push(this.value);
+    }
+
+    //add when checked
+
+    localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+    console.log(localStorage.getItem("arrproduct"));
+  }
+);
 
 
 

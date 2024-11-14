@@ -265,7 +265,10 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 
 
 function createWindowPriceTag(texthtml) {
- 
+   const Store = require("electron-store");
+   const store = new Store();
+   //call store path_documents
+   var path_documents = store.get("path_documents");
 
   let mainWindow = new BrowserWindow({
     fullscreen: false,
