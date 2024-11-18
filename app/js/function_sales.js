@@ -107,6 +107,9 @@ function syncSales() {
   syncSalesShopSales();
   alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   getSales();
+  //reload page
+  location.reload();
+
 }
 
 function syncSalesAuto() {

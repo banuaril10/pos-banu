@@ -547,8 +547,9 @@ var ip_local = "http://localhost";
 
 function syncSalesHeader() {
   var date = $("#date").val();
-  var url = ip_local + "/pi/api/cyber/sync_sales_header.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_header.php?date=now";
   $.get(url, function (data, status) {
+     console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -556,8 +557,9 @@ function syncSalesHeader() {
 
 function syncSalesLine() {
   var date = $("#date").val();
-  var url = ip_local + "/pi/api/cyber/sync_sales_line.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_line.php?date=now";
   $.get(url, function (data, status) {
+    console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -566,8 +568,9 @@ function syncSalesLine() {
 function syncSalesCashierBalance() {
   var date = $("#date").val();
   var url =
-    ip_local + "/pi/api/cyber/sync_sales_cashierbalance.php?date=" + date;
+    ip_local + "/pi/api/cyber/sync_sales_cashierbalance.php?date=now";
   $.get(url, function (data, status) {
+    console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -575,8 +578,9 @@ function syncSalesCashierBalance() {
 
 function syncSalesDeleted() {
   var date = $("#date").val();
-  var url = ip_local + "/pi/api/cyber/sync_sales_deleted.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_deleted.php?date=now";
   $.get(url, function (data, status) {
+    console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -584,8 +588,9 @@ function syncSalesDeleted() {
 
 function syncSalesShopSales() {
   var date = $("#date").val();
-  var url = ip_local + "/pi/api/cyber/sync_sales_shopsales.php?date=" + date;
+  var url = ip_local + "/pi/api/cyber/sync_sales_shopsales.php?date=now";
   $.get(url, function (data, status) {
+    console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -599,7 +604,7 @@ function syncSalesAuto() {
   syncSalesCashierBalance();
   syncSalesDeleted();
   syncSalesShopSales();
-  console.log("sync success");
+ 
   // alert("sync success");
 }
 
