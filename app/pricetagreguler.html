@@ -43,32 +43,64 @@
                   <button type="button" id="btnback" class="btn btn-success"><i class="fa fa-play "></i> Back</button>   
               </div>
           </div>
+
+          <br>
+
+          <div class="row">
+            <div class="col-md-12" style="background-color: #fff;padding: 10px">
+
+
+                    Notes : items yg dichecklist akan dicetak price tag nya, dan tidak akan hilang sampai dilakukan uncheck
+
+
+            </div>
+
+          </div>
 	
 
             <br>
 
         <div class="row">
-                <div class="col-md-12">     
-				    <div class="table-responsive" style="width:100%">
-                    <br>
+                <div class="col-md-4">     
+
                 
                     <select id="stock" name="stock" class="form-control">
 							<option value="0">Semua Stock</option>
 							<option value="1">Stock > 0</option>
 				    </select>
+                </div>
 
-                    <!-- <button type="button" id="filterstock" class="btn btn-primary"><i class="fa fa-check"></i> Filter</button> -->
-			</div>
+                <div class="col-md-4">     
+
+                
+                    <select id="rack" name="rack" class="form-control">
+							<option value="">Semua Rack</option>
+				    </select>
+
       
-            </div>
+                </div>
+
+                <div class="col-md-4">     
+
+                    <button type="button" id="filterstock" class="btn btn-primary"><i class="fa fa-check"></i> Filter</button>
+
+      
+                </div>
+
          </div>
 
          <br>
 			
             <div class="row">
-                <div class="col-md-12">     
+                <div class="col-md-12">  
+
+                    
                     <div class="well-agus well-color-light well-shadow-grey">
 				    <div class="table-responsive" style="width:100%">
+
+                    <div id="message"></div>
+
+
                     <button type="button" id="btncheckall" class="btn btn-success"><i class="fa fa-check-square-o"></i> Check All</button>
                     <button type="button" id="btnuncheckall" class="btn btn-danger"><i class="fa fa-square-o"></i> Uncheck All</button>                    
                     <button type="button" id="btnprintpricetag" class="btn btn-primary"><i class="fa fa-print"></i> Cetak Reguler</button>
@@ -87,6 +119,7 @@
                             <th>SKU</th>
                             <th>Product Name</th>
                             <th>Price</th>
+                            <th>Rack</th>
                             <th>Stock</th>
                         </tr>
                         </thead>

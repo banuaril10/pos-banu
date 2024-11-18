@@ -306,21 +306,47 @@ function createWindowPriceTag(texthtml) {
 
 //get value id stocking
 var stocking = 0;
+var racking = "";
 const stock = document.getElementById("stock");
+const rack = document.getElementById("rack");
 
-get_data_product(stocking);
+get_data_product(stocking, racking);
 
-stock.addEventListener("change", function (event) {
-  $("#loaderpos").show();
+filterstock.addEventListener("click", function (event) {
   stocking = stock.value;
-  console.log("stock : " + stocking);
-  // alert("stock : " + stocking);
+  racking = rack.value;
+  //add html message
+  // id message;
+  // var message = document.getElementById("message");
+  // message.innerHTML = "Proses sync data";
+
+  // $("#loaderpos").show();
   $("#tableproductreguler").DataTable().destroy();
-  get_data_product(stocking);
-  $("#loaderpos").hide();
+  get_data_product(stocking, racking);
+  // $("#loaderpos").hide();
+  // message.innerHTML = "Selesai sync data";
 });
 
 
+
+
+//append data rack to select option
+$.ajax({
+  url: "http://" + api_storeapps + "/pi/api/cyber/get_product_rack.php",
+  type: "GET",
+  async: false,
+  success: function (dataResult) {
+    var dataResult = JSON.parse(dataResult);
+    $.each(dataResult, function (i, item) {
+      $("#rack").append(
+        $("<option>", {
+          value: item.rack,
+          text: item.rack,
+        })
+      );
+    });
+  },
+});
 
 
  
@@ -338,21 +364,18 @@ stock.addEventListener("change", function (event) {
 
 
 
-function get_data_product(stock) {
+function get_data_product(stock, rack) {
+  $("#loaderpos").show();
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_reguler.php?stock=" + stock,
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_reguler.php?stock=" + stock + "&rack=" + rack,
     type: "GET",
-    beforeSend: function () {
-      // $("#statussync").html("proses sync stock");
-      $("#loaderpos").show();
-    },
-    async: false,
     success: function (dataResult) {
       
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
       $("#tableproductreguler").DataTable({
         data: dataResult,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         columns: [
           {
             data: "sku",
@@ -387,6 +410,7 @@ function get_data_product(stock) {
           { data: "sku" },
           { data: "name" },
           { data: "price" },
+          { data: "rack" },
           { data: "stock" },
         ],
       });

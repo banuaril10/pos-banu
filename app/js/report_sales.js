@@ -258,21 +258,25 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_item") {
-    data = get_excel_sales_today();
+    data = get_excel_sales_item();
     var row_title = [];
-    row_title.push("Name Store");
-    row_title.push("Omset");
-    row_title.push("STD");
-    row_title.push("APC");
+    row_title.push("No");
+    row_title.push("Date");
+    row_title.push("SKU");
+    row_title.push("Name");
+    row_title.push("Qty");
+    row_title.push("Amount");
 
     dataexcel.push(row_title);
 
     for (var i = 0; i < data.length; i++) {
       var row = [];
-      row.push(data[i].namestore);
-      row.push(data[i].omset);
-      row.push(data[i].std);
-      row.push(data[i].apc);
+      row.push(data[i].no);
+      row.push(data[i].date);
+      row.push(data[i].sku);
+      row.push(data[i].name);
+      row.push(data[i].qty);
+      row.push(data[i].amount_num);
       dataexcel.push(row);
     }
   }
@@ -587,6 +591,23 @@ function get_excel_sales_today(){
   $.ajax({
     url:
       "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync stock");
+    },
+    async: false,
+    success: function (dataResult) {
+      // console.log(dataResult);
+      dataResults = JSON.parse(dataResult);
+    },
+  });
+  return dataResults;
+}
+
+function get_excel_sales_item(){
+  var dataResults = "";
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php",
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");

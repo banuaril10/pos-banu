@@ -300,28 +300,53 @@ function createWindowPriceTag(texthtml) {
   }, 1000);
 }
 
-var stock = document.getElementById("stock").value;
-get_data_product(stock);
-//onclick button print pricetag
-const filterstock = document.getElementById("filterstock");
+var stocking = 0;
+var racking = "";
+const stock = document.getElementById("stock");
+const rack = document.getElementById("rack");
+
+get_data_product(stocking, racking);
+
 filterstock.addEventListener("click", function (event) {
-  console.log("stock : "+stock);
-  alert("stock : "+stock);
+  stocking = stock.value;
+  racking = rack.value;
+  //add html message
+  // id message;
+  // var message = document.getElementById("message");
+  // message.innerHTML = "Proses sync data";
+
+  // $("#loaderpos").show();
   $("#tableproductreguler").DataTable().destroy();
-  get_data_product(stock);
+  get_data_product(stocking, racking);
+  // $("#loaderpos").hide();
+  // message.innerHTML = "Selesai sync data";
+});
+
+$.ajax({
+  url: "http://" + api_storeapps + "/pi/api/cyber/get_product_rack.php",
+  type: "GET",
+  async: false,
+  success: function (dataResult) {
+    var dataResult = JSON.parse(dataResult);
+    $.each(dataResult, function (i, item) {
+      $("#rack").append(
+        $("<option>", {
+          value: item.rack,
+          text: item.rack,
+        })
+      );
+    });
+  },
 });
 
 
 
 
-function get_data_product(stock) {
+function get_data_product(stock, rack) {
+  $("#loaderpos").show();
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_promo.php?stock=" + stock,
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_product_promo.php?stock=" + stock + "&rack=" + rack,
     type: "GET",
-    beforeSend: function () {
-      $("#statussync").html("proses sync stock");
-    },
-    async: false,
     success: function (dataResult) {
       console.log(dataResult);
       var dataResult = JSON.parse(dataResult);
@@ -362,10 +387,12 @@ function get_data_product(stock) {
           { data: "name" },
           { data: "price" },
           { data: "stock" },
+          { data: "rack" },
           { data: "priceafter" },
           { data: "discountname" },
         ],
       });
+      $("#loaderpos").hide();
     },
   });
 }
