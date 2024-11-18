@@ -419,7 +419,7 @@ function get_data_product(stock, rack) {
   });
 }
 
-$("#tableproductreguler tbody").on(
+$("#tableproductreguler").on(
   "click",
   "input[type='checkbox']",
   function () {
