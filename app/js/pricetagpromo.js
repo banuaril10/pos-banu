@@ -238,30 +238,30 @@ btnuncheckall.addEventListener("click", function (event) {
 
 
 //check and unchecked value this save checked product from datatable to local storage
-$("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
-  var chkproduct = document.getElementsByName("checkbox[]");
-  var arrproduct = [];
+$("#tableproductreguler tbody").on(
+  "click",
+  "input[type='checkbox']",
+  function () {
+    var chkproduct = document.getElementsByName("checkbox[]");
+    var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    if (localStorage.getItem("arrproduct") != null) {
+      arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    }
+
+    //remove when unchecked
+    if (!this.checked) {
+      arrproduct.splice(arrproduct.indexOf(this.value), 1);
+    } else {
+      arrproduct.push(this.value);
+    }
+
+    //add when checked
+
+    localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+    console.log(localStorage.getItem("arrproduct"));
   }
-
- 
-      //remove when unchecked
-      if (!this.checked) {
-        arrproduct.splice(arrproduct.indexOf(this.value), 1);
-      } else {
-        arrproduct.push(this.value);
-      }
-      
-
-      //add when checked
-
-
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  console.log(localStorage.getItem("arrproduct")); 
-
-});
+);
 
 
 function createWindowPriceTag(texthtml) {
