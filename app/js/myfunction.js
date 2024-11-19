@@ -231,9 +231,9 @@ function writefile(strtext) {
 
 function test_print() {
   var strtext = "";
-  strtext += "==============================\n";
+  strtext += "=======================================\n";
   strtext += "     TEST PRINT\n";
-  strtext += "==============================\n";
+  strtext += "=======================================\n";
   strtext += "No. 1\n";
   strtext += "No. 2\n";
   strtext += "No. 3\n";
@@ -287,7 +287,18 @@ function print(strtext) {
       },
       success: function (dataResult) {},
     });
-  }else if (jenis_printer == "thermal_windows") {
+  }else if (jenis_printer == "thermal_linux_vsc") {
+    var url = "http://" + ip_printer + "/pi/printer/print_struk_vsc_linux.php";
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        html: strtext,
+        ip_printer: ip_printer,
+      },
+      success: function (dataResult) {},
+    });
+  } else if (jenis_printer == "thermal_windows") {
     var url = "http://" + ip_printer + "/pi/printer/print_struk.php";
     $.ajax({
       url: url,
@@ -313,8 +324,7 @@ function print(strtext) {
         html: strtext,
         ip_printer: ip_printer,
       },
-      success: function (dataResult) {
-      },
+      success: function (dataResult) {},
     });
   } else {
     const process = require("child_process"); // The power of Node.JS

@@ -1712,15 +1712,15 @@ async function gentexttoprint(strbillno){
      
 	 
 	if(notes_footer != ""){
-			// notes+=textbyline("----------------------------",38,'center')+'\r\n';
+			// notes+=textbyline("***************************************",38,'center')+'\r\n';
 			notes+=wordWrap(notes_footer,38)+'\r\n';
 	}
 	 
 	 
    });
-   strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+   strcontent+=textbyline("=======================================",38,'center')+'\r\n';
    strcontent+=textbyline("Nama Barang",10,'center')+textbyline("Qty",5,'center')+textbyline("Harga",7,'center')+textbyline("Disc",6,'center')+textbyline("Total",10,'right')+'\r\n';
-   strcontent +=textbyline("----------------------------", 38, "center") + "\r\n";
+   strcontent+=textbyline("=======================================",38,'center')+'\r\n';
  
    $.each(objprint.line, function (i,item) {
      strcontent+=textbyline(item.itemname,38,'left')+'\r\n';
@@ -1732,7 +1732,7 @@ async function gentexttoprint(strbillno){
 	
    
    });
-    strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+    strcontent+=textbyline("=======================================",38,'center')+'\r\n';
     // strcontent+=textbyline("TOTAL",5,'left')+textbyline(strbillamount.toString(),34,'right')+'\r\n'; 
     strcontent+=textbyline("TOTAL",5,'left')+textbyline(formatRupiah(total.toString()),34,'right')+'\r\n'; 
     strcontent+=textbyline("DISKON     ",11,'left')+textbyline(formatRupiah(diskon.toString()),28,'right')+'\r\n';
@@ -1764,20 +1764,20 @@ async function gentexttoprint(strbillno){
     strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
     strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount.toString(),28,'right')+'\r\n';  
     strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';
-    strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+    strcontent+=textbyline("=======================================",38,'center')+'\r\n';
     if (isppn >0){
     strcontent+=textbyline("DPP :"+strdpp,6,'left')+textbyline("PPN :"+strppn,20,'right')+'\r\n';
-    strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+    strcontent+=textbyline("=======================================",38,'center')+'\r\n';
     if (strMemberId != ''){
       strcontent+=textbyline("SELAMAT ANDA MENDAPATKAN POINT",38,'center')+'\r\n';
       strcontent+=textbyline("MEMBER   ",11,'left')+textbyline(strMemberName.toString(),28,'right')+'\r\n';
       strcontent+=textbyline("POINT    ",11,'left')+textbyline(strPointGive.toString(),28,'right')+'\r\n';
     }
-    strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+    strcontent+=textbyline("***************************************",38,'center')+'\r\n';
     strcontent+=textbyline("NPWP :"+strnpwp,38,'center')+'\r\n';
     };
     strcontent+=textbyline(strorgdesc,38,'center')+'\r\n';
-    strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+    strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 	if(strNote1 != ""){
 		 strcontent+=textbyline(strNote1,38,'center')+'\r\n';
 	}
@@ -1792,7 +1792,7 @@ async function gentexttoprint(strbillno){
 	
 	if(strNote1 != "" || strNote2 != "" || strNote3 != ""){
 		
-		strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+		strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 	}
 
     
@@ -1885,9 +1885,9 @@ function genbillpreview(objheader,objline){
 
 
         strcontent+='<table width="100%">';
-        strcontent+='----------------------------<br>';
+        strcontent+='=======================================<br>';
         strcontent+='<tr><td><strong>Nama Barang</strong></td><td><strong>Qty</strong></td><td><strong>Harga</strong></td><td><strong>Disc</strong></td><td><strong>Total</strong></td></tr>';
-       // strcontent+=htmlbyline("----------------------------",38,'center')+'<br>';
+       // strcontent+=htmlbyline("=======================================",38,'center')+'<br>';
       
         $.each(objline, function (i,item) {
           strcontent+='<tr><td colspan="5">'+item.itemname+'</td></tr>';
@@ -1898,7 +1898,7 @@ function genbillpreview(objheader,objline){
 		  total += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.price.toString().replace(",", ""));
 
         });
-          strcontent+='<tr><td colspan="5">----------------------------</td></tr>';
+          strcontent+='<tr><td colspan="5">=======================================</td></tr>';
           strcontent+='<tr><td colspan="4">TOTAL</td><td align="right">'+formatRupiah(total.toString())+'</td></tr>';
           strcontent+='<tr><td colspan="4">DISKON</td><td align="right">'+formatRupiah(diskon.toString())+'</td></tr>';
           strcontent+='<tr><td colspan="4">DISC.MEMBER</td><td align="right">'+strmemberdiscount.toString()+'</td></tr>';
@@ -1910,11 +1910,11 @@ function genbillpreview(objheader,objline){
           strcontent+='<tr><td colspan="4">BAYAR CASH </td><td align="right">'+strpaygiven+'</td></tr>';
           strcontent+='<tr><td colspan="4">INFAK  </td><td align="right">'+strdonasiamount+'</td></tr>';
           strcontent+='<tr><td colspan="4">KEMBALI </td><td align="right">'+strpayreturn.toString()+'</td></tr>';
-          strcontent+='<tr><td colspan="5">----------------------------</td></tr>';
+          strcontent+='<tr><td colspan="5">=======================================</td></tr>';
           if(isppn > 0) {
           strcontent+='<tr><td colspan="3">DPP :'+strdpp+'</td><td align="right">PPN :'+strppn+'</td></tr>';
           };
-          strcontent+='<tr><td colspan="5">----------------------------</td></tr>';
+          strcontent+='<tr><td colspan="5">=======================================</td></tr>';
           if (strMemberId != ''){
             strcontent+='<tr><td colspan="5" align="center">SELAMAT ANDA MENDAPATKAN POINT</td></tr>';
             strcontent+='<tr><td >MEMBER </td><td colspan="4" align="left">'+strMemberName+'</td></tr>';
@@ -1922,18 +1922,18 @@ function genbillpreview(objheader,objline){
           }
 
           strcontent+='</table>';
-         // strcontent+=htmlbyline("----------------------------",38,'center')+'<br>';
+         // strcontent+=htmlbyline("=======================================",38,'center')+'<br>';
          // strcontent+='\r\n';
-          strcontent+='<dl><dt class="text-center">----------------------------</dt>';
+          strcontent+='<dl><dt class="text-center">***************************************</dt>';
           if(isppn > 0) {
           strcontent+='<dt class="text-center">NPWP :'+strnpwp+'</dt>';
           };
           strcontent+='<dt class="text-center">'+strorgdesc+'</dt>';
-          strcontent+='<dt class="text-center">----------------------------</dt>';
+          strcontent+='<dt class="text-center">***************************************</dt>';
           strcontent+='<dt class="text-center">'+strNote1+'</dt>';
           strcontent+='<dt class="text-center">'+strNote2+'</dt>';
           strcontent+='<dt class="text-center">'+strNote3+'</dt>';
-          strcontent+='<dt class="text-center">----------------------------</dt>';
+          strcontent+='<dt class="text-center">***************************************</dt>';
           strcontent+='<dt class="text-center">'+straddressdonasi+'</dt>';
           strcontent+='</dl>';
           
@@ -2011,16 +2011,16 @@ function gentexttoreprint(objheader,objline){
            }
 		  
 		if(notes_footer != ""){
-			// notes+=textbyline("----------------------------",38,'center')+'\r\n';
+			// notes+=textbyline("***************************************",38,'center')+'\r\n';
 			//notes+=textbyline(notes_footer,38,'center')+'\r\n';
 			notes+=wordWrap(notes_footer,38)+'\r\n';
 		}
 	 
 
         });
-        strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+        strcontent+=textbyline("=======================================",38,'center')+'\r\n';
         strcontent+=textbyline("Nama Barang",10,'center')+textbyline("Qty",5,'center')+textbyline("Harga",7,'center')+textbyline("Disc",6,'center')+textbyline("Total",10,'right')+'\r\n';
-        strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+        strcontent+=textbyline("=======================================",38,'center')+'\r\n';
       
         $.each(objline, function (i,item) {
           strcontent+=textbyline(item.itemname,38,'left')+'\r\n';
@@ -2034,7 +2034,7 @@ function gentexttoreprint(objheader,objline){
 			
 		
 		});
-			strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+			strcontent+=textbyline("=======================================",38,'center')+'\r\n';
 			// strcontent+=textbyline("TOTAL",5,'left')+textbyline(strbillamount.toString(),34,'right')+'\r\n'; 
 			strcontent+=textbyline("TOTAL",5,'left')+textbyline(formatRupiah(total.toString()),34,'right')+'\r\n'; 
 			strcontent+=textbyline("DISKON     ",11,'left')+textbyline(formatRupiah(diskon.toString()),28,'right')+'\r\n';
@@ -2067,20 +2067,20 @@ function gentexttoreprint(objheader,objline){
           strcontent+=textbyline("BAYAR CASH ",11,'left')+textbyline(strpaygiven,28,'right')+'\r\n';
           strcontent+=textbyline("INFAK      ",11,'left')+textbyline(strdonasiamount,28,'right')+'\r\n';
           strcontent+=textbyline("KEMBALI    ",11,'left')+textbyline(strpayreturn.toString(),28,'right')+'\r\n';
-          strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+          strcontent+=textbyline("=======================================",38,'center')+'\r\n';
           if (isppn >0){
           strcontent+=textbyline("DPP :"+strdpp,6,'left')+textbyline("PPN :"+strppn,20,'right')+'\r\n';
-          strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+          strcontent+=textbyline("=======================================",38,'center')+'\r\n';
           if (strMemberId != ''){
             strcontent+=textbyline("SELAMAT ANDA MENDAPATKAN POINT",38,'center')+'\r\n';
             strcontent+=textbyline("MEMBER   ",11,'left')+textbyline(strMemberName.toString(),28,'right')+'\r\n';
             strcontent+=textbyline("POINT :  ",11,'left')+textbyline(strPointGive.toString(),28,'right')+'\r\n';
           }
-          strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+          strcontent+=textbyline("***************************************",38,'center')+'\r\n';
           strcontent+=textbyline("NPWP :"+strnpwp,38,'center')+'\r\n';
           };
           strcontent+=textbyline(strorgdesc,38,'center')+'\r\n';
-          strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+          strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 			if(strNote1 != ""){
 				strcontent+=textbyline(strNote1,38,'center')+'\r\n';
 			}
@@ -2095,7 +2095,7 @@ function gentexttoreprint(objheader,objline){
 			
 			if(strNote1 != "" || strNote2 != "" || strNote3 != ""){
 				
-				strcontent+=textbyline("----------------------------",38,'center')+'\r\n';
+				strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 			}
           strcontent+=textbyline(straddressdonasi,38,'center')+'\r\n';
 		  strcontent+=notes;
