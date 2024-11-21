@@ -507,31 +507,6 @@ var producttable = $("#tableproduct").DataTable({
     processing: "Lagi Loading...",
   },
   columns: [
-    {
-      data: "sku",
-      render: function (data, type, full, meta) {
-        //check checked product from local storage
-        if (localStorage.getItem("arrproduct") != null) {
-          var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-          if (arrproduct.includes(data)) {
-            return (
-              '<input type="checkbox" name="chkproduct" value="' +
-              data +
-              '" checked>'
-            );
-          } else {
-            return (
-              '<input type="checkbox" name="chkproduct" value="' + data + '">'
-            );
-          }
-        } else {
-          return (
-            '<input type="checkbox" name="chkproduct" value="' + data + '">'
-          );
-        }
-        // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
-      },
-    },
     { data: "sku" },
     { data: "name" },
     { data: "price", className: "text-right" },

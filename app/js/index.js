@@ -87,12 +87,12 @@ function checkOnlineStatus() {
     $("#online-status").html("<span class='dot-green'></span> ");
     $("#online-status").css("color", "green");
     //add dot green
-    $("#online-status").append("ONLINE)");
+    $("#online-status").append("ONLINE");
   }).fail(function () {
     $("#online-status").html("<span class='dot-red'></span> ");
     $("#online-status").css("color", "red");
     //add dot red
-    $("#online-status").append("OFFLINE)");
+    $("#online-status").append("OFFLINE");
   });
 }
 setInterval(checkOnlineStatus, 5000);
