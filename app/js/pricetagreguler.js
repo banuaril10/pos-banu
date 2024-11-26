@@ -56,17 +56,26 @@ function cetak_pricetag_promo(arrproduct) {
 }
 
 function cetak_pricetag(arrproduct) {
+  //foreach arrproduct
+  var arrcopy = [];
+  arrproduct.forEach(function (item) {
+    var copy = document.getElementById("copy" + item).value;
+    arrcopy.push(copy);
+  });
+
+  // var arrcopy = JSON.parse(arrcopy);
+  console.log(arrcopy);
+
 
   $.ajax({
     url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
     type: "POST",
-    data: { arrproduct: arrproduct },
+    data: { arrproduct: arrproduct, arrcopy : arrcopy },
     beforeSend: function () {
       $("#statussync").html("proses sync shortcut");
     },
     async: false,
     success: function (dataResult) {
-
       var dataResult = JSON.parse(dataResult);
       var hasil = cetak_reguler(dataResult);
       // console.log(hasil);
@@ -375,7 +384,10 @@ function get_data_product(stock, rack) {
       var dataResult = JSON.parse(dataResult);
       $("#tableproductreguler").DataTable({
         data: dataResult,
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        lengthMenu: [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"],
+        ],
         columns: [
           {
             data: "sku",
@@ -412,6 +424,18 @@ function get_data_product(stock, rack) {
           { data: "price" },
           { data: "rack" },
           { data: "stock" },
+          {
+            data: "sku",
+            render: function (data, type, full, meta) {
+                return (
+                  '<input style="width: 100%" type="number" class="largerCheckbox" id="copy' +
+                  data +
+                  '" value="1">'
+                );
+              
+              // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
+            },
+          },
         ],
       });
       $("#loaderpos").hide();

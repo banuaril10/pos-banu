@@ -38,6 +38,7 @@ const btnpromocode = document.getElementById("btnpromocode");
 const btnbanksync = document.getElementById("btnbanksync");
 const btnedcsync = document.getElementById("btnedcsync");
 const btnusersync = document.getElementById("btnusersync");
+const btnuserhrissync = document.getElementById("btnuserhrissync");
 const btnprofilesync = document.getElementById("btnprofilesync");
 const btnsyncitems = document.getElementById("btnsyncitems");
 const btnproductstocksync = document.getElementById("btnproductstocksync");
@@ -114,6 +115,13 @@ btnusersync.addEventListener("click", async function (event) {
   $("#loaderpos").show();
   sync_users();
 });
+
+btnuserhrissync.addEventListener("click", async function (event) {
+  $("#loaderpos").show();
+  sync_users_hris();
+});
+
+
 
 btnprofilesync.addEventListener("click", async function (event) {
   $("#loaderpos").show();
@@ -319,6 +327,19 @@ function sync_edc() {
 function sync_users() {
   $.ajax({
     url: "http://" + api_storeapps + "/pi/api/cyber/sync_users.php",
+    type: "GET",
+    success: function (dataResult) {
+      console.log(dataResult);
+
+      var dataResult = JSON.parse(dataResult);
+      $("#loaderpos").hide();
+    },
+  });
+}
+
+function sync_users_hris() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_users_hris.php",
     type: "GET",
     success: function (dataResult) {
       console.log(dataResult);
