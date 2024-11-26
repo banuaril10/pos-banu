@@ -746,6 +746,7 @@ var promotable=$('#tablepromo').DataTable( {
         } ,
         "columns": [
             { "data": "sku" },
+            { "data": "barcode" },
             { "data": "name" },
             { "data": "price","className": "text-right" },
             { "data": "discount","className": "text-right" },
