@@ -140,7 +140,9 @@ function showcashin(username, ad_org_id, userid) {
             btnapproved =
               "<button class='btn btn-success' id='btnapproved' onclick='modal_cashin(\"" +
               value.cashinid +
-              "\")'>Approved</button>";
+              "\")'>Approved</button><button class='btn btn-danger' id='btnremove' onclick='remove_cashin(\"" +
+              value.cashinid +
+              "\")' >Remove</button>";
           } else if (value.status == "1") {
             value.status = "<font class='badge badge-success'>APPROVED</font>";
             value.approvedby = approvedby;
@@ -294,6 +296,32 @@ function approved_cashin(id, userspv) {
         $("#overlay").fadeOut(300);
         $("#notif").html(dataResult.msg);
       }
+    },
+  });
+}
+
+// remove_cashin;
+
+function remove_cashin(id) {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/remove_cashin.php",
+    type: "POST",
+    data: {
+      id: id,
+    },
+    cache: false,
+    beforeSend: function () {
+      $("#notif").html("Proses remove cashin..");
+    },
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+        $("#notif").html(
+          '<font style="color: green">' + dataResult.message + "</font>"
+        );
+        $("#overlay").fadeOut(300);
+        location.reload();
+
     },
   });
 }

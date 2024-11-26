@@ -420,6 +420,7 @@ function get_data_product(stock, rack) {
           },
           // { data: "no" },
           { data: "sku" },
+          { data: "barcode" },
           { data: "name" },
           { data: "price" },
           { data: "rack" },
