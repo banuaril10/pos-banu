@@ -673,4 +673,21 @@ function get_excel_sales_item(){
   return dataResults;
 }
 
+function get_excel_sales_category(){
+  var dataResults = "";
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync stock");
+    },
+    async: false,
+    success: function (dataResult) {
+      // console.log(dataResult);
+      dataResults = JSON.parse(dataResult);
+    },
+  });
+  return dataResults;
+}
+
 
