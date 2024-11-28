@@ -66,6 +66,7 @@ function hide_all() {
   $("#tablesalesnoncash").DataTable().destroy();
   $("#tablesalestoday").DataTable().destroy();
   $("#tablesalesitem").DataTable().destroy();
+  $("#tablesalescategory").DataTable().destroy();
 
 
   $("#tablesalesdaily").hide();
@@ -74,6 +75,7 @@ function hide_all() {
   $("#tablesalesnoncash").hide();
   $("#tablesalestoday").hide();
   $("#tablesalesitem").hide();
+  $("#tablesalescategory").hide();
 }
 
 btnsalesitem.addEventListener("click", async function (event) {
@@ -281,6 +283,24 @@ btnexportexcel.addEventListener("click", async function (event) {
       row.push(data[i].sku);
       row.push(data[i].name);
       row.push(data[i].qty);
+      row.push(data[i].amount_num);
+      dataexcel.push(row);
+    }
+  } else if (jenis_laporan == "get_report_sales_category") {
+    data = get_excel_sales_category();
+    var row_title = [];
+    row_title.push("No");
+    row_title.push("Date");
+    row_title.push("Category");
+    row_title.push("Amount");
+
+    dataexcel.push(row_title);
+
+    for (var i = 0; i < data.length; i++) {
+      var row = [];
+      row.push(data[i].no);
+      row.push(data[i].date);
+      row.push(data[i].category);
       row.push(data[i].amount_num);
       dataexcel.push(row);
     }
