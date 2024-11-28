@@ -25,7 +25,7 @@ if (!window.HTMLDialogElement) {
 // log out
 const btnback = document.getElementById("btnback");
 btnback.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/home.html`;
+  window.location.href = `file:///${__dirname}/pricetag.html`;
 });
 
 
