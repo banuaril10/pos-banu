@@ -106,6 +106,11 @@ btnsalestoday.addEventListener("click", async function (event) {
   get_report_sales_today();
 });
 
+btnsalescategory.addEventListener("click", async function (event) {
+  hide_all();
+  get_report_sales_category();
+});
+
 btnexportexcel.addEventListener("click", async function (event) {
   var jenis_laporan = $("#jenis_laporan").val();
   var title_report = $("#title_report").html();
@@ -507,6 +512,33 @@ function get_report_sales_item() {
   });
 }
 
+
+function get_report_sales_category() {
+  $.ajax({
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php",
+    type: "GET",
+    beforeSend: function () {
+      $("#statussync").html("proses sync stock");
+    },
+    async: false,
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      $("#jenis_laporan").val("get_report_sales_category");
+      $("#title_report").html("Report Sales By Category");
+      $("#tablesalescategory").show();
+      $("#tablesalescategory").DataTable({
+        data: dataResult,
+        columns: [
+          { data: "no" },
+          { data: "date" },
+          { data: "category" },
+          { data: "amount" },
+        ],
+      });
+    },
+  });
+}
 
 
 function get_excel_sales_by_cashier() {
