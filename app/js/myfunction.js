@@ -336,7 +336,13 @@ function print(strtext) {
       writeStream.end();
       cmd = perintah;
     } else {
-      cmd = 'echo "' + strtext + '" | lpr -o raw';
+      //auto cut in php $html .= chr(29) . "V" . 0, but i want in node js
+      var perintah = "lp -d " + ip_printer + " -o cpi=10 -o lpi=7 print.txt";
+      var writeStream = fs.createWriteStream("print.txt");
+      writeStream.write(strtext);
+      writeStream.end();
+      cmd = perintah;
+      
     }
 
     var child = process.exec(cmd);
@@ -559,7 +565,7 @@ function syncSalesHeader() {
   var date = $("#date").val();
   var url = ip_local + "/pi/api/cyber/sync_sales_header.php?date=now";
   $.get(url, function (data, status) {
-     console.log(data);
+    //  console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -569,7 +575,7 @@ function syncSalesLine() {
   var date = $("#date").val();
   var url = ip_local + "/pi/api/cyber/sync_sales_line.php?date=now";
   $.get(url, function (data, status) {
-    console.log(data);
+    // console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -580,7 +586,7 @@ function syncSalesCashierBalance() {
   var url =
     ip_local + "/pi/api/cyber/sync_sales_cashierbalance.php?date=now";
   $.get(url, function (data, status) {
-    console.log(data);
+    // console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -590,7 +596,7 @@ function syncSalesDeleted() {
   var date = $("#date").val();
   var url = ip_local + "/pi/api/cyber/sync_sales_deleted.php?date=now";
   $.get(url, function (data, status) {
-    console.log(data);
+    // console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
@@ -600,7 +606,7 @@ function syncSalesShopSales() {
   var date = $("#date").val();
   var url = ip_local + "/pi/api/cyber/sync_sales_shopsales.php?date=now";
   $.get(url, function (data, status) {
-    console.log(data);
+    // console.log(data);
     // console.log(data);
     // alert("Proses sync, klik tombol refresh setelah beberapa saat..");
   });
