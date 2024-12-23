@@ -245,7 +245,7 @@ function test_print() {
 
 function print(strtext) {
 
-  // console.log(strtext);
+  console.log(strtext);
 
   const os = require("os");
   var os_val = "";

@@ -822,38 +822,72 @@ var promomembertable=$('#tablepromomurah').DataTable( {
             ]
     });
 
-var buygettable=$('#tablebuyget').DataTable( {
-      "sDom": "<'dt-toolbar'<'col-sm-6' <'toolbar'>><'col-sm-12'f>>"+
-      "t"+
-      "<'dt-toolbar-footer'<'col-sm-2 col-xs-2 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
-        "oLanguage": {
-        "sSearch": '<span class="input-group-addon"><i class="fa fa-search"></i></span>'
-        },	
-       // "scrollX": true,
-        "autoWidth" : true,
-        "processing": true,
-        "serverSide": true,
-          "ajax": {
-                   "url":api_url+'/pos/table?f1=pos_dtempbuyget_view&f2=',
-                   "type": "POST",
-                  "dataType": 'json',
-                  "contentType": "application/json",
-                  "headers": {"Authorization":localStorage.getItem('token').replace('"','')},
-                   "data": function(d){
-                    //                     d.filter = getfiltervalue();
-                     return (JSON.stringify(d))
-                    }
-               },
-        'language': {
-        'processing': 'Lagi Loading...'
-            } ,
-            "columns": [
-                { "data": "skuget" },
-                { "data": "product_name" },
-                { "data": "price","className": "text-right" },
-                { "data": "pricediscount","className": "text-right" }
-            ]
-    });
+// var buygettable=$('#tablebuyget').DataTable( {
+//       "sDom": "<'dt-toolbar'<'col-sm-6' <'toolbar'>><'col-sm-12'f>>"+
+//       "t"+
+//       "<'dt-toolbar-footer'<'col-sm-2 col-xs-2 hidden-xs'l><'col-xs-12 col-sm-6'p>>",
+//         "oLanguage": {
+//         "sSearch": '<span class="input-group-addon"><i class="fa fa-search"></i></span>'
+//         },	
+//        // "scrollX": true,
+//         "autoWidth" : true,
+//         "processing": true,
+//         "serverSide": true,
+//           "ajax": {
+//                    "url":api_url+'/pos/table?f1=pos_dtempbuyget_view&f2=',
+//                    "type": "POST",
+//                   "dataType": 'json',
+//                   "contentType": "application/json",
+//                   "headers": {"Authorization":localStorage.getItem('token').replace('"','')},
+//                    "data": function(d){
+//                     //                     d.filter = getfiltervalue();
+//                      return (JSON.stringify(d))
+//                     }
+//                },
+//         'language': {
+//         'processing': 'Lagi Loading...'
+//             } ,
+//             "columns": [
+//                 { "data": "skuget" },
+//                 { "data": "product_name" },
+//                 { "data": "price","className": "text-right" },
+//                 { "data": "pricediscount","className": "text-right" }
+//             ]
+//     });
+
+
+get_data_buy_get();
+function get_data_buy_get() {
+  $("#loaderpos").show();
+  $.ajax({
+    url:
+      "http://" +
+      api_storeapps +
+      "/pi/api/cyber/get_product_promo_buyget.php",
+    type: "GET",
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      $("#tablebuyget").DataTable({
+        data: dataResult,
+        lengthMenu: [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"],
+        ],
+        columns: [
+          { data: "skubuy" },
+          { data: "qtybuy" },
+          { data: "skuget" },
+          { data: "qtyget" },
+          { data: "priceget" },
+          { data: "pricediscount" },
+          { data: "priceafter" },
+        ],
+      });
+      $("#loaderpos").hide();
+    },
+  });
+}
 
 
 function getfiltervalue() { 
@@ -1684,7 +1718,7 @@ async function gentexttoprint(strbillno){
      strcontent+=textbyline(item.address1,38,'center')+'\r\n';
      strcontent+=textbyline(item.address2,38,'center')+'\r\n';
      strcontent+=textbyline('STRUK   :'+item.billno,24,'left')+''+textbyline(item.strtime,14,'right')+'\r\n';
-     strcontent+=textbyline('TANGGAL :'+item.strdate,18,'left')+''+textbyline(item.postby,20,'right')+'\r\n';
+     strcontent+=textbyline('TANGGAL :'+item.strdate,18,'left')+''+textbyline(item.postby,21,'right')+'\r\n';
      strdpp=item.dppvalue;
      strppn=item.ppnvalue;
      strnpwp=item.npwp;
@@ -1719,26 +1753,50 @@ async function gentexttoprint(strbillno){
 	 
 	 
    });
-   strcontent+=textbyline("=======================================",38,'center')+'\r\n';
-   strcontent+=textbyline("Nama Barang",10,'center')+textbyline("Qty",5,'center')+textbyline("Harga",7,'center')+textbyline("Disc",6,'center')+textbyline("Total",10,'right')+'\r\n';
-   strcontent+=textbyline("=======================================",38,'center')+'\r\n';
- 
-   $.each(objprint.line, function (i,item) {
-     strcontent+=textbyline(item.itemname,38,'left')+'\r\n';
-    // strcontent+=textbyline(item.qty.toString(),15,'right')+'\r\n';
-     strcontent+=textbyline(item.qty.toString(),13,'right')+textbyline(item.price,0,'right')+textbyline(item.discount.toString(),0,'right')+textbyline(item.amount.toString(),0,'right')+'\r\n';
-   
-	 diskon += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.discount.toString().replace(",", ""));
-	 total += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.price.toString().replace(",", ""));
-	
-   
-   });
+               strcontent +=
+                 textbyline(
+                   "=======================================",
+                   38,
+                   "center"
+                 ) + "\r\n";
+               strcontent +=
+                 textbyline("Qty", 5, "left") +
+                 textbyline("Harga", 15, "center") +
+                 textbyline("Disc", 8, "center") +
+                 textbyline("Total", 13, "right") +
+                 "\r\n";
+               strcontent +=
+                 textbyline(
+                   "=======================================",
+                   38,
+                   "center"
+                 ) + "\r\n";
+
+               $.each(objprint.line, function (i, item) {
+                 strcontent += textbyline(item.itemname, 38, "left") + "\r\n";
+                 // strcontent+=textbyline(item.qty.toString(),15,'right')+'\r\n';
+                 strcontent +=
+                   textbyline(item.qty.toString(), 3, "right") +
+                   textbyline(item.price, 10, "right") +
+                   textbyline(item.discount.toString(), 11, "right") +
+                   textbyline(item.amount.toString(), 15, "right") +
+                   "\r\n";
+
+                 diskon +=
+                   parseInt(item.qty.toString().replace(",", "")) *
+                   parseInt(item.discount.toString().replace(",", ""));
+                 total +=
+                   parseInt(item.qty.toString().replace(",", "")) *
+                   parseInt(item.price.toString().replace(",", ""));
+               });
+
+
     strcontent+=textbyline("=======================================",38,'center')+'\r\n';
     // strcontent+=textbyline("TOTAL",5,'left')+textbyline(strbillamount.toString(),34,'right')+'\r\n'; 
     strcontent+=textbyline("TOTAL",5,'left')+textbyline(formatRupiah(total.toString()),34,'right')+'\r\n'; 
     strcontent+=textbyline("DISKON     ",11,'left')+textbyline(formatRupiah(diskon.toString()),28,'right')+'\r\n';
     // strcontent+=textbyline("DISKON     ",11,'left')+textbyline(strTotalDiscount.toString(),28,'right')+'\r\n';
-    if (strReedemPoint !== "          0"){
+    if (strReedemPoint !== "0"){
     strcontent+=textbyline("REEDEM POINT",8,'left')+textbyline(strReedemPoint.toString(),27,'right')+'\r\n';
     };
 
@@ -1774,11 +1832,11 @@ async function gentexttoprint(strbillno){
       strcontent+=textbyline("MEMBER   ",11,'left')+textbyline(strMemberName.toString(),28,'right')+'\r\n';
       strcontent+=textbyline("POINT    ",11,'left')+textbyline(strPointGive.toString(),28,'right')+'\r\n';
     }
-    strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+    // strcontent+=textbyline("***************************************",38,'center')+'\r\n';
     strcontent+=textbyline("NPWP :"+strnpwp,38,'center')+'\r\n';
     };
     strcontent+=textbyline(strorgdesc,38,'center')+'\r\n';
-    strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+    // strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 	if(strNote1 != ""){
 		 strcontent+=textbyline(strNote1,38,'center')+'\r\n';
 	}
@@ -1793,7 +1851,7 @@ async function gentexttoprint(strbillno){
 	
 	if(strNote1 != "" || strNote2 != "" || strNote3 != ""){
 		
-		strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+		// strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 	}
 
     
@@ -1895,8 +1953,8 @@ function genbillpreview(objheader,objline){
           // strcontent+=textbyline(item.qty.toString(),15,'right')+'\r\n';
           strcontent+='<tr><td></td><td align="right">'+item.qty.toString()+'</td><td align="right">'+item.price+'</td><td align="right">'+item.discount.toString()+'</td><td align="right">'+item.amount.toString()+'</td></tr>';
 		  
-		  diskon += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.discount.toString().replace(",", ""));
-		  total += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.price.toString().replace(",", ""));
+		      diskon += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.discount.toString().replace(",", ""));
+		      total += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.price.toString().replace(",", ""));
 
         });
           strcontent+='<tr><td colspan="5">=======================================</td></tr>';
@@ -2016,35 +2074,55 @@ function gentexttoreprint(objheader,objline){
 			//notes+=textbyline(notes_footer,38,'center')+'\r\n';
 			notes+=wordWrap(notes_footer,38)+'\r\n';
 		}
+
+
 	 
 
         });
-        strcontent+=textbyline("=======================================",38,'center')+'\r\n';
-        strcontent+=textbyline("Nama Barang",10,'center')+textbyline("Qty",5,'center')+textbyline("Harga",7,'center')+textbyline("Disc",6,'center')+textbyline("Total",10,'right')+'\r\n';
-        strcontent+=textbyline("=======================================",38,'center')+'\r\n';
-      
-        $.each(objline, function (i,item) {
-          strcontent+=textbyline(item.itemname,38,'left')+'\r\n';
-          // strcontent+=textbyline(item.qty.toString(),15,'right')+'\r\n';
-          strcontent+=textbyline(item.qty.toString(),14,'right')+textbyline(item.price,0,'right')+textbyline(item.discount.toString(),0,'right')+textbyline(item.amount.toString(),0,'right')+'\r\n';
-		
-		  diskon += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.discount.toString().replace(",", ""));
-		  total += parseInt(item.qty.toString().replace(",", "")) * parseInt(item.price.toString().replace(",", ""));
-		
-			// total += parseInt(item.qty) * parseInt(item.price);
-			
-		
-		});
+
+            strcontent+=textbyline("=======================================",38,'center')+'\r\n';
+            strcontent +=
+             textbyline("Qty", 5, "left") +
+             textbyline("Harga", 15, "center") +
+             textbyline("Disc", 8, "center") +
+             textbyline("Total", 13, "right") +
+             "\r\n";
+            strcontent +=
+             textbyline(
+               "=======================================",
+               38,
+               "center"
+             ) + "\r\n";
+
+            $.each(objline, function (i, item) {
+             strcontent += textbyline(item.itemname, 38, "left") + "\r\n";
+             // strcontent+=textbyline(item.qty.toString(),15,'right')+'\r\n';
+             strcontent +=
+               textbyline(item.qty.toString(), 3, "right") +
+               textbyline(item.price, 10, "right") +
+               textbyline(item.discount.toString(), 11, "right") +
+               textbyline(item.amount.toString(), 15, "right") +
+               "\r\n";
+
+             diskon +=
+               parseInt(item.qty.toString().replace(",", "")) *
+               parseInt(item.discount.toString().replace(",", ""));
+             total +=
+               parseInt(item.qty.toString().replace(",", "")) *
+               parseInt(item.price.toString().replace(",", ""));
+            });
+
+
 			strcontent+=textbyline("=======================================",38,'center')+'\r\n';
 			// strcontent+=textbyline("TOTAL",5,'left')+textbyline(strbillamount.toString(),34,'right')+'\r\n'; 
 			strcontent+=textbyline("TOTAL",5,'left')+textbyline(formatRupiah(total.toString()),34,'right')+'\r\n'; 
 			strcontent+=textbyline("DISKON     ",11,'left')+textbyline(formatRupiah(diskon.toString()),28,'right')+'\r\n';
     // strcontent+=textbyline("DISKON     ",11,'left')+textbyline(strTotalDiscount.toString(),28,'right')+'\r\n';
-          if (strReedemPoint !== "          0"){
+          if (strReedemPoint !== "0"){
             strcontent+=textbyline("REEDEM POINT",8,'left')+textbyline(strReedemPoint.toString(),27,'right')+'\r\n';
             };
           strcontent+=textbyline("GRAND TOTAL",11,'left')+textbyline(strgrandamount.toString(),28,'right')+'\r\n';
-          strcontent+=textbyline("BAYAR D/C  ",11, "left")+textbyline(strdcamount.toString(),28,'right')+'\r\n';
+          // strcontent+=textbyline("BAYAR D/C  ",11, "left")+textbyline(strdcamount.toString(),28,'right')+'\r\n';
 
               if (edcname != "") {
                 //str replace EDC to ""
@@ -2077,11 +2155,11 @@ function gentexttoreprint(objheader,objline){
             strcontent+=textbyline("MEMBER   ",11,'left')+textbyline(strMemberName.toString(),28,'right')+'\r\n';
             strcontent+=textbyline("POINT :  ",11,'left')+textbyline(strPointGive.toString(),28,'right')+'\r\n';
           }
-          strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+          // strcontent+=textbyline("***************************************",38,'center')+'\r\n';
           strcontent+=textbyline("NPWP :"+strnpwp,38,'center')+'\r\n';
           };
           strcontent+=textbyline(strorgdesc,38,'center')+'\r\n';
-          strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+          // strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 			if(strNote1 != ""){
 				strcontent+=textbyline(strNote1,38,'center')+'\r\n';
 			}
@@ -2096,7 +2174,7 @@ function gentexttoreprint(objheader,objline){
 			
 			if(strNote1 != "" || strNote2 != "" || strNote3 != ""){
 				
-				strcontent+=textbyline("***************************************",38,'center')+'\r\n';
+				// strcontent+=textbyline("***************************************",38,'center')+'\r\n';
 			}
           strcontent+=textbyline(straddressdonasi,38,'center')+'\r\n';
 		  strcontent+=notes;
@@ -2644,7 +2722,7 @@ function getDataPromo(billno){
 				type: "GET",
 				async: false,
 				success: function(dataResult){
-					console.log(dataResult);
+					// console.log(dataResult);
 					$("#divalertinfo").html(dataResult);
 					notes = dataResult;
 					// console.log("http://"+api_storeapps+"/pi/api/cek_notes_go.php?nominal="+nominal);
