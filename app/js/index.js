@@ -19,6 +19,11 @@ var divDebitPayAfter=document.getElementById('divDebitPayAfter');
 
 var divMemberId=document.getElementById('divMemberId');
 
+//hide scroll lock
+// document.body.style.overflow = 'hidden';
+
+
+
 var billseqno=0;
 var refundbillno="";
 var voidmode="";
