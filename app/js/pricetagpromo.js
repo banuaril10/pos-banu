@@ -31,16 +31,27 @@ btnback.addEventListener("click", function (event) {
 
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
-  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  var arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
   cetak_pricetag_promo(arrproduct);
 });
 
 
 function cetak_pricetag_promo(arrproduct) {
+
+    var arrcopy = [];
+    arrproduct.forEach(function (item) {
+      var copy = document.getElementById("copy" + item).value;
+      arrcopy.push(copy);
+    });
+
+    // var arrcopy = JSON.parse(arrcopy);
+    console.log(arrcopy);
+
+
   $.ajax({
     url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo.php",
     type: "POST",
-    data: { arrproduct: arrproduct },
+    data: { arrproduct: arrproduct, arrcopy: arrcopy },
     beforeSend: function () {
       $("#statussync").html("proses get");
     },
@@ -134,8 +145,8 @@ $("#tableproduct").DataTable({
       data: "sku",
       render: function (data, type, full, meta) {
         //check checked product from local storage
-        if (localStorage.getItem("arrproduct") != null) {
-          var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+        if (localStorage.getItem("arrproduct_promo") != null) {
+          var arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
           if (arrproduct.includes(data)) {
             return (
               '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
@@ -190,8 +201,8 @@ btncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  if (localStorage.getItem("arrproduct_promo") != null) {
+    arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
   }
 
   for (var i = 0; i < chkproduct.length; i++) {
@@ -209,7 +220,7 @@ btncheckall.addEventListener("click", function (event) {
     }
   }
 
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+  localStorage.setItem("arrproduct_promo", JSON.stringify(arrproduct));
   // console.log(localStorage.getItem("arrproduct"));
 });
 
@@ -220,8 +231,8 @@ btnuncheckall.addEventListener("click", function (event) {
   var arrproduct = [];
   var arrproductnull = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  if (localStorage.getItem("arrproduct_promo") != null) {
+    arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
   }
 
   for (var i = 0; i < chkproduct.length; i++) {
@@ -231,7 +242,7 @@ btnuncheckall.addEventListener("click", function (event) {
     }
   }
 
-  localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
+  localStorage.setItem("arrproduct_promo", JSON.stringify(arrproductnull));
   // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
   // console.log(localStorage.getItem('arrproduct'));
 });
@@ -331,8 +342,10 @@ function get_data_product(stock, rack) {
             data: "sku",
             render: function (data, type, full, meta) {
               //check checked product from local storage
-              if (localStorage.getItem("arrproduct") != null) {
-                var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+              if (localStorage.getItem("arrproduct_promo") != null) {
+                var arrproduct = JSON.parse(
+                  localStorage.getItem("arrproduct_promo")
+                );
                 if (arrproduct.includes(data)) {
                   return (
                     '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
@@ -364,6 +377,18 @@ function get_data_product(stock, rack) {
           { data: "rack" },
           { data: "priceafter" },
           { data: "discountname" },
+          {
+            data: "sku",
+            render: function (data, type, full, meta) {
+              return (
+                '<input style="width: 100%" type="number" class="largerCheckbox" id="copy' +
+                data +
+                '" value="1">'
+              );
+
+              // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
+            },
+          },
         ],
       });
       $("#loaderpos").hide();
@@ -378,8 +403,8 @@ $("#tableproductreguler").on(
     var chkproduct = document.getElementsByName("checkbox[]");
     var arrproduct = [];
 
-    if (localStorage.getItem("arrproduct") != null) {
-      arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    if (localStorage.getItem("arrproduct_promo") != null) {
+      arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
     }
 
     //remove when unchecked
@@ -391,8 +416,8 @@ $("#tableproductreguler").on(
 
     //add when checked
 
-    localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-    console.log(localStorage.getItem("arrproduct"));
+    localStorage.setItem("arrproduct_promo", JSON.stringify(arrproduct));
+    console.log(localStorage.getItem("arrproduct_promo"));
   }
 );
 
