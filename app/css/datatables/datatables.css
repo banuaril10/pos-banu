@@ -37,8 +37,8 @@ table.dataTable thead td {
   padding: 5px 18px;
   /* border-bottom: 1px solid #111; */
   /* background: blue !important; */
-  /* background:#243C84 !important; */
-  background:#1f3728 !important;
+  background:#001A6E !important;
+  /* background:#1f3728 !important; */
   
 }
 table.dataTable thead th:active,
