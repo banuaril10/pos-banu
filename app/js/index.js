@@ -861,7 +861,7 @@ var promomembertable=$('#tablepromomurah').DataTable( {
 //     });
 
 
-get_data_buy_get();
+
 function get_data_buy_get() {
   $("#loaderpos").show();
   $.ajax({
@@ -887,6 +887,33 @@ function get_data_buy_get() {
           { data: "priceget" },
           { data: "pricediscount" },
           { data: "priceafter" },
+        ],
+      });
+      $("#loaderpos").hide();
+    },
+  });
+}
+
+function get_data_grosir() {
+  $("#loaderpos").show();
+  $.ajax({
+    url:
+      "http://" + api_storeapps + "/pi/api/cyber/get_product_promo_grosir.php",
+    type: "GET",
+    success: function (dataResult) {
+      console.log(dataResult);
+      var dataResult = JSON.parse(dataResult);
+      $("#tablegrosir").DataTable({
+        data: dataResult,
+        lengthMenu: [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"],
+        ],
+        columns: [
+          { data: "sku" },
+          { data: "stock" },
+          { data: "name" },
+          { data: "grosir_price" },
         ],
       });
       $("#loaderpos").hide();
@@ -1547,17 +1574,24 @@ function openmurahpromo(){
 };
 
 function openlistbuyget(){
+  //destroy datatable $("#tablebuyget").DataTable
+  $("#tablebuyget").DataTable().destroy();
+  get_data_buy_get();
   promooptionmod.close();
 
   if (isDialogSupported) {
     listbuygetmod.showModal();
-   } else {
+  } else {
     listbuygetmod.setAttribute("open", "");
-   };
+  }
   // cashmod.querySelector("input").focus();
 };
 
 function openlistgrosir(){
+
+  //destroy datatable $("#tablegrosir").DataTable
+  $("#tablegrosir").DataTable().destroy();
+  get_data_grosir();
   promooptionmod.close();
 
   if (isDialogSupported) {
