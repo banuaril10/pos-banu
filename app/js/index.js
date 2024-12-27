@@ -1506,6 +1506,12 @@ btnbuyandget.addEventListener('click',function (event){
 });
 
 
+const btngrosir = document.getElementById("btngrosirpromo");
+btngrosir.addEventListener("click", function (event) {
+  openlistgrosir();
+});
+
+
 
 function openregulerpromo(){
   promooptionmod.close();
@@ -1551,6 +1557,18 @@ function openlistbuyget(){
   // cashmod.querySelector("input").focus();
 };
 
+function openlistgrosir(){
+  promooptionmod.close();
+
+  if (isDialogSupported) {
+    listgrosirmod.showModal();
+    } else {
+    listgrosirmod.setAttribute("open", "");
+    };
+  // cashmod.querySelector("input").focus();
+};
+
+
 
 function openbuyget(){
   let objBuyGet=get_auth_data("/pos/dtempbuygetbybill",{ f1:lastbillno },false);
@@ -1590,6 +1608,12 @@ buttonpromomurahclose.addEventListener('click',function (event){
 const buttonlistbuygetclose=document.getElementById('buttonlistbuygetclose');
 buttonlistbuygetclose.addEventListener('click',function (event){
   listbuygetmod.close();
+});
+
+// close Grosir
+const buttonlistgrosirclose=document.getElementById('buttonlistgrosirclose');
+buttonlistgrosirclose.addEventListener('click',function (event){
+  listgrosirmod.close();
 });
 
 

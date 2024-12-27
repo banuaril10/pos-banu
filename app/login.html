@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- <html lang="en-us" id="lock-page" style="background-color: #000 !important; background: url('img/rb_61087.png');"> -->
-<html lang="en-us" id="lock-page" style="background-color: #000 !important;">
+<html lang="en-us" id="lock-page" style="background:url('img/bg.png') !important;">
 	<head>
 		<meta charset="utf-8">
 		<title>Infinite POS</title>
@@ -34,8 +34,8 @@
 
 	</head>
 	
-	<!-- <body style="background-color: #000 !important; background: url('img/rb_61087.png');"> -->
-	<body style="background-color: #000 !important;">
+	<body style="background: none !important;">
+	<!-- <body style="background-color: #000 !important;"> -->
 	<div id="notification" class="hidden">
   <p id="message"></p>
   <button id="close-button" onClick="closeNotification()">
@@ -46,19 +46,33 @@
   </button>
 </div>
 
-		<div id="main" role="main">
-				<h3 class="text-white" id="print_path"></h3>
+		<div style="margin-left: 0px" id="main" role="main">
+			<table>
+				<tr>
+					<td><img src="img/avatars/sunny-big.png" alt="" width="100" /></td>
+					<td><img src="img/idolaku.png" alt="" width="100" /></td>
+					<td><img src="img/uniqu.png" alt="" width="80" /></td>
+				</tr>
+			</table>
+			<!-- MAIN CONTENT -->
+
+			<!-- <img src="img/avatars/sunny-big.png" alt="" width="250" height="140" />
+			<h3 class="text-white" id="print_path"></h3> -->
 
 			<!-- MAIN CONTENT -->
 
-			<form id="login_form" name="login_form" method="POST" class="lockscreen animated flipInY " style="width: 620px !important">
+			<form id="login_form" name="login_form" method="POST" class="lockscreen animated flipInY " style="width: 620px !important; left: 45% !important">
 				<div class="logo">
-					<h1 class="semi-bold-light"><img src="img/logo-o.png" alt="" /><div id="divshopname"></div> Versi : <font id="version"> </font></h1>	
+
+<!-- <img src="img/avatars/sunny-big.png" alt="" width="250" height="140" /> -->
+
+					<center><h1 class="semi-bold-light"><div id="divshopname"></div></h1>	<h3 class="text-white" id="print_path"></h3></center>
+					
 					
 						
 				</div>
-				<div style="width: 100%">
-					<img src="img/avatars/sunny-big.png" alt="" width="250" height="140" />
+				<div style="width: 100%; text-align: center; border-radius: 5%;">
+					
 					<!--<img src='img/zul.png' width="200" height="140"></img>-->
 					<div>
 						<h1><i class="fa fa-user fa-3x text-muted air air-top-right hidden-mobile" ></i><div id="cek-version"> </div><div id="divcashiername"></div> 
@@ -72,18 +86,18 @@
 										
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" id="userid" class="form-control" name="userid" placeholder="User ID">
+											<input style="width: 100%" type="text" id="userid" class="form-control" name="userid" placeholder="User ID">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your User ID</b>
 										</label>
 										<div class="note">
 											<!-- <a href="forgotpassword.html">Forgot password?</a> -->
 										</div>
-							</section>
+								</section>
 								<section>
 										
 										<label class="input">
 											<i class="icon-append fa fa-lock"></i>
-											<input type="password" id="userpwd" class="form-control" name="userpwd" placeholder="Password">
+											<input style="width: 100%" type="password" id="userpwd" class="form-control" name="userpwd" placeholder="Password">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
 										</label>
 										<div class="note">
@@ -101,8 +115,8 @@
 					</div>
 				</div>
 				<div class="alert alert-warning" style="display: none;"></div>
-				<p class="font-xs margin-top-5">
-					Copyright Infinite ERP (Custom By Idolmart) 2024.
+				<p class="font-xs margin-top-5" style="text-align: center; color: #fff">
+					Copyright Idolmart 2024.
 
 				</p>
 			</form>

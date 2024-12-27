@@ -35,6 +35,27 @@
         border-radius: 50%;
         display: inline-block;
       }
+
+      @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* body {
+            background: #192655 !important;
+        } */
+
+        /* //change th color  */
+        th {
+            background: #192655 !important;
+            border: 1px solid #fff !important;
+            color: white;
+        }
+
 	
     </style>
     <title>InfinitePOS</title>
@@ -52,6 +73,7 @@
 					
 				</h3>
             </div>
+
 			
 			
             <div class="col-sm-6">
@@ -236,6 +258,13 @@
   
   
   <div class="footer">
+    <div class="row">
+        <div class="col-sm-12">
+            <marquee direction="left" scrollamount="5" style="color: white; font-size: 20px; font-weight: bold; 
+            animation: pulse 10s linear infinite;">
+               Silahkan Kasir Input NIK Karyawan yang melayani Transaksi Konsumen Struk ini..</marquee>
+        </div>
+    </div>
   
     <div class="row">
 	 <div class="col-sm-4 pr-md-1"> 
@@ -618,6 +647,7 @@
                     <button type="button" id="btnmemberpromo" class="btn btn-danger btn-lg btn-block">Member Promo</button> 
                     <button type="button" id="btnmurahpromo" class="btn btn-warning btn-lg btn-block">Tebus Murah</button> 
                     <button type="button" id="btnbuyandget" class="btn btn-success btn-lg btn-block">Buy and Get</button> 
+                    <button type="button" id="btngrosirpromo" class="btn btn-success btn-lg btn-block">Grosir</button> 
             </div>
         </div>
              
@@ -727,6 +757,31 @@
     </div>
     <div class="modal-footer">
             <button type="button" id="buttonlistbuygetclose" class="btn btn-primary">Close</button>
+    </div>
+</dialog>
+
+
+<dialog id="listgrosirmod" >
+    <div class="row">
+        <div class="col-sm-12 text-center"><h3>Item Grosir</h3> <hr></div>
+    </div>
+      
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table id="tablegrosir" class="table table-bordered dataTable"  width="100%">
+                <thead>
+                    <tr>
+                        <th>SKU (Barcode)</th>
+                        <th>Nama Items</th>
+                        <th>Info Promo</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+            <button type="button" id="buttonlistgrosirclose" class="btn btn-primary">Close</button>
     </div>
 </dialog>
 
@@ -869,6 +924,9 @@
     </div>
          
 </dialog>
+
+
+
 
 </body>
 <script src="../node_modules/jquery/dist/jquery.js"></script>
