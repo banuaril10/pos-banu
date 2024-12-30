@@ -31,16 +31,27 @@ btnback.addEventListener("click", function (event) {
 
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
-  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  var arrproduct = JSON.parse(localStorage.getItem("arrproduct_grosir"));
   cetak_pricetag_promo_grosir(arrproduct);
 });
 
 
 function cetak_pricetag_promo_grosir(arrproduct) {
+
+   var arrcopy = [];
+   arrproduct.forEach(function (item) {
+     var copy = document.getElementById("copy" + item).value;
+     arrcopy.push(copy);
+   });
+
+   // var arrcopy = JSON.parse(arrcopy);
+   console.log(arrcopy);
+
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo_grosir.php",
+    url:
+      "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo_grosir.php",
     type: "POST",
-    data: { arrproduct: arrproduct },
+    data: { arrproduct: arrproduct, arrcopy: arrcopy },
     beforeSend: function () {
       $("#statussync").html("proses get");
     },
@@ -97,8 +108,8 @@ btncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  if (localStorage.getItem("arrproduct_grosir") != null) {
+    arrproduct = JSON.parse(localStorage.getItem("arrproduct_grosir"));
   }
 
   for (var i = 0; i < chkproduct.length; i++) {
@@ -116,7 +127,7 @@ btncheckall.addEventListener("click", function (event) {
     }
   }
 
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+  localStorage.setItem("arrproduct_grosir", JSON.stringify(arrproduct));
   // console.log(localStorage.getItem("arrproduct"));
 });
 
@@ -127,8 +138,8 @@ btnuncheckall.addEventListener("click", function (event) {
   var arrproduct = [];
   var arrproductnull = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  if (localStorage.getItem("arrproduct_grosir") != null) {
+    arrproduct = JSON.parse(localStorage.getItem("arrproduct_grosir"));
   }
 
   for (var i = 0; i < chkproduct.length; i++) {
@@ -138,7 +149,7 @@ btnuncheckall.addEventListener("click", function (event) {
     }
   }
 
-  localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
+  localStorage.setItem("arrproduct_grosir", JSON.stringify(arrproductnull));
   // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
   // console.log(localStorage.getItem('arrproduct'));
 });
@@ -215,8 +226,10 @@ function get_data_product(stock) {
             data: "sku",
             render: function (data, type, full, meta) {
               //check checked product from local storage
-              if (localStorage.getItem("arrproduct") != null) {
-                var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+              if (localStorage.getItem("arrproduct_grosir") != null) {
+                var arrproduct = JSON.parse(
+                  localStorage.getItem("arrproduct_grosir")
+                );
                 if (arrproduct.includes(data)) {
                   return (
                     '<input type="checkbox" class="largerCheckbox" name="checkbox[]" value="' +
@@ -247,6 +260,18 @@ function get_data_product(stock) {
           { data: "stock" },
           { data: "grosir_price" },
           { data: "discountname" },
+          {
+            data: "sku",
+            render: function (data, type, full, meta) {
+              return (
+                '<input style="width: 100%" type="number" class="largerCheckbox" id="copy' +
+                data +
+                '" value="1">'
+              );
+
+              // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
+            },
+          },
         ],
       });
     },
@@ -260,8 +285,8 @@ $("#tableproductgrosir").on(
     var chkproduct = document.getElementsByName("checkbox[]");
     var arrproduct = [];
 
-    if (localStorage.getItem("arrproduct") != null) {
-      arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+    if (localStorage.getItem("arrproduct_grosir") != null) {
+      arrproduct = JSON.parse(localStorage.getItem("arrproduct_grosir"));
     }
 
     //remove when unchecked
@@ -273,8 +298,8 @@ $("#tableproductgrosir").on(
 
     //add when checked
 
-    localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-    console.log(localStorage.getItem("arrproduct"));
+    localStorage.setItem("arrproduct_grosir", JSON.stringify(arrproduct));
+    console.log(localStorage.getItem("arrproduct_grosir"));
   }
 );
 
