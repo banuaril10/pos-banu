@@ -35,10 +35,17 @@ btnprintpricetag.addEventListener("click", function (event) {
   cetak_pricetag(arrproduct);
 });
 
+const btnprintplanogram = document.getElementById("btnprintplanogram");
+btnprintplanogram.addEventListener("click", function (event) {
+  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+  cetak_planogram(arrproduct);
+});
 
-function cetak_pricetag_promo(arrproduct) {
+
+// cetak table planogram with column sku, name, rack
+function cetak_planogram(arrproduct) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_plano.php",
     type: "POST",
     data: { arrproduct: arrproduct },
     beforeSend: function () {
@@ -47,13 +54,34 @@ function cetak_pricetag_promo(arrproduct) {
     async: false,
     success: function (dataResult) {
       var dataResult = JSON.parse(dataResult);
-      var hasil = cetak_promo(dataResult);
+      var hasil = cetak_planogram_table(dataResult);
       // console.log(hasil);
 
       createWindowPriceTag(hasil);
     },
   });
 }
+
+
+
+// function cetak_pricetag_promo(arrproduct) {
+//   $.ajax({
+//     url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag_promo.php",
+//     type: "POST",
+//     data: { arrproduct: arrproduct },
+//     beforeSend: function () {
+//       $("#statussync").html("proses get");
+//     },
+//     async: false,
+//     success: function (dataResult) {
+//       var dataResult = JSON.parse(dataResult);
+//       var hasil = cetak_promo(dataResult);
+//       // console.log(hasil);
+
+//       createWindowPriceTag(hasil);
+//     },
+//   });
+// }
 
 function cetak_pricetag(arrproduct) {
   //foreach arrproduct

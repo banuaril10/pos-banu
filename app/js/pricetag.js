@@ -3,6 +3,8 @@ require("popper.js");
 require("bootstrap");
 var $ = require("jquery");
 let remote = require('electron').remote
+const { session } = require("electron");
+
 // get cashier information
 $("#loaderpos").html(
   "<img id='loading-image' src='./img/loading2.gif' alt='Loading...' />"
@@ -53,17 +55,17 @@ btnpricetagbabydoll.addEventListener("click", function (event) {
 
 
 
-const btnprintpricetag = document.getElementById("btnprintpricetag");
-btnprintpricetag.addEventListener("click", function (event) {
-  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag(arrproduct);
-});
+// const btnprintpricetag = document.getElementById("btnprintpricetag");
+// btnprintpricetag.addEventListener("click", function (event) {
+//   var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+//   cetak_pricetag(arrproduct);
+// });
 
-const btnprintpricetagpromo = document.getElementById("btnprintpricetagpromo");
-btnprintpricetagpromo.addEventListener("click", function (event) {
-  var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag_promo(arrproduct);
-});
+// const btnprintpricetagpromo = document.getElementById("btnprintpricetagpromo");
+// btnprintpricetagpromo.addEventListener("click", function (event) {
+//   var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+//   cetak_pricetag_promo(arrproduct);
+// });
 
 function cetak_pricetag_promo(arrproduct) {
   $.ajax({
@@ -83,6 +85,26 @@ function cetak_pricetag_promo(arrproduct) {
     },
   });
 }
+
+
+// btnuncheckall.addEventListener("click", function (event) {
+//   var chkproduct = document.getElementsByName("checkbox[]");
+//   var arrproduct = [];
+//   var arrproductnull = [];
+
+//   if (localStorage.getItem("arrproduct") != null) {
+//     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+//   }
+
+//   for (var i = 0; i < chkproduct.length; i++) {
+//     if (arrproduct.includes(chkproduct[i].value)) {
+//       chkproduct[i].checked = false;
+//       //arrproduct.splice(arrproduct.indexOf(chkproduct[i].value),1);
+//     }
+//   }
+
+//   localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
+// });
 
 function cetak_pricetag(arrproduct) {
 
@@ -214,55 +236,56 @@ $("#filterstock").on("click", function () {
 
 
 // btncheckall and save checked product from datatable to local storage
-const btncheckall = document.getElementById("btncheckall");
-btncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("checkbox[]");
-  var arrproduct = [];
+// const btncheckall = document.getElementById("btncheckall");
+// btncheckall.addEventListener("click", function (event) {
+//   var chkproduct = document.getElementsByName("checkbox[]");
+//   var arrproduct = [];
 
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
+//   if (localStorage.getItem("arrproduct") != null) {
+//     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
+//   }
 
-  for (var i = 0; i < chkproduct.length; i++) {
-    //check if product is already in local storage
-    if (arrproduct.includes(chkproduct[i].value)) {
-      //uncheck product
-      chkproduct[i].checked = false;
-      //remove product from local storage
-      arrproduct.splice(arrproduct.indexOf(chkproduct[i].value), 1);
-    } else {
-      //checked product
-      chkproduct[i].checked = true;
-      //add product to local storage
-      arrproduct.push(chkproduct[i].value);
-    }
-  }
+//   for (var i = 0; i < chkproduct.length; i++) {
+//     //check if product is already in local storage
+//     if (arrproduct.includes(chkproduct[i].value)) {
+//       //uncheck product
+//       chkproduct[i].checked = false;
+//       //remove product from local storage
+//       arrproduct.splice(arrproduct.indexOf(chkproduct[i].value), 1);
+//     } else {
+//       //checked product
+//       chkproduct[i].checked = true;
+//       //add product to local storage
+//       arrproduct.push(chkproduct[i].value);
+//     }
+//   }
 
-  localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  // console.log(localStorage.getItem("arrproduct"));
-});
+//   localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+//   // console.log(localStorage.getItem("arrproduct"));
+// });
 
 // btnuncheckall;
 const btnuncheckall = document.getElementById("btnuncheckall");
-btnuncheckall.addEventListener("click", function (event) {
-  var chkproduct = document.getElementsByName("checkbox[]");
-  var arrproduct = [];
-  var arrproductnull = [];
-
-  if (localStorage.getItem("arrproduct") != null) {
-    arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  }
-
-  for (var i = 0; i < chkproduct.length; i++) {
-    if (arrproduct.includes(chkproduct[i].value)) {
-      chkproduct[i].checked = false;
-      //arrproduct.splice(arrproduct.indexOf(chkproduct[i].value),1);
-    }
-  }
-
-  localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
-  // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
-  // console.log(localStorage.getItem('arrproduct'));
+//onclick
+btnuncheckall.addEventListener("click", async () => {
+  //clear arrproduct from local storage
+  localStorage.removeItem("arrproduct");
+  
+  //  try {
+  //    const result = await window.electronAPI.clearStorage();
+  //    console.log(result);
+  //    alert(result); // Optional: Inform the user
+  //  } catch (error) {
+  //    console.error(error.message);
+  //    alert("Failed to clear storage: " + error.message);
+  //  }
+  // session.defaultSession
+  //   .clearStorageData({
+  //     storages: ["localstorage"],
+  //   })
+  //   .then(() => {
+  //     console.log("Local Storage cleared!");
+  //   });
 });
 
 

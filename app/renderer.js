@@ -22,6 +22,11 @@ if (localStorage.getItem('user') == null) {
     divusername.innerHTML =  objuser.username;
 }
 
+// const { contextBridge, ipcRenderer } = require("electron");
+
+// contextBridge.exposeInMainWorld("electronAPI", {
+//   clearStorage: () => ipcRenderer.invoke("clear-storage"),
+// });
 
 
 ipc.on("window-id-sent", (event,id) => {

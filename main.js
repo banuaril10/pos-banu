@@ -19,6 +19,13 @@ var macaddress = require('macaddress');
 const is = require("electron-is");
 
 
+// const localStoragePath = path.join(app.getPath("userData"), "Local Storage");
+// const { session } = require("electron");
+
+
+
+
+
 const { autoUpdater } = require('electron-updater');
 const { error } = require('console');
 
@@ -218,6 +225,18 @@ function gethome(){
 
 //open apps posserver-win.exe from documents
 function openApps(os_val) {
+  //delete localStoragePath
+  // const dirPath = path.join(app.getPath("userData"), "Local Storage");
+  // const fs = require("fs");
+
+  // fs.rm(dirPath, { recursive: true, force: true }, (err) => {
+  //   if (err) {
+  //     console.error("Failed to remove directory:", err);
+  //   } else {
+  //     console.log("Directory successfully removed!");
+  //   }
+  // });
+  
   var exec = require("child_process").execFile;
 
   if (os_val == "Windows") {
@@ -246,6 +265,21 @@ function openApps(os_val) {
 
 
 app.on('ready', function() {
+  //then 
+
+    app.whenReady().then(() => {
+      // session.defaultSession
+      //   .clearStorageData({
+      //     storages: ["localstorage"],
+      //   })
+      //   .then(() => {
+      //     console.log("Local Storage cleared!");
+      //   });
+    });
+
+
+
+
   openApps(os_val);
 });
 
@@ -255,6 +289,17 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 });
+
+// ipcMain.handle("clear-storage", async () => {
+//   try {
+//     await session.defaultSession.clearStorageData({
+//       storages: ["localstorage", "cookies", "indexeddb", "cache"], // Adjust as needed
+//     });
+//     return "Storage cleared!";
+//   } catch (error) {
+//     throw new Error("Failed to clear storage: " + error.message);
+//   }
+// });
 
 // ipc.on("send-window-id", (event) => {
   // event.sender.send("window-id-sent", mainWindow.id);
