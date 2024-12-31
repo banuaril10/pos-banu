@@ -32,20 +32,21 @@ btnback.addEventListener("click", function (event) {
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
   var arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
-  cetak_pricetag_promo(arrproduct);
+  var arrcopy = JSON.parse(localStorage.getItem("arrcopy_promo"));
+  cetak_pricetag_promo(arrproduct, arrcopy);
 });
 
 
-function cetak_pricetag_promo(arrproduct) {
+function cetak_pricetag_promo(arrproduct, arrcopy) {
 
-    var arrcopy = [];
-    arrproduct.forEach(function (item) {
-      var copy = document.getElementById("copy" + item).value;
-      arrcopy.push(copy);
-    });
+    // var arrcopy = [];
+    // arrproduct.forEach(function (item) {
+    //   var copy = document.getElementById("copy" + item).value;
+    //   arrcopy.push(copy);
+    // });
 
-    // var arrcopy = JSON.parse(arrcopy);
-    console.log(arrcopy);
+    // // var arrcopy = JSON.parse(arrcopy);
+    // console.log(arrcopy);
 
 
   $.ajax({
@@ -66,26 +67,26 @@ function cetak_pricetag_promo(arrproduct) {
   });
 }
 
-function cetak_pricetag(arrproduct) {
+// function cetak_pricetag(arrproduct) {
 
-  $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
-    type: "POST",
-    data: { arrproduct: arrproduct },
-    beforeSend: function () {
-      $("#statussync").html("proses sync shortcut");
-    },
-    async: false,
-    success: function (dataResult) {
+//   $.ajax({
+//     url: "http://" + api_storeapps + "/pi/api/cyber/get_pricetag.php",
+//     type: "POST",
+//     data: { arrproduct: arrproduct },
+//     beforeSend: function () {
+//       $("#statussync").html("proses sync shortcut");
+//     },
+//     async: false,
+//     success: function (dataResult) {
 
-      var dataResult = JSON.parse(dataResult);
-      var hasil = cetak_reguler(dataResult);
-      // console.log(hasil);
+//       var dataResult = JSON.parse(dataResult);
+//       var hasil = cetak_reguler(dataResult);
+//       // console.log(hasil);
 
-      createWindowPriceTag(hasil);
-    },
-  });
-}
+//       createWindowPriceTag(hasil);
+//     },
+//   });
+// }
 
 function getproductinfo() {
   $.ajax({
@@ -200,9 +201,14 @@ const btncheckall = document.getElementById("btncheckall");
 btncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
+  var arrcopy = [];
 
   if (localStorage.getItem("arrproduct_promo") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
+  }
+
+  if (localStorage.getItem("arrcopy") != null) {
+    arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
   }
 
   for (var i = 0; i < chkproduct.length; i++) {
@@ -212,15 +218,26 @@ btncheckall.addEventListener("click", function (event) {
       chkproduct[i].checked = false;
       //remove product from local storage
       arrproduct.splice(arrproduct.indexOf(chkproduct[i].value), 1);
+
+       arrcopy = arrcopy.filter((item) => item.sku !== this.value);
+
     } else {
       //checked product
       chkproduct[i].checked = true;
       //add product to local storage
       arrproduct.push(chkproduct[i].value);
+
+      var copy = $("#copy" + chkproduct[i].value).val();
+      if (copy == "") {
+        copy = 1;
+      }
+      arrcopy.push({ sku: chkproduct[i].value, copy: copy });
+
     }
   }
 
   localStorage.setItem("arrproduct_promo", JSON.stringify(arrproduct));
+  localStorage.setItem("arrcopy_promo", JSON.stringify(arrcopy));
   // console.log(localStorage.getItem("arrproduct"));
 });
 
@@ -230,10 +247,15 @@ btnuncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
   var arrproductnull = [];
+  var arrcopynull = [];
 
   if (localStorage.getItem("arrproduct_promo") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
   }
+
+   if (localStorage.getItem("arrcopy") != null) {
+     arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+   }
 
   for (var i = 0; i < chkproduct.length; i++) {
     if (arrproduct.includes(chkproduct[i].value)) {
@@ -243,6 +265,7 @@ btnuncheckall.addEventListener("click", function (event) {
   }
 
   localStorage.setItem("arrproduct_promo", JSON.stringify(arrproductnull));
+  localStorage.setItem("arrcopy_promo", JSON.stringify(arrcopynull));
   // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
   // console.log(localStorage.getItem('arrproduct'));
 });
@@ -337,6 +360,10 @@ function get_data_product(stock, rack) {
       var dataResult = JSON.parse(dataResult);
       $("#tableproductreguler").DataTable({
         data: dataResult,
+        lengthMenu: [
+          [10, 25, 50, 100, 500, 1000, -1],
+          [10, 25, 50, 100, 500, 1000, "All"],
+        ],
         columns: [
           {
             data: "sku",
@@ -402,21 +429,33 @@ $("#tableproductreguler").on(
   function () {
     var chkproduct = document.getElementsByName("checkbox[]");
     var arrproduct = [];
+    var arrcopy = [];
 
     if (localStorage.getItem("arrproduct_promo") != null) {
       arrproduct = JSON.parse(localStorage.getItem("arrproduct_promo"));
     }
 
+    if (localStorage.getItem("arrcopy_promo") != null) {
+      arrcopy = JSON.parse(localStorage.getItem("arrcopy_promo"));
+    }
+
     //remove when unchecked
     if (!this.checked) {
       arrproduct.splice(arrproduct.indexOf(this.value), 1);
+      arrcopy = arrcopy.filter((item) => item.sku !== this.value);
     } else {
       arrproduct.push(this.value);
+      var copy = $("#copy" + this.value).val();
+      if (copy == "") {
+        copy = 1;
+      }
+      arrcopy.push({ sku: this.value, copy: copy });
     }
 
     //add when checked
 
     localStorage.setItem("arrproduct_promo", JSON.stringify(arrproduct));
+    localStorage.setItem("arrcopy_promo", JSON.stringify(arrcopy));
     console.log(localStorage.getItem("arrproduct_promo"));
   }
 );

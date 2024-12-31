@@ -32,7 +32,8 @@ btnback.addEventListener("click", function (event) {
 const btnprintpricetag = document.getElementById("btnprintpricetag");
 btnprintpricetag.addEventListener("click", function (event) {
   var arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
-  cetak_pricetag(arrproduct);
+  var arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+  cetak_pricetag(arrproduct, arrcopy);
 });
 
 const btnprintplanogram = document.getElementById("btnprintplanogram");
@@ -83,16 +84,20 @@ function cetak_planogram(arrproduct) {
 //   });
 // }
 
-function cetak_pricetag(arrproduct) {
+function cetak_pricetag(arrproduct, arrcopy) {
   //foreach arrproduct
-  var arrcopy = [];
-  arrproduct.forEach(function (item) {
-    var copy = document.getElementById("copy" + item).value;
-    arrcopy.push(copy);
-  });
+  // var arrcopy = [];
+  // arrproduct.forEach(function (item) {
+  //   //baca value copy di halaman lain datatable
+  //   var copy = $("#copy" + item).val();
 
-  // var arrcopy = JSON.parse(arrcopy);
-  console.log(arrcopy);
+  //   arrcopy.push(copy);
+
+    
+  // });
+
+  // // var arrcopy = JSON.parse(arrcopy);
+  // console.log(arrcopy);
 
 
   $.ajax({
@@ -226,10 +231,16 @@ const btncheckall = document.getElementById("btncheckall");
 btncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
+  var arrcopy = [];
 
   if (localStorage.getItem("arrproduct") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
   }
+
+  if (localStorage.getItem("arrcopy") != null) {
+    arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+  }
+
 
   for (var i = 0; i < chkproduct.length; i++) {
     //check if product is already in local storage
@@ -238,16 +249,27 @@ btncheckall.addEventListener("click", function (event) {
       chkproduct[i].checked = false;
       //remove product from local storage
       arrproduct.splice(arrproduct.indexOf(chkproduct[i].value), 1);
+      //remove arrcopy where sku = chkproduct[i].value
+      arrcopy = arrcopy.filter((item) => item.sku !== this.value);
+
     } else {
       //checked product
       chkproduct[i].checked = true;
       //add product to local storage
       arrproduct.push(chkproduct[i].value);
+      //add arrcopy
+      var copy = $("#copy" + chkproduct[i].value).val();
+      if (copy == "") {
+        copy = 1;
+      }
+      arrcopy.push({sku:chkproduct[i].value, copy:copy});
     }
   }
 
   localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
-  // console.log(localStorage.getItem("arrproduct"));
+  localStorage.setItem("arrcopy", JSON.stringify(arrcopy));
+  console.log(localStorage.getItem("arrproduct"));
+  console.log(localStorage.getItem("arrcopy"));
 });
 
 // btnuncheckall;
@@ -256,10 +278,16 @@ btnuncheckall.addEventListener("click", function (event) {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
   var arrproductnull = [];
+  var arrcopynull = [];
 
   if (localStorage.getItem("arrproduct") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
   }
+
+  if (localStorage.getItem("arrcopy") != null) {
+    arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+  }
+
 
   for (var i = 0; i < chkproduct.length; i++) {
     if (arrproduct.includes(chkproduct[i].value)) {
@@ -269,8 +297,12 @@ btnuncheckall.addEventListener("click", function (event) {
   }
 
   localStorage.setItem("arrproduct", JSON.stringify(arrproductnull));
+  localStorage.setItem("arrcopy", JSON.stringify(arrcopynull));
+  //remove arrcopy where sku = chkproduct[i].value
+  
   // localStorage.setItem('arrproduct',JSON.stringify(arrproduct));
-  // console.log(localStorage.getItem('arrproduct'));
+  console.log(localStorage.getItem('arrproduct'));
+  console.log(localStorage.getItem('arrcopy'));
 });
 
 
@@ -278,17 +310,33 @@ btnuncheckall.addEventListener("click", function (event) {
 $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
   var chkproduct = document.getElementsByName("checkbox[]");
   var arrproduct = [];
+  var arrcopy = [];
 
   if (localStorage.getItem("arrproduct") != null) {
     arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
   }
 
+  if (localStorage.getItem("arrcopy") != null) {
+    arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+  }
+
+
  
       //remove when unchecked
       if (!this.checked) {
         arrproduct.splice(arrproduct.indexOf(this.value), 1);
+        //remove arrcopy where sku = chkproduct[i].value
+        arrcopy = arrcopy.filter((item) => item.sku !== this.value);
+
       } else {
         arrproduct.push(this.value);
+        //add arrcopy
+        var copy = $("#copy" + this.value).val();
+        if (copy == "") {
+          copy = 1;
+        }
+        arrcopy.push({sku:this.value, copy:copy});
+
       }
       
 
@@ -296,7 +344,10 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 
 
   localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+  localStorage.setItem("arrcopy", JSON.stringify(arrcopy));
+
   console.log(localStorage.getItem("arrproduct")); 
+  console.log(localStorage.getItem("arrcopy"));
 
 });
 
@@ -478,22 +529,49 @@ $("#tableproductreguler").on(
   function () {
     var chkproduct = document.getElementsByName("checkbox[]");
     var arrproduct = [];
+    var arrcopy = [];
 
     if (localStorage.getItem("arrproduct") != null) {
       arrproduct = JSON.parse(localStorage.getItem("arrproduct"));
     }
 
+    if (localStorage.getItem("arrcopy") != null) {
+      arrcopy = JSON.parse(localStorage.getItem("arrcopy"));
+    }
+
+
     //remove when unchecked
     if (!this.checked) {
       arrproduct.splice(arrproduct.indexOf(this.value), 1);
+      //splice arrcopy where sku = this.value
+      // arrcopy = arrcopy.filter(function (item) {
+      //   // return item.sku !== this.value;
+      //   alert(item.sku+" | "+this.value);
+      // });
+
+      arrcopy = arrcopy.filter((item) => item.sku !== this.value);
+
+      // console.log(arrcopy);
+
+
+
     } else {
-      arrproduct.push(this.value);
+      arrproduct.push(this.value);  
+      //add arrcopy
+      var copy = $("#copy" + this.value).val();
+      if (copy == "") {
+        copy = 1;
+      }
+      arrcopy.push({sku:this.value, copy:copy});
+
     }
 
     //add when checked
 
     localStorage.setItem("arrproduct", JSON.stringify(arrproduct));
+    localStorage.setItem("arrcopy", JSON.stringify(arrcopy));
     console.log(localStorage.getItem("arrproduct"));
+    console.log(localStorage.getItem("arrcopy"));
   }
 );
 
