@@ -413,8 +413,8 @@ function get_data_product(stock, rack) {
       $("#tableproductreguler").DataTable({
         data: dataResult,
         lengthMenu: [
-          [10, 25, 50, -1],
-          [10, 25, 50, "All"],
+          [10, 25, 50, 100, 500, 1000, -1],
+          [10, 25, 50, 100, 500, 1000, "All"],
         ],
         columns: [
           {
@@ -456,12 +456,12 @@ function get_data_product(stock, rack) {
           {
             data: "sku",
             render: function (data, type, full, meta) {
-                return (
-                  '<input style="width: 100%" type="number" class="largerCheckbox" id="copy' +
-                  data +
-                  '" value="1">'
-                );
-              
+              return (
+                '<input style="width: 100%" type="number" class="largerCheckbox" id="copy' +
+                data +
+                '" value="1">'
+              );
+
               // return '<input type="checkbox" name="chkproduct" value="'+data+'">';
             },
           },
