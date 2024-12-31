@@ -336,28 +336,7 @@ function print(strtext) {
       writeStream.end();
       cmd = perintah;
     } else {
-      //auto cut in php $html .= chr(29) . "V" . 0, but i want in node js
-      // const AUTOCUT_CMD = '\x1d\x56\x42\x00';
-      // perintah = 'echo "' + strtext+AUTOCUT_CMD + '" | lpr -o raw';
-
-  //  const AUTOCUT_CMD = "\x1d\x56\x42\x00";
-
-  //  // Combine text and command
-  //  const receiptData = strtext + AUTOCUT_CMD;
-
-  //  // Escape the text for shell compatibility
-  //  const escapedData = receiptData.replace(/(["$`\\])/g, "\\$1");
-
-   // Command to print
-  //  const perintah = `echo -e "${escapedData}" | lpr -o raw`;
-   const perintah = 'echo -e "Test Print" | lpr -o raw';
-
-   
-
-      // var perintah = "lp -d " + ip_printer + " -o cpi=10 -o lpi=7 print.txt";
-      // var writeStream = fs.createWriteStream("print.txt");
-      // writeStream.write(strtext);
-      // writeStream.end();
+      perintah = 'echo "' + strtext + '" | lpr -o raw';
       cmd = perintah;
       
     }
