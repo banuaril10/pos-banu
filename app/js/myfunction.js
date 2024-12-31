@@ -336,7 +336,8 @@ function print(strtext) {
       writeStream.end();
       cmd = perintah;
     } else {
-      perintah = 'echo "' + strtext + '" | lpr -o raw';
+
+      perintah = 'echo "' + strtext + '\x1d\x56\x42\x00" | lpr -o raw';
       cmd = perintah;
       
     }
