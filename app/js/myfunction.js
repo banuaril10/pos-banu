@@ -326,38 +326,68 @@ function print(strtext) {
       },
       success: function (dataResult) {},
     });
+  } else if (jenis_printer == "dot") {
+        const process = require("child_process"); // The power of Node.JS
+        var cmd = "";
+        if (is.windows()) {
+          var perintah = "notepad /p print.txt";
+          var writeStream = fs.createWriteStream("print.txt");
+          writeStream.write(strtext);
+          writeStream.end();
+          cmd = perintah;
+        } else {
+          perintah = 'echo "' + strtext + '" | lpr -o raw';
+          cmd = perintah;
+        }
+
+        var child = process.exec(cmd);
+        child.on("error", function (err) {
+          console.log("stderr: <" + err + ">");
+        });
+
+        child.stdout.on("data", function (data) {
+          console.log(data);
+        });
+
+        child.stderr.on("data", function (data) {
+          console.log("stderr: <" + data + ">");
+        });
+
+        child.on("close", function (code) {
+          if (code == 0) console.log("child process complete.");
+          else console.log("child process exited with code " + code);
+        });
   } else {
-    const process = require("child_process"); // The power of Node.JS
-    var cmd = "";
-    if (is.windows()) {
-      var perintah = "notepad /p print.txt";
-      var writeStream = fs.createWriteStream("print.txt");
-      writeStream.write(strtext);
-      writeStream.end();
-      cmd = perintah;
-    } else {
-      perintah = 'echo "' + strtext + '" | lpr -o raw';
-      cmd = perintah;
-      
-    }
+          const process = require("child_process"); // The power of Node.JS
+          var cmd = "";
+          if (is.windows()) {
+            var perintah = "notepad /p print.txt";
+            var writeStream = fs.createWriteStream("print.txt");
+            writeStream.write(strtext);
+            writeStream.end();
+            cmd = perintah;
+          } else {
+            perintah = 'echo "' + strtext + '" | lpr -o raw';
+            cmd = perintah;
+          }
 
-    var child = process.exec(cmd);
-    child.on("error", function (err) {
-      console.log("stderr: <" + err + ">");
-    });
+          var child = process.exec(cmd);
+          child.on("error", function (err) {
+            console.log("stderr: <" + err + ">");
+          });
 
-    child.stdout.on("data", function (data) {
-      console.log(data);
-    });
+          child.stdout.on("data", function (data) {
+            console.log(data);
+          });
 
-    child.stderr.on("data", function (data) {
-      console.log("stderr: <" + data + ">");
-    });
+          child.stderr.on("data", function (data) {
+            console.log("stderr: <" + data + ">");
+          });
 
-    child.on("close", function (code) {
-      if (code == 0) console.log("child process complete.");
-      else console.log("child process exited with code " + code);
-    });
+          child.on("close", function (code) {
+            if (code == 0) console.log("child process complete.");
+            else console.log("child process exited with code " + code);
+          });
   }
 }
 
