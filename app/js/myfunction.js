@@ -350,7 +350,7 @@ function print(strtext) {
 
    // Command to print
   //  const perintah = `echo -e "${escapedData}" | lpr -o raw`;
-   const perintah = 'echo -e "Test Print\x1d\x56\x42\x00" | lpr -o raw';
+   const perintah = 'echo -e "Test Print" | lpr -o raw';
 
    
 
