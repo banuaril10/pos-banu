@@ -340,16 +340,16 @@ function print(strtext) {
       // const AUTOCUT_CMD = '\x1d\x56\x42\x00';
       // perintah = 'echo "' + strtext+AUTOCUT_CMD + '" | lpr -o raw';
 
-      const AUTOCUT_CMD = "\x1d\x56\x42\x00";
+   const AUTOCUT_CMD = "\x1d\x56\x42\x00";
 
-      // Combine text and command
-      const receiptData = strtext + AUTOCUT_CMD;
+   // Combine text and command
+   const receiptData = strtext + AUTOCUT_CMD;
 
-      // Command to print
-      const perintah = `echo -e "${receiptData.replace(
-        /"/g,
-        '\\"'
-      )}" | lpr -o raw`;
+   // Escape the text for shell compatibility
+   const escapedData = receiptData.replace(/(["$`\\])/g, "\\$1");
+
+   // Command to print
+   const perintah = `echo -e "${escapedData}" | lpr -o raw`;
 
       // var perintah = "lp -d " + ip_printer + " -o cpi=10 -o lpi=7 print.txt";
       // var writeStream = fs.createWriteStream("print.txt");
