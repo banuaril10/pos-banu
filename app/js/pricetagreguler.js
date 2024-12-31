@@ -358,7 +358,6 @@ function createWindowPriceTag(texthtml) {
   //call store path_documents
   var path_documents = store.get("path_documents");
 
-
   let mainWindow = new BrowserWindow({
     fullscreen: false,
     width: 1000,
@@ -376,8 +375,8 @@ function createWindowPriceTag(texthtml) {
 
   var path_cetak = path_documents + "/cetak_pricetag.html";
 
-  var writeStream = fs.createWriteStream(path_cetak);
-  writeStream.end();
+  // var writeStream = fs.createWriteStream(path_cetak);
+  // writeStream.end();
 
   fs.writeFileSync(
     path.join(path_cetak),
