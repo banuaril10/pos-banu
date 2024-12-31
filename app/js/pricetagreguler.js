@@ -355,66 +355,41 @@ $("#tableproduct tbody").on("click", "input[type='checkbox']", function () {
 function createWindowPriceTag(texthtml) {
   const Store = require("electron-store");
   const store = new Store();
+  //call store path_documents
+  var path_documents = store.get("path_documents");
 
-  // Get the documents path from the store
-  const path_documents = store.get("path_documents");
-  if (!path_documents) {
-    console.error("Path documents is not defined in the store.");
-    return;
-  }
 
-  const path_cetak = path.join(path_documents, "cetak_pricetag.html");
+  let mainWindow = new BrowserWindow({
+    fullscreen: false,
+    width: 1000,
+    height: 600,
+    icon: path.join(__dirname, "assets/icons/png/icon.png"),
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
+  });
 
-  try {
-    // Write HTML content to the file
-    const htmlContent = `
-      <style>
-        @media print {
-          @page { 
-            size: portrait; 
-            width: 216mm; 
-            height: 280mm; 
-            margin-top: 15; 
-            margin-right: 2; 
-            margin-left: 2; 
-            padding: 0; 
-          }
-          margin: 0; 
-          padding: 0; 
-        }
-        table { page-break-inside: auto; }
-        tr { page-break-inside: avoid; page-break-after: auto; }
-      </style>
-      ${texthtml}
-    `;
-    fs.writeFileSync(path_cetak, htmlContent);
+  //create file cetak_pricetag.html if not exists
 
-    // Create the Electron BrowserWindow
-    const mainWindow = new BrowserWindow({
-      fullscreen: false,
-      width: 1000,
-      height: 600,
-      icon: path.join(__dirname, "assets/icons/png/icon.png"),
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-        nativeWindowOpen: true,
-        enableRemoteModule: true,
-      },
-    });
+  var path_cetak = path_documents + "/cetak_pricetag.html";
 
-    // Load the HTML file
-    mainWindow.loadFile(path_cetak);
+  var writeStream = fs.createWriteStream(path_cetak);
+  writeStream.end();
 
-    // Print after ensuring the content is loaded
-    mainWindow.webContents.on("did-finish-load", () => {
-      mainWindow.webContents.print({ silent: false }, (success, errorType) => {
-        if (!success) console.error("Print failed:", errorType);
-      });
-    });
-  } catch (error) {
-    console.error("Error creating price tag window:", error);
-  }
+  fs.writeFileSync(
+    path.join(path_cetak),
+    "<style>@media print{@page {size: potrait; width: 216mm;height: 280mm;margin-top: 15;margin-right: 2;margin-left: 2; padding: 0;} margin: 0; padding: 0;} table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto }</style>" +
+      texthtml
+  );
+
+  mainWindow.loadFile(path.join(path_cetak));
+
+  setTimeout(function () {
+    mainWindow.webContents.print();
+  }, 1000);
 }
 
 //get value id stocking
