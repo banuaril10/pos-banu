@@ -336,15 +336,7 @@ function print(strtext) {
       writeStream.end();
       cmd = perintah;
     } else {
-
-      // perintah = 'echo "' + strtext + '\x1d\x56\x42\x00" | lpr -o raw';
-      // cmd = perintah;
-
-
-      const AUTOCUT_CMD = "\x1d\x56\x42\x00";
-      const escapedContent = strtext.replace(/(["$`\\])/g, "\\$1");
-      const perintah = `echo -e "${escapedContent}${AUTOCUT_CMD}" | lpr -o raw`;
-
+      perintah = 'echo "' + strtext + '" | lpr -o raw';
       cmd = perintah;
       
     }
