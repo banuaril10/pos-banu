@@ -652,6 +652,9 @@ function syncSalesAuto() {
 
 setInterval(syncSalesAuto, 300000);
 
+//kirim data sales tanpa membuat aplikasi ngelag
+
+
 function logout(){
   localStorage.removeItem('token');
   localStorage.removeItem('menu');
