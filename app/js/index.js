@@ -724,7 +724,7 @@ function loadrefund(strsearch) {
           });       
 };   
 
-var promotable=$('#tablepromo').DataTable( {
+var promotable=$('#tablepromo').DataTable({
   "sDom": "<'dt-toolbar'<'col-sm-6' <'toolbar'>><'col-sm-12'f>>"+
   "t"+
   "<'dt-toolbar-footer'<'col-sm-2 col-xs-2 hidden-xs'l><'col-xs-12 col-sm-6'p>>",

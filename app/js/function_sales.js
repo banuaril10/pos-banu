@@ -32,7 +32,7 @@ if (!window.HTMLDialogElement) {
 
 function checkOnlineStatus() {
   $.get(
-    "https://intransit.idolmartidolaku.com/apiidolmart/sales_order",
+    "https://intransit.idolmartidolaku.com",
     function (data, status) {
       $("#online-status").html("<span class='dot-green'></span> ");
       $("#online-status").css("color", "green");
@@ -46,7 +46,7 @@ function checkOnlineStatus() {
     $("#online-status").append("OFFLINE");
   });
 }
-setInterval(checkOnlineStatus, 2000);
+setInterval(checkOnlineStatus, 5000);
 
 //function with loading spinner
 

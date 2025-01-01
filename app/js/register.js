@@ -20,9 +20,9 @@ if (!window.HTMLDialogElement) {
 console.log(domain);
 if (domain == "") {
   checkorg(has, domain, locationid);
-  getusersit();
+  getusersit(has, domain, locationid); 
 } else {
-  getidlocationbyname();
+  getidlocationbyname(); //ini register baru ubah org lama
 }
 
 function getidlocationbyname() {
@@ -58,9 +58,9 @@ function getidlocationbyname() {
   });
 }
 
-function getusersit() {
+function getusersit(has, domain, locationid) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/sync_users_it.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/sync_users_it.php?has=" + has + "&domain=" + domain + "&locationid=" + locationid,
     type: "GET",
     async: false,
     success: function (dataResult) {

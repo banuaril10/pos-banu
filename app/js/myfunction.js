@@ -650,7 +650,7 @@ function syncSalesAuto() {
   // alert("sync success");
 }
 
-setInterval(syncSalesAuto, 30000);
+setInterval(syncSalesAuto, 300000);
 
 function logout(){
   localStorage.removeItem('token');
