@@ -36,6 +36,8 @@ if (!window.HTMLDialogElement) {
   isDialogSupported = false;
 }
 
+
+
 var objshift=get_auth_data("/selects/select_filter",{f1:'',f2:'', f3: 'pos_mshift_get',f4:'' },false);
     var strshiftoption='';
    // strbuildingoption += '<option value="%">All</option>';
@@ -259,12 +261,216 @@ btnlaporan.addEventListener("click", function (event) {
   window.location.href = `file:///${__dirname}/report.html`;
 });
 
-;
+// btnpricetagberakhirdownload;
+const btnpricetagberakhirdownload=document.getElementById('btnpricetagberakhirdownload');
+btnpricetagberakhirdownload.addEventListener('click',function (event){
+  excel_promo_berakhir();
+});
+
+// btnpricetagmulaidownload;
+const btnpricetagmulaidownload=document.getElementById('btnpricetagmulaidownload');
+btnpricetagmulaidownload.addEventListener('click',function (event){
+  excel_promo_mulai();
+});
+
+function excel_promo_berakhir() {
+  const XLSX = require("xlsx"); // Import the library
+
+  $.ajax({
+    async: false,
+    url: "http://" + api_storeapps + "/pi/api/cyber/check_promo_active.php",
+    success: function (dataResult) {
+      try {
+        var parsedData = JSON.parse(dataResult);
+        var list_discountber_arr = parsedData.list_discountber_arr;
+
+        // Prepare Excel data
+        var excelData = [["SKU", "Discount Name", "From Date", "To Date"]]; // Headers
+        list_discountber_arr.forEach((item) => {
+          excelData.push([
+            item.sku,
+            item.discountname,
+            item.fromdate,
+            item.todate,
+          ]);
+        });
+
+        // Create workbook and worksheet
+        var workbook = XLSX.utils.book_new();
+        var worksheet = XLSX.utils.aoa_to_sheet(excelData);
+
+        // Append the worksheet
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Promo Berakhir");
+
+        // Save the file
+        const path = require("path");
+        const fs = require("fs");
+        const filePath = path.join(
+          __dirname,
+          "promo_berakhir_" +
+            (parsedData.nama_promo_berakhir || "data") +
+            ".xlsx"
+        );
+
+        // Write the Excel file to disk
+        XLSX.writeFile(workbook, filePath);
+
+        console.log("Excel file saved to:", filePath);
+      } catch (error) {
+        console.error("Error parsing JSON or generating Excel:", error);
+      }
+    },
+    error: function (error) {
+      console.error("AJAX request failed:", error);
+    },
+  });
+}
+
+function excel_promo_mulai() {
+
+  
+  const XLSX = require("xlsx"); // Import the library
+
+  $.ajax({
+    async: false,
+    url: "http://" + api_storeapps + "/pi/api/cyber/check_promo_active.php",
+    success: function (dataResult) {
+      try {
+        var parsedData = JSON.parse(dataResult);
+        var list_discountmul_arr = parsedData.list_discountmul_arr;
+
+        // Prepare Excel data
+        var excelData = [["SKU", "Discount Name", "From Date", "To Date"]]; // Headers
+        list_discountmul_arr.forEach((item) => {
+          excelData.push([
+            item.sku,
+            item.discountname,
+            item.fromdate,
+            item.todate,
+          ]);
+        });
+
+        // Create workbook and worksheet
+        var workbook = XLSX.utils.book_new();
+        var worksheet = XLSX.utils.aoa_to_sheet(excelData);
+
+        // Append the worksheet
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Promo Mulai");
+
+        // Save the file
+        const path = require("path");
+        const fs = require("fs");
+        const filePath = path.join(
+          __dirname,
+          "promo_mulai_" +
+            (parsedData.nama_promo_mulai || "data") +
+            ".xlsx"
+        );
+
+        // Write the Excel file to disk
+        XLSX.writeFile(workbook, filePath);
+
+        console.log("Excel file saved to:", filePath);
+      } catch (error) {
+        console.error("Error parsing JSON or generating Excel:", error);
+      }
+    },
+    error: function (error) {
+      console.error("AJAX request failed:", error);
+    },
+  });
+}
+
+function saveAs(blob, fileName) {
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href =
+
+    url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+
+
+
+function cek_promo_active() {
+  // Perform AJAX request
+  $.ajax({
+    async: false,
+    url: "http://" + api_storeapps + "/pi/api/cyber/check_promo_active.php",
+    success: function (dataResult) {
+      try {
+        // Parse the JSON response
+        console.log(dataResult);
+        var parsedData = JSON.parse(dataResult);
+
+        // {"mulai":[],"berakhir":[{"discountname":"OL1","jum":5}],"promo_mulai":0,"promo_berakhir":5}
+
+        // Check and handle parsed data 
+        if (parsedData.promo_berakhir >= 1) {
+          notifpricetagberakhir.showModal();
+          // text_promo_berakhir;
+          $("#text_promo_berakhir").html(parsedData.text_berakhir);
+        }
+        if (parsedData.promo_mulai >= 1) {
+          notifpricetagmulai.showModal();
+          // text_promo_mulai;
+          $("#text_promo_mulai").html(parsedData.text_mulai);
+        }
+
+        //jika keduanya 0
+        if (parsedData.promo_berakhir == 0 && parsedData.promo_mulai == 0) {
+          window.location.href = `file:///${__dirname}/sales_order.html`;
+        }
+      } catch (error) {
+        notifpricetagerror.showModal();
+        // Handle JSON parse errors
+        console.error("Error parsing JSON response:", error);
+        // window.location.href = `file:///${__dirname}/sales_order.html`;
+      }
+    },
+    error: function (error) {
+      // Handle AJAX errors
+      notifpricetagerror.showModal();
+      console.error("AJAX request failed:", error);
+      // window.location.href = `file:///${__dirname}/sales_order.html`;
+    },
+  });
+}
+
+
+
+var notifpricetagberakhir = document.getElementById("notifpricetagberakhir");
+var notifpricetagmulai = document.getElementById("notifpricetagmulai");
+var notifpricetagerror = document.getElementById("notifpricetagerror");
+
+const btnsalesorderokerr = document.getElementById("btnsalesorderokerr");
+const btnsalesorderokmul = document.getElementById("btnsalesorderokmul");
+const btnsalesorderokber = document.getElementById("btnsalesorderokber");
+
+btnsalesorderokerr.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/sales_order.html`;
+});
+
+btnsalesorderokmul.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/sales_order.html`;
+});
+
+btnsalesorderokber.addEventListener("click", function (event) {
+  window.location.href = `file:///${__dirname}/sales_order.html`;
+});
 
 const btnsalesorder = document.getElementById("btnsalesorder");
 btnsalesorder.addEventListener("click", function (event) {
-  window.location.href = `file:///${__dirname}/sales_order.html`;
+  //pop up dialog
+  // notifpricetagberakhir.showModal();
+  cek_promo_active();
 });
+
+
 
 const btnsetup=document.getElementById('btnsetup');
 btnsetup.addEventListener('click',function (event){

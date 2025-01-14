@@ -19,25 +19,23 @@ var isDialogSupported = true;
 if (!window.HTMLDialogElement) {
   document.body.classList.add("no-dialog");
   isDialogSupported = false;
-}
-
-;
-const date_awal = document.getElementById("date_awal");
-const date_akhir = document.getElementById("date_akhir");
+};
+const date_awal = document.getElementById("date_awal").value;
+const date_akhir = document.getElementById("date_akhir").value;
 
 //value date now
 var today = new Date();
 
 
 
-date_awal.value = today
-  .toISOString("dd/mm/yyyy")
-  .substr(0, 10)
-  .toString("dd/mm/yyyy");
-date_akhir.value = today
-  .toISOString("dd/mm/yyyy")
-  .substr(0, 10)
-  .toString("dd/mm/yyyy");
+// date_awal.value = today
+//   .toISOString("dd/mm/yyyy")
+//   .substr(0, 10)
+//   .toString("dd/mm/yyyy");
+// date_akhir.value = today
+//   .toISOString("dd/mm/yyyy")
+//   .substr(0, 10)
+//   .toString("dd/mm/yyyy");
 
 //change format date dd/mm/yyyy
 
@@ -80,37 +78,37 @@ function hide_all() {
 
 btnsalesitem.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_item();
+  get_report_sales_item(date_awal, date_akhir);
 });
 
 btnsalesdaily.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_daily();
+  get_report_sales_daily(date_awal, date_akhir);
 });
 
 btnsalesbycashier.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_by_cashier();
+  get_report_sales_by_cashier(date_awal, date_akhir);
 });
 
 btnsalesvoid.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_void();
+  get_report_sales_void(date_awal, date_akhir);
 });
 
 btnsalesnoncash.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_non_cash();
+  get_report_sales_non_cash(date_awal, date_akhir);
 });
 
 btnsalestoday.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_today();
+  get_report_sales_today(date_awal, date_akhir);
 });
 
 btnsalescategory.addEventListener("click", async function (event) {
   hide_all();
-  get_report_sales_category();
+  get_report_sales_category(date_awal, date_akhir);
 });
 
 btnexportexcel.addEventListener("click", async function (event) {
@@ -121,7 +119,7 @@ btnexportexcel.addEventListener("click", async function (event) {
   var dataexcel = [];
 
   if (jenis_laporan == "get_report_sales_by_cashier") {
-    data = get_excel_sales_by_cashier();
+    data = get_excel_sales_by_cashier(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Start Date");
@@ -161,7 +159,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_daily") {
-    data = get_excel_sales_daily();
+    data = get_excel_sales_daily(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Sales Date");
@@ -197,7 +195,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_void") {
-    data = get_excel_sales_void();
+    data = get_excel_sales_void(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Insert Date");
@@ -227,7 +225,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_non_cash") {
-    data = get_excel_sales_non_cash();
+    data = get_excel_sales_non_cash(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Sales Date");
@@ -247,7 +245,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_today") {
-    data = get_excel_sales_today();
+    data = get_excel_sales_today(date_awal, date_akhir);
     var row_title = [];
     row_title.push("Name Store");
     row_title.push("Omset");
@@ -265,7 +263,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_item") {
-    data = get_excel_sales_item();
+    data = get_excel_sales_item(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Date");
@@ -287,7 +285,7 @@ btnexportexcel.addEventListener("click", async function (event) {
       dataexcel.push(row);
     }
   } else if (jenis_laporan == "get_report_sales_category") {
-    data = get_excel_sales_category();
+    data = get_excel_sales_category(date_awal, date_akhir);
     var row_title = [];
     row_title.push("No");
     row_title.push("Date");
@@ -323,12 +321,9 @@ btnexportexcel.addEventListener("click", async function (event) {
 
 
 
-function get_report_sales_by_cashier() {
+function get_report_sales_by_cashier(date_awal, date_akhir) {
   $.ajax({
-    url:
-      "http://" +
-      api_storeapps +
-      "/pi/api/cyber/report_sales_cashier.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_cashier.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -365,10 +360,9 @@ function get_report_sales_by_cashier() {
   });
 }
 
-function get_report_sales_daily() {
+function get_report_sales_daily(date_awal, date_akhir) {
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -404,10 +398,9 @@ function get_report_sales_daily() {
   });
 }
 
-function get_report_sales_void() {
+function get_report_sales_void(date_awal, date_akhir) {
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -440,12 +433,9 @@ function get_report_sales_void() {
   });
 }
 
-function get_report_sales_non_cash() {
+function get_report_sales_non_cash(date_awal, date_akhir) {
   $.ajax({
-    url:
-      "http://" +
-      api_storeapps +
-      "/pi/api/cyber/report_sales_non_cash.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_non_cash.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -473,10 +463,9 @@ function get_report_sales_non_cash() {
   });
 }
 
-function get_report_sales_today() {
+function get_report_sales_today(date_awal, date_akhir) {
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -503,9 +492,9 @@ function get_report_sales_today() {
   });
 }
 
-function get_report_sales_item() {
+function get_report_sales_item(date_awal, date_akhir) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -533,9 +522,9 @@ function get_report_sales_item() {
 }
 
 
-function get_report_sales_category() {
+function get_report_sales_category(date_awal, date_akhir) {
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -561,13 +550,10 @@ function get_report_sales_category() {
 }
 
 
-function get_excel_sales_by_cashier() {
+function get_excel_sales_by_cashier(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url:
-      "http://" +
-      api_storeapps +
-      "/pi/api/cyber/report_sales_cashier.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_cashier.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -582,11 +568,10 @@ function get_excel_sales_by_cashier() {
 }
 
 
-function get_excel_sales_daily(){
+function get_excel_sales_daily(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_daily.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -600,11 +585,10 @@ function get_excel_sales_daily(){
   return dataResults;
 }
 
-function get_excel_sales_void(){
+function get_excel_sales_void(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_void.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -618,13 +602,10 @@ function get_excel_sales_void(){
   return dataResults;
 }
 
-function get_excel_sales_non_cash(){
+function get_excel_sales_non_cash(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url:
-      "http://" +
-      api_storeapps +
-      "/pi/api/cyber/report_sales_non_cash.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_non_cash.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -638,11 +619,10 @@ function get_excel_sales_non_cash(){
   return dataResults;
 }
 
-function get_excel_sales_today(){
+function get_excel_sales_today(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url:
-      "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_today.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -656,10 +636,10 @@ function get_excel_sales_today(){
   return dataResults;
 }
 
-function get_excel_sales_item(){
+function get_excel_sales_item(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_item.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
@@ -673,10 +653,10 @@ function get_excel_sales_item(){
   return dataResults;
 }
 
-function get_excel_sales_category(){
+function get_excel_sales_category(date_awal, date_akhir) {
   var dataResults = "";
   $.ajax({
-    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php",
+    url: "http://" + api_storeapps + "/pi/api/cyber/report_sales_category.php?date_awal=" + date_awal + "&date_akhir=" + date_akhir,
     type: "GET",
     beforeSend: function () {
       $("#statussync").html("proses sync stock");
